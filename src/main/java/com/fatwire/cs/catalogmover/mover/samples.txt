@@ -1,0 +1,369 @@
+POST /cs/CatalogManager HTTP/1.0
+Connection: Keep-Alive
+User-Agent: Mozilla/4.03 [en] (WinNT; I)
+Host: radium:8080
+Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*
+Cookie: $Version=1;JSESSIONID=abchDQKdfexdeePNT7Zfr
+Content-type: multipart/form-data; boundary=+++++++++++++++++++++++++++18132642711537;charset=windows-1252
+Content-Length: 7779
+
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="elementname0"
+
+Support/Performance/BigPage
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="description0"
+
+Produces a big html page
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="url0"; filename="Support/Performance/BigPage.jsp"
+Content-Type: application/octet-stream
+
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="cs" uri="futuretense_cs/ftcs1_0.tld" %>
+<%@ taglib prefix="ics" uri="futuretense_cs/ics.tld" %>
+<%@ taglib prefix="satellite" uri="futuretense_cs/satellite.tld" %>
+<%//
+// Support/Performance/BigPage
+//
+// INPUT
+//
+// OUTPUT
+//%>
+<%@ page import="COM.FutureTense.Interfaces.FTValList" %>
+<%@ page import="COM.FutureTense.Interfaces.ICS" %>
+<%@ page import="COM.FutureTense.Interfaces.IList" %>
+<%@ page import="COM.FutureTense.Interfaces.Utilities" %>
+<%@ page import="COM.FutureTense.Util.ftErrors" %>
+<%@ page import="COM.FutureTense.Util.ftMessage"%>
+<cs:ftcs>
+<satellite:tag>
+    <satellite:parameter name="type" value ="open"/>
+</satellite:tag>
+
+<html>
+<head>
+<title>Performance Big Page</title>
+</head>
+<body>
+<%
+int size =1;
+String sizeStr = ics.GetVar("size"); //size in kB
+if (sizeStr != null) {
+	size = Integer.parseInt(sizeStr);
+}
+for (int i=0; i< size; i++){
+%>
+<h2>Page Caching Overview</h2>
+<p>An effective page caching strategy allows your site to perform well and influences your hardware design by relieving load on Content Server and the database. 
+The Content Server product family contains two products that cache web pages:</p>
+<ul>
+<li>Content Server, which caches pages either on disk or in Java memory<p>
+<li>Content Server Satellite, which caches pages on remote servers<p>
+</ul>
+<p>For optimum performance on the delivery server, use the caching capabilities of both products in tandem.</p>
+<h3> Content Server Page Caching </h3>
+<p>divine recommends that you cache your pages based on the following two principles:</p>
+<ul>
+<li>Cache most pages<p>
+<li>Use uncached pages only where necessary<p>
+</ul>
+<p>The caches contain the pagelets, which contain HTTP headers and body content
+that are generated when elements are evaluated by Content Server. 
+<p>divine recommends that you design your pages so that 75-90% of the content can be cached. 
+You should cache as many componants as you can.</p>
+<% }
+%>
+</body>
+</html>
+<satellite:tag>
+    <satellite:parameter name="type" value ="closed"/>
+</satellite:tag>
+
+</cs:ftcs>
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="url_folder0"
+
+Support\Performance
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="elementname1"
+
+Support/Performance/CallElementIntensive
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="description1"
+
+Does a lot of call elements
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="url1"; filename="Support/Performance/CallElementIntensive.jsp"
+Content-Type: application/octet-stream
+
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="cs" uri="futuretense_cs/ftcs1_0.tld" %>
+<%@ taglib prefix="ics" uri="futuretense_cs/ics.tld" %>
+<%@ taglib prefix="satellite" uri="futuretense_cs/satellite.tld" %>
+<%@ taglib prefix="time" uri="futuretense_cs/time.tld" %>
+
+<%//
+// Support/Performance/CallElementIntensive
+//
+// INPUT
+//
+// OUTPUT
+//%>
+<%@ page import="COM.FutureTense.Interfaces.FTValList" %>
+<%@ page import="COM.FutureTense.Interfaces.ICS" %>
+<%@ page import="COM.FutureTense.Interfaces.IList" %>
+<%@ page import="COM.FutureTense.Interfaces.Utilities" %>
+<%@ page import="COM.FutureTense.Util.ftErrors" %>
+<%@ page import="COM.FutureTense.Util.ftMessage"%>
+<cs:ftcs>
+<satellite:tag>
+    <satellite:parameter name="type" value ="open"/>
+</satellite:tag>
+
+<time:set name="mystamp" />
+
+<%
+for (int i=0;i< Integer.parseInt(ics.GetVar("number")) ;i++){
+%><ics:callelement element="Support/Performance/SimpleElementToCall" />
+<%}%>
+<br><br>
+<time:get name="mystamp" /> ms<br>
+<satellite:tag>
+    <satellite:parameter name="type" value ="closed"/>
+</satellite:tag>
+
+</cs:ftcs>
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="url_folder1"
+
+Support\Performance
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="elementname2"
+
+Support/Performance/CPUIntensive
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="description2"
+
+CPU intensive element
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="url2"; filename="Support/Performance/CPUIntensive.jsp"
+Content-Type: application/octet-stream
+
+<%@ taglib prefix="cs" uri="futuretense_cs/ftcs1_0.tld" %>
+<%@ taglib prefix="ics" uri="futuretense_cs/ics.tld" %>
+<%@ taglib prefix="satellite" uri="futuretense_cs/satellite.tld" %>
+<%//
+// Support/Performance/CPUIntensive
+//
+// INPUT
+//
+// OUTPUT
+//%>
+<%@ page import="COM.FutureTense.Interfaces.FTValList" %>
+<%@ page import="COM.FutureTense.Interfaces.ICS" %>
+<%@ page import="COM.FutureTense.Interfaces.IList" %>
+<%@ page import="COM.FutureTense.Interfaces.Utilities" %>
+<%@ page import="COM.FutureTense.Util.ftErrors" %>
+<%@ page import="COM.FutureTense.Util.ftMessage"%>
+<%@ page import="java.io.*"%>
+
+<%!
+
+double staticDoubleTest(double d1, double d2)   {
+        double d3 = d1;
+        double d4 = d2;
+        double d5 = d1;
+        double d6 = d2;
+        d3 += d4;
+        d3 *= d2;
+        d3 *= d5;
+        d3 -= d6;
+        d3 /= d1;
+        return d3;
+}
+
+void runDoubleTests(Writer out, long repeat)  throws IOException  {
+        final double d1 = 1.2345678;
+        final double d2 = 0.12345678;
+        final double numIterations = 8000000;
+        final double numRepeatedTests = 1;
+        final double numNoReport = 0;
+        double sum=0;
+
+        //test using doubles
+
+        // Dry run first
+        //sum = 0.0;
+        //for(double i=0;i<numIterations;i++) {
+        //    sum += staticDoubleTest(d1, d2);
+        //}
+
+        // Now, time it
+        for(double k=0;k<numRepeatedTests;k++) {
+            long time = System.currentTimeMillis();
+            sum = 0.0;
+            for(double i=0;i<numIterations;i++) {
+                sum += staticDoubleTest(d1, d2);
+            }
+            time = System.currentTimeMillis() - time;
+            if (k>=numNoReport)
+                out.write("staticDoubleTest" + repeat + " test took "+(time/1000.0f)+" secs    sum = "+sum +"\n");
+        }
+
+        if(repeat != 0)
+            runDoubleTests(out,repeat-1);
+}
+
+%>
+<cs:ftcs>
+<satellite:tag>
+    <satellite:parameter name="type" value ="open"/>
+</satellite:tag>
+
+<%
+        long time = System.currentTimeMillis();
+
+        runDoubleTests(out,3);
+        out.write("Whole test took "+((System.currentTimeMillis() - time)/1000.0f) + " secs\n");
+
+%>
+<satellite:tag>
+    <satellite:parameter name="type" value ="closed"/>
+</satellite:tag>
+
+</cs:ftcs>
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="url_folder2"
+
+Support\Performance
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="tablename"
+
+tt1172484886257
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="tablekey"
+
+elementname
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="authusername"
+
+dolf
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="authpassword"
+
+dolf
+--+++++++++++++++++++++++++++18132642711537
+Content-Disposition: form-data; name="ftcmd"
+
+replacerows
+--+++++++++++++++++++++++++++18132642711537--
+
+
+
+
+
+
+
+
+GET /cs/CatalogManager?tablename=ElementCatalog&ftcmd=retrievebinary&tablekeyvalue=Support/Performance/BigPage&tablekey=elementname&columnname=url&retrievestatus=true HTTP/1.1
+User-Agent: FutureTense CS CatalogTools
+Host: localhost:8080
+Cache-Control: no-cache
+Cookie: JSESSIONID=abclRwVnNlqae-i7C9Zfr
+
+POST /cs/CatalogManager HTTP/1.1
+Content-Type: multipart/form-data; boundary=------------------------9321161712727
+Content-Length: 2570
+User-Agent: FutureTense CS CatalogTools
+Host: localhost:8080
+Cache-Control: no-cache
+Cookie: JSESSIONID=abclRwVnNlqae-i7C9Zfr
+
+--------------------------9321161712727
+content-disposition: form-data; name="tablename"
+
+ElementCatalog
+--------------------------9321161712727
+content-disposition: form-data; name="ftcmd"
+
+updaterow
+--------------------------9321161712727
+content-disposition: form-data; name="elementname"
+
+Support/Performance/BigPage
+--------------------------9321161712727
+content-disposition: form-data; name="url_folder"
+
+Support/Performance
+--------------------------9321161712727
+content-disposition: form-data; name="url"; filename="BigPage,0.jsp"
+Content-Type: text/plain
+
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="cs" uri="futuretense_cs/ftcs1_0.tld" %>
+<%@ taglib prefix="ics" uri="futuretense_cs/ics.tld" %>
+<%@ taglib prefix="satellite" uri="futuretense_cs/satellite.tld" %>
+<%//
+// Support/Performance/BigPage
+//
+// INPUT
+//
+// OUTPUT
+//%>
+<%@ page import="COM.FutureTense.Interfaces.FTValList" %>
+<%@ page import="COM.FutureTense.Interfaces.ICS" %>
+<%@ page import="COM.FutureTense.Interfaces.IList" %>
+<%@ page import="COM.FutureTense.Interfaces.Utilities" %>
+<%@ page import="COM.FutureTense.Util.ftErrors" %>
+<%@ page import="COM.FutureTense.Util.ftMessage"%>
+<cs:ftcs>
+<html>
+<head>
+<title>Performance Big Page</title>
+</head>
+<body>
+<%
+int size =1;
+String sizeStr = ics.GetVar("size"); //size in kB
+if (sizeStr != null) {
+	size = Integer.parseInt(sizeStr);
+}
+for (int i=0; i< size; i++){
+%>
+<h2>Page Caching Overview</h2>
+<p>An effective page caching strategy allows your site to perform well and influences your hardware design by relieving load on Content Server and the database. 
+The Content Server product family contains two products that cache web pages:</p>
+<ul>
+<li>Content Server, which caches pages either on disk or in Java memory<p>
+<li>Content Server Satellite, which caches pages on remote servers<p>
+</ul>
+<p>For optimum performance on the delivery server, use the caching capabilities of both products in tandem.</p>
+<h3> Content Server Page Caching </h3>
+<p>divine recommends that you cache your pages based on the following two principles:</p>
+<ul>
+<li>Cache most pages<p>
+<li>Use uncached pages only where necessary<p>
+</ul>
+<p>The caches contain the pagelets, which contain HTTP headers and body content
+that are generated when elements are evaluated by Content Server. 
+<p>divine recommends that you design your pages so that 75-90% of the content can be cached. 
+You should cache as many componants as you can.</p>
+<% }
+%>
+</body>
+</html>
+</cs:ftcs>
+--------------------------9321161712727--
+GET /cs/CatalogManager?tablename=ElementCatalog&ftcmd=selectrow(s) HTTP/1.1
+User-Agent: FutureTense CS CatalogTools
+Host: localhost:8080
+Cache-Control: no-cache
+Cookie: JSESSIONID=abclRwVnNlqae-i7C9Zfr
+
+GET /cs/CatalogManager?tablename=ElementCatalog&ftcmd=retrievebinary&tablekeyvalue=Support/Performance/BigPage&tablekey=elementname&columnname=url&retrievestatus=true HTTP/1.1
+User-Agent: FutureTense CS CatalogTools
+Host: localhost:8080
+Cache-Control: no-cache
+Cookie: JSESSIONID=abclRwVnNlqae-i7C9Zfr
+
