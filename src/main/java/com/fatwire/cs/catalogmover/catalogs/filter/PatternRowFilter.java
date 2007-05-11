@@ -1,7 +1,9 @@
-package com.fatwire.cs.catalogmover.catalogs;
+package com.fatwire.cs.catalogmover.catalogs.filter;
 
 import java.util.Iterator;
 import java.util.regex.Pattern;
+
+import com.fatwire.cs.catalogmover.catalogs.Row;
 
 public class PatternRowFilter implements Iterable<Row> {
     private final Iterable<Row> delegate;
