@@ -27,8 +27,6 @@ public class LocalCatalog {
 
     private File uploadPath;
 
-    private String catalogName;
-
     public LocalCatalog(final File path) {
         super();
 
@@ -38,11 +36,14 @@ public class LocalCatalog {
         }
         location = path.getAbsoluteFile();
         log.debug("Catalog: " + location.getAbsolutePath());
-        catalogName = path.getName().substring(0,
-                path.getName().lastIndexOf('.'));
 
     }
 
+    /**
+     * Reads the catalog from disk into memory
+     * 
+     * @throws IOException
+     */
     public void refresh() throws IOException {
         log.debug("Refreshing Catalog at " + location);
 

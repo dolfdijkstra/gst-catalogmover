@@ -9,10 +9,8 @@ package com.fatwire.cs.catalogmover.util;
 
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -91,13 +89,15 @@ public class ResponseStatusCode {
 
     static final String _xparam = "xparam";
 
+    private static Log log = LogFactory.getLog(ResponseStatusCode.class);
+
     /**
      * Returns the generic logger object
      * 
      * @return Log object
      */
-    private static Log getLog() {
-        return LogFactory.getLog(ResponseStatusCode.class);
+    private Log getLog() {
+        return log;
     }
 
     // the parts.
@@ -217,28 +217,26 @@ public class ResponseStatusCode {
 
         // Parameters
         final StringBuilder p = new StringBuilder();
+        if (hparams != null) {
+            try {
 
-        try {
-            final Iterator<Entry<String, String>> iterator = (null == hparams) ? null
-                    : hparams.entrySet().iterator();
-            while ((null != iterator) && iterator.hasNext()) {
-                final Map.Entry oEntry = iterator.next();
-                final String name = (String) oEntry.getKey();
-                final String value = oEntry.getValue().toString();
+                for (final Map.Entry<String, String> oEntry : hparams
+                        .entrySet()) {
+                    final String name = oEntry.getKey();
+                    final String value = oEntry.getValue().toString();
 
-                if (p.length() > 0) {
-                    p.append('&');
+                    if (p.length() > 0) {
+                        p.append('&');
+                    }
+                    p.append(name).append('=').append(value);
                 }
-                p.append(name).append('=').append(value);
+            } catch (final Exception e) {
+                // this currently happens quite frequently. // TODO: fix
+                getLog().trace("Failure composing status code", e);
             }
-        } catch (final Exception e) {
-            // this currently happens quite frequently. // TODO: fix
-            ResponseStatusCode.getLog().trace("Failure composing status code",
-                    e);
         }
-
-        result.append(ResponseStatusCode._params + p.toString()
-                + ResponseStatusCode.sep);
+        result.append(ResponseStatusCode._params).append(p.toString()).append(
+                ResponseStatusCode.sep);
         result.append(ResponseStatusCode.statusPostfix); // end comment
     }
 
@@ -279,23 +277,21 @@ public class ResponseStatusCode {
      */
     public Map<String, String> getParams() {
         final Map<String, String> iparams = new HashMap<String, String>();
-
-        try {
-            final Iterator<Entry<String, String>> iterator = (null == hparams) ? null
-                    : hparams.entrySet().iterator();
-            while ((null != iterator) && iterator.hasNext()) {
-                final Map.Entry oEntry = iterator.next();
-                final String name = (String) oEntry.getKey();
-                final String value = oEntry.getValue().toString();
-                if (StringUtils.goodString(value)) {
-                    iparams.put(name, value);
+        if (hparams != null) {
+            try {
+                for (final Map.Entry<String, String> oEntry : hparams
+                        .entrySet()) {
+                    final String name = oEntry.getKey();
+                    final String value = oEntry.getValue().toString();
+                    if (StringUtils.goodString(value)) {
+                        iparams.put(name, value);
+                    }
                 }
+            } catch (final Exception e) {
+                getLog().error("Failure getting params in ResponseStatusCode",
+                        e);
             }
-        } catch (final Exception e) {
-            ResponseStatusCode.getLog().error(
-                    "Failure getting params in ResponseStatusCode", e);
         }
-
         return iparams;
     }
 
@@ -379,6 +375,8 @@ public class ResponseStatusCode {
      * @see #setNextError
      */
     public boolean setFromData(final String data) {
+        if (StringUtils.emptyString(data))
+            return false;
         try {
             // if it has nothing good an exception
             // will get tossed
@@ -398,8 +396,7 @@ public class ResponseStatusCode {
 
         } catch (final Exception e) {
             // this behaviour currently occurs quite frequently. // todo: fix
-            ResponseStatusCode.getLog().trace(
-                    "Failure setting status code from string", e);
+            getLog().trace("Failure setting status code from string", e);
         }
         return false;
     }
@@ -468,7 +465,7 @@ public class ResponseStatusCode {
             return true;
         } catch (final Exception e) {
             // this behaviour currently happens quite frequently todo: fix
-            ResponseStatusCode.getLog().trace("Failure setting from string", e);
+            getLog().trace("Failure setting from string", e);
         }
 
         return false;
@@ -504,22 +501,19 @@ public class ResponseStatusCode {
      * @param input
      *            map of params to set
      */
-    public void setParams(final Map input) {
+    public void setParams(final Map<String, String> input) {
         hparams = new HashMap<String, String>(100, 100);
 
         try {
-            final Iterator iterator = input.entrySet().iterator();
-            while (iterator.hasNext()) {
-                final Map.Entry oEntry = (Map.Entry) iterator.next();
-                final String name = (String) oEntry.getKey();
+            for (final Map.Entry<String, String> oEntry : input.entrySet()) {
+                final String name = oEntry.getKey();
                 final String value = oEntry.getValue().toString();
                 if (StringUtils.goodString(value)) {
                     hparams.put(name, value);
                 }
             }
         } catch (final Exception e) {
-            ResponseStatusCode.getLog().error(
-                    "Failure setting params in ResponseStatusCode", e);
+            getLog().error("Failure setting params in ResponseStatusCode", e);
         }
     }
 
