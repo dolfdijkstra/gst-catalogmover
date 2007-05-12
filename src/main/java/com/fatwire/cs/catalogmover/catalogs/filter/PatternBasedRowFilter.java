@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import com.fatwire.cs.catalogmover.catalogs.Row;
 
-public class PatternBasedRowFilter implements RowFilter {
+public class PatternBasedRowFilter implements Filter<Row> {
 
     final String columnName;
 

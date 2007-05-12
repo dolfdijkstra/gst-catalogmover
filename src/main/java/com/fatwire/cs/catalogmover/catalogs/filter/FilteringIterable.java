@@ -1,41 +1,47 @@
 package com.fatwire.cs.catalogmover.catalogs.filter;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
-import com.fatwire.cs.catalogmover.catalogs.Row;
+public class FilteringIterable<T> implements Iterable<T> {
+    private final Iterable<T> delegate;
 
-public class FilteringIterable implements Iterable<Row> {
-    private final Iterable<Row> delegate;
+    private List<Filter<T>> includeFilters = Collections.emptyList();
 
-    final RowFilter[] includeFilters;
+    private List<Filter<T>> excludeFilters = Collections.emptyList();;
 
-    final RowFilter[] excludeFilters;
-
-    public FilteringIterable(final Iterable<Row> delegate,
-            final RowFilter[] includeFilters, final RowFilter[] excludeFilters) {
+    public FilteringIterable(final Iterable<T> delegate,
+            final List<Filter<T>> includeFilters,
+            final List<Filter<T>> excludeFilters) {
         super();
         this.delegate = delegate;
-        this.includeFilters = includeFilters == null ? new RowFilter[0]
-                : includeFilters;
-        this.excludeFilters = excludeFilters == null ? new RowFilter[0]
-                : excludeFilters;
+
+        if (includeFilters != null) {
+            this.includeFilters = includeFilters;
+
+        }
+        if (excludeFilters != null) {
+            this.excludeFilters = excludeFilters;
+        }
+
     }
 
-    public Iterator<Row> iterator() {
-        final Iterator<Row> delegateIterator = delegate.iterator();
-        return new Iterator<Row>() {
+    public Iterator<T> iterator() {
+        final Iterator<T> delegateIterator = delegate.iterator();
+        return new Iterator<T>() {
             {
                 proceedToNext();
             }
 
-            private Row next = null;
+            private T next = null;
 
             public boolean hasNext() {
                 return next != null;
             }
 
-            public Row next() {
-                final Row r = next;
+            public T next() {
+                final T r = next;
                 proceedToNext();
                 return r;
             }
@@ -49,7 +55,7 @@ public class FilteringIterable implements Iterable<Row> {
 
                 next = null;
                 while (delegateIterator.hasNext() && next == null) {
-                    final Row r = delegateIterator.next();
+                    final T r = delegateIterator.next();
                     next = match(r) ? r : null;
 
                 }
@@ -60,17 +66,17 @@ public class FilteringIterable implements Iterable<Row> {
              * @param row
              * @return true if this row does not match a exclude filter, or true if there are no includeFilters or if it matches an include filter pattern.
              */
-            private boolean match(final Row row) {
-                for (RowFilter filter : excludeFilters) {
+            private boolean match(final T row) {
+                for (Filter<T> filter : excludeFilters) {
                     if (filter.matches(row)) {
                         return false;
                     }
                 }
                 //if there are no include filters all rows match
-                if (includeFilters.length == 0) {
+                if (includeFilters.isEmpty()) {
                     return true;
                 }
-                for (RowFilter filter : includeFilters) {
+                for (Filter<T> filter : includeFilters) {
                     if (filter.matches(row)) {
                         return true;
                     }
