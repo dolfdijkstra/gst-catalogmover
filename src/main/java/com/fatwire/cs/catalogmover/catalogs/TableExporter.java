@@ -5,7 +5,6 @@ import static com.fatwire.cs.catalogmover.catalogs.TableData.COLTYPEDATE;
 import static com.fatwire.cs.catalogmover.catalogs.TableData.COLTYPENUMBER;
 import static com.fatwire.cs.catalogmover.catalogs.TableData.COLTYPETEXT;
 import static com.fatwire.cs.catalogmover.catalogs.TableData.COLTYPEUNKNOWN;
-import static com.fatwire.cs.catalogmover.catalogs.TableData.HTMLTABLEVERSION;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,25 +43,22 @@ public class TableExporter {
      * 
      * @param SelectedRows
      *            vector of row indicess to include or specify null for all rows
+     * @throws IOException 
      */
-    public StringBuffer exportHTML(final int[] SelectedRows,
-            final String sDBType, final boolean bRowSummary) {
+    public StringBuffer exportHTML(final Iterable<Row> selectedRows,
+            final String sDBType, final boolean bRowSummary) throws IOException {
         final StringWriter oStringWriter = new StringWriter();
         final PrintWriter oPrintWriter = new PrintWriter(oStringWriter);
 
-        try {
 
             // this entry writes the page wrapping stuff,
             // the one that writes to a stream has that
             // already
             oPrintWriter.print(HTML.startpage(HTML.gencomment()));
-            exportHTML(SelectedRows, sDBType, bRowSummary, oPrintWriter);
+            exportHTML(selectedRows, sDBType, bRowSummary, oPrintWriter);
             oPrintWriter.print(HTML.endpage());
             oPrintWriter.flush();
             return new StringBuffer(oStringWriter.toString());
-        } catch (final Exception e) {
-            return null;
-        }
     }
 
     /**
@@ -71,9 +67,9 @@ public class TableExporter {
      * @param selectedRows
      *            vector of row indicess to include or specify null for all rows
      */
-    public void exportHTML(final int[] selectedRows, final String dbType,
-            final boolean rowSummary, final PrintWriter printWriter)
-            throws IOException {
+    public void exportHTML(final Iterable<Row> selectedRows,
+            final String dbType, final boolean rowSummary,
+            final PrintWriter printWriter) throws IOException {
         String type;
         //
         // Create an identifier based on the table name
@@ -170,21 +166,15 @@ public class TableExporter {
         }
         printWriter.println("</tr>");
 
-        // either a set of rows or all rows
-        // are to be exported based on input
-        final boolean bAll = (selectedRows == null);
-        final int sz = (bAll ? getRowCount() : selectedRows.length);
         final int numColumns = getColumnCount();
-        for (int i = 0; i < sz; i++) {
-            // next row to take
-            final int k = (bAll ? i : selectedRows[i]);
+        for (Row row : selectedRows) {
 
             printWriter.println("<tr>");
 
             for (int colNum = 0; colNum < numColumns; colNum++) {
                 printWriter.print("\t<td>");
                 printWriter.print(wrapperStart);
-                printWriter.print(getCell(k, colNum));
+                printWriter.print(row.getData(colNum));
                 printWriter.print(wrapperEnd);
                 printWriter.println("</td>");
             }
