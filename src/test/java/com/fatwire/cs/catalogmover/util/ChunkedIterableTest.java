@@ -19,7 +19,7 @@ public class ChunkedIterableTest extends TestCase {
     }
 
     public void testReIterate() {
-        int chunckSize=10;
+        int chunckSize = 10;
         final Map<Integer, String> l = new TreeMap<Integer, String>();
         for (int i = 0; i < 15; i++) {
             l.put(i, String.valueOf(i));
@@ -37,26 +37,28 @@ public class ChunkedIterableTest extends TestCase {
 
             j++;
         }
-        assertEquals("Number of outer iterations is incorrect", l.size()/chunckSize, j);
+        assertEquals("Number of outer iterations is incorrect", l.size()
+                / chunckSize, j);
         assertEquals("Number of total iterations is incorrect", l.size(), y);
-        
+
     }
 
     public void testIterator() {
-        int chunckSize=10;
+        int chunckSize = 10;
         final List<Integer> l = new LinkedList<Integer>();
         for (int i = 0; i < 100; i++) {
             l.add(i);
         }
         int j = 0;
         int y = 0;
-        for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l, 10)) {
+        for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l,
+                chunckSize)) {
             for (final Integer u : i) {
                 y++;
             }
             j++;
         }
-        assertEquals("Number of outer iterations is incorrect", 10, j);
-        assertEquals("Number of total iterations is incorrect", 100, l.size());
+        assertEquals("Number of outer iterations is incorrect", chunckSize, j);
+        assertEquals("Number of total iterations is incorrect", l.size(), y);
     }
 }
