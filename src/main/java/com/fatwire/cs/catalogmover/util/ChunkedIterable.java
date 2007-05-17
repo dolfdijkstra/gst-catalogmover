@@ -15,11 +15,6 @@
 package com.fatwire.cs.catalogmover.util;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 
 /**
  * Evolution of ChunkedListIterable so that it is now a Iterable
