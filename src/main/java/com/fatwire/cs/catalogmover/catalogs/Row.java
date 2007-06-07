@@ -21,7 +21,7 @@ public class Row {
     public String getData(final String headerName) {
         int col = -1;
         for (final Header header : data.getHeaders().values()) {
-            if (headerName.equals(header.getHeader())) {
+            if (headerName.equals(header.getName())) {
                 col = header.getColumn();
                 break;
             }
@@ -42,6 +42,14 @@ public class Row {
 
     public int getRowNum() {
         return rowNum;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Row from " + data.getTableName() +":" + rowNum;
     }
 
 }

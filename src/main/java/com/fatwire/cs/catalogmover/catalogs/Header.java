@@ -4,18 +4,18 @@
 package com.fatwire.cs.catalogmover.catalogs;
 
 public class Header {
-    private int column;
+    private final int column;
 
-    private String header;
+    private final String name;
 
-    private String schema;
+    private final String schema;
 
-    private int type;
+    private final int type;
 
-    Header(final int column, final String header, final String schema,
+    Header(final int column, final String name, final String schema,
             final int type) {
         this.column = column;
-        this.header = header;
+        this.name = name;
         this.schema = schema;
         this.type = type;
     }
@@ -24,8 +24,8 @@ public class Header {
         return column;
     }
 
-    public String getHeader() {
-        return header;
+    public String getName() {
+        return name;
     }
 
     public String getSchema() {
@@ -36,7 +36,8 @@ public class Header {
         return type;
     }
 
+    @Override
     public String toString() {
-        return "header: " + header + " schema: " + schema + " type: " + type;
+        return "name: " + name + " schema: " + schema + " type: " + type;
     }
 }

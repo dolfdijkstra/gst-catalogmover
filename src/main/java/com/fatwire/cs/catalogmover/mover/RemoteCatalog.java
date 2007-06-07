@@ -1,8 +1,10 @@
 package com.fatwire.cs.catalogmover.mover;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +21,7 @@ public class RemoteCatalog {
      */
     private final File exportFile;
 
-    private File uploadPath;
+    private final File uploadPath;
 
     /**
      * @param tableName
@@ -29,7 +31,7 @@ public class RemoteCatalog {
         super();
         this.tableName = tableName;
         exportFile = new File(exportPath.getAbsoluteFile(), tableName + ".html");
-        this.uploadPath = new File(exportPath.getAbsoluteFile(), tableName);
+        uploadPath = new File(exportPath.getAbsoluteFile(), tableName);
         log.debug("Catalog: " + exportFile.getAbsolutePath());
 
     }
@@ -49,7 +51,8 @@ public class RemoteCatalog {
         return tableName;
     }
 
-    protected void write(String string, File file) throws IOException {
+    protected void write(final String string, final File file)
+            throws IOException {
         file.getParentFile().mkdirs();
         final FileWriter writer = new FileWriter(file);
         try {
@@ -58,7 +61,7 @@ public class RemoteCatalog {
             if (writer != null) {
                 try {
                     writer.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     //ignore
                 }
             }
@@ -66,13 +69,36 @@ public class RemoteCatalog {
 
     }
 
-    public void writeCatalog(String content) throws IOException {
+    protected void write(final byte[] bytes, final File file)
+            throws IOException {
+        file.getParentFile().mkdirs();
+        final OutputStream writer = new FileOutputStream(file);
+        try {
+            writer.write(bytes);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (final IOException e) {
+                    //ignore
+                }
+            }
+        }
+
+    }
+
+    public void writeCatalog(final String content) throws IOException {
         write(content, getExportFile());
     }
 
-    public void writeUrlField(String content, String urlField)
+    public void writeUrlField(final String content, final String urlField)
             throws IOException {
-        write(content, new File(this.getUploadPath(), urlField));
+        write(content, new File(getUploadPath(), urlField));
+    }
+
+    public void writeUrlField(final byte[] content, final String urlField)
+            throws IOException {
+        write(content, new File(getUploadPath(), urlField));
     }
 
 }

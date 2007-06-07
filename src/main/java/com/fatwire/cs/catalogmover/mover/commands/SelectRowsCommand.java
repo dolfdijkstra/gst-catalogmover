@@ -9,7 +9,7 @@ public class SelectRowsCommand extends AbstractCatalogMoverCommand {
 
     private String response;
 
-    public SelectRowsCommand(BaseCatalogMover cm, final String tableName) {
+    public SelectRowsCommand(final BaseCatalogMover cm, final String tableName) {
         super(cm);
         this.tableName = tableName;
     }
@@ -21,7 +21,7 @@ public class SelectRowsCommand extends AbstractCatalogMoverCommand {
     }
 
     protected void selectRows() throws CatalogMoverException {
-        final Post post = this.prepareNewPost();
+        final Post post = prepareNewPost();
         post.addMultipartData("ftcmd", "selectrow(s)");
         post.addMultipartData("tablename", tableName);
 

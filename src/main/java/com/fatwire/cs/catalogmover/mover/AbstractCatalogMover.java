@@ -1,7 +1,9 @@
 package com.fatwire.cs.catalogmover.mover;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,7 +22,7 @@ public abstract class AbstractCatalogMover {
 
     protected HttpAccess httpAccess;
 
-    protected final Log log = LogFactory.getLog(this.getClass());
+    protected final Log log = LogFactory.getLog(getClass());
 
     private String password;
 
@@ -32,15 +34,14 @@ public abstract class AbstractCatalogMover {
         super();
     }
 
-    public ResponseStatusCode execute(final Post post)
+    public ResponseStatusCode executeForResponseStatusCode(final Post post)
             throws CatalogMoverException {
         final ResponseStatusCode status = new ResponseStatusCode();
-        //final boolean foundStatus =
         //let the caller deal with the foundStatus
         //don't throw an exception here
         status.setFromData(executeForResponse(post));
-        if (this.hasListeners()) {
-            this.fireEvent(new CatalogMoverStatusReceivedEvent(this, status));
+        if (hasListeners()) {
+            fireEvent(new CatalogMoverStatusReceivedEvent(this, status));
         }
 
         return status;
@@ -48,6 +49,25 @@ public abstract class AbstractCatalogMover {
     }
 
     public String executeForResponse(final Post post)
+            throws CatalogMoverException {
+
+        SimpleResponse response = execute(post);
+        if (response.getStatusCode() == 200) {
+            try {
+                return new String(response.getBody(), response
+                        .getResponseEncoding());
+            } catch (UnsupportedEncodingException e) {
+                throw new CatalogMoverException(e);
+            }
+
+        } else {
+            throw new IllegalResponseStatusException(post.getUrl(), response
+                    .getStatusCode());
+        }
+
+    }
+
+    public SimpleResponse execute(final Post post)
             throws CatalogMoverException {
 
         final long t = System.currentTimeMillis();
@@ -60,35 +80,38 @@ public abstract class AbstractCatalogMover {
                         + " ms.");
                 log.trace(response);
             }
+            SimpleResponseImpl simpleResponse = new SimpleResponseImpl();
+            simpleResponse.setStatusCode(response.getStatusCode());
             if (response.getStatusCode() == 200) {
-                final String charset = response.getResponseEncoding();
 
-                final InputStreamReader in = new InputStreamReader(response
-                        .getResponseBodyAsStream(), charset);
-                final char[] chars = new char[1024];
+                simpleResponse.setResponseEncoding(response
+                        .getResponseEncoding());
+
+                final InputStream in = response.getResponseBodyAsStream();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+                final byte[] b = new byte[1024];
                 int c = 0;
 
-                final StringBuilder out = new StringBuilder();
                 try {
-                    while ((c = in.read(chars)) != -1) {
-                        out.append(chars, 0, c);
+                    while ((c = in.read(b)) != -1) {
+                        out.write(b, 0, c);
                     }
+                    simpleResponse.setBody(out.toByteArray());
                 } finally {
-                    if (in != null)
+                    if (in != null) {
                         in.close();
+                    }
                 }
-                if (this.hasListeners()) {
-                    this.fireEvent(new CatalogMoverResponseReceivedEvent(this,
-                            response, out.toString()));
+                if (hasListeners()) {
+                    fireEvent(new CatalogMoverResponseReceivedEvent(this,
+                            response, simpleResponse));
                 }
-                return out.toString();
-            } else {
-                throw new IllegalResponseStatusException(post.getUrl(),
-                        response.getStatusCode());
             }
-        } catch (HttpAccessException e) {
+            return simpleResponse;
+        } catch (final HttpAccessException e) {
             throw new CatalogMoverException(e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new CatalogMoverException(e);
         } finally {
             if (response != null) {
@@ -137,20 +160,20 @@ public abstract class AbstractCatalogMover {
     }
 
     protected boolean hasListeners() {
-        return !this.eventListeners.isEmpty();
+        return !eventListeners.isEmpty();
     }
 
-    public void registerEventListener(CatalogMoverEventListener listener) {
-        this.eventListeners.addIfAbsent(listener);
+    public void registerEventListener(final CatalogMoverEventListener listener) {
+        eventListeners.addIfAbsent(listener);
     }
 
-    public void deregisterEventListener(CatalogMoverEventListener listener) {
-        this.eventListeners.remove(listener);
+    public void deregisterEventListener(final CatalogMoverEventListener listener) {
+        eventListeners.remove(listener);
 
     }
 
-    protected void fireEvent(CatalogMoverEvent event) {
-        for (CatalogMoverEventListener listener : eventListeners) {
+    protected void fireEvent(final CatalogMoverEvent event) {
+        for (final CatalogMoverEventListener listener : eventListeners) {
             listener.fireEvent(event);
         }
     }

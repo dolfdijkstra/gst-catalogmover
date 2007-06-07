@@ -78,11 +78,11 @@ public class ElementCatalog {
             final Header header = cell.getColumn();
 
             // log.debug(header.getHeader());
-            if ("elementname".equals(header.getHeader())) {
+            if ("elementname".equals(header.getName())) {
                 entry.setElementname(cell.getCell());
-            } else if ("description".equals(header.getHeader())) {
+            } else if ("description".equals(header.getName())) {
                 entry.setDescription(cell.getCell());
-            } else if ("url".equals(header.getHeader())) {
+            } else if ("url".equals(header.getName())) {
                 String v = cell.getCell();
                 if (v != null) {
                     v = v.replace('\\', '/');
@@ -93,9 +93,9 @@ public class ElementCatalog {
                         log.debug(tmp + " does not exist.");
                     }
                 }
-            } else if ("resdetails1".equals(header.getHeader())) {
+            } else if ("resdetails1".equals(header.getName())) {
                 entry.setResdetails1(cell.getCell());
-            } else if ("resdetails2".equals(header.getHeader())) {
+            } else if ("resdetails2".equals(header.getName())) {
                 entry.setResdetails2(cell.getCell());
             }
 

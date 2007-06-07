@@ -59,7 +59,7 @@ public final class HTML {
      * @return string
      */
     public static final String gencomment() {
-        return ("\n<!-- CatalogManager-->\n");
+        return ("\n<!-- FatWire's Headless CatalogManager -->\n");
     }
 
     /**

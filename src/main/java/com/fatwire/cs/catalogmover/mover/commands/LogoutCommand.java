@@ -26,7 +26,7 @@ public class LogoutCommand extends AbstractCatalogMoverCommand implements
         post.addMultipartData("ftcmd", "logout");
         post.addMultipartData("killsession", "true");
 
-        final ResponseStatusCode status = cm.execute(post);
+        final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
         if (status.getResult()) {
             AbstractCatalogMoverCommand.log.info(status.toString());
         } else {

@@ -42,9 +42,26 @@ public class TableData implements Iterable<Row> {
     }
 
     public void addCell(final int row, final int column, final String cell) {
-        cells.put(new Key(row, column),
-                new Cell(row, headers.get(column), cell));
+        Header header = headers.get(column);
+        if (header != null && header.getName().startsWith("url")) {
+            cells.put(new Key(row, column), new Cell(row, headers.get(column),
+                    stripFileNumberFromUpload(cell)));
+
+        } else {
+            cells.put(new Key(row, column), new Cell(row, headers.get(column),
+                    cell));
+        }
         rowCount = Math.max(rowCount, row);
+    }
+
+    private String stripFileNumberFromUpload(String value) {
+        int dot = value.lastIndexOf('.');
+        int comma = value.lastIndexOf(',');
+        if (comma !=-1 && dot > comma) {
+            return value.substring(0, comma)
+                    + value.substring(dot, value.length());
+        }
+        return value;
     }
 
     public void addHeader(final int column, final String header,
@@ -126,7 +143,7 @@ public class TableData implements Iterable<Row> {
 
     public String getTableKey() {
         // first header is the key
-        return headers.get(0).getHeader();
+        return headers.get(0).getName();
     }
 
 }

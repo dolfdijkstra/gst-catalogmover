@@ -2,7 +2,6 @@ package com.fatwire.cs.catalogmover.mover;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 import com.fatwire.cs.catalogmover.mover.commands.MoveCatalogCommand;
 
@@ -11,13 +10,7 @@ public class CatalogMoverTest extends AbstractTest {
     public void testMoveCatalog() throws IOException, CatalogMoverException {
         if (false)
             return;
-        final BaseCatalogMover cm = new CatalogMover();
-
-        cm.setCsPath(URI
-                .create("http://radium.nl.fatwire.com:8080/cs/CatalogManager"));
-        cm.setUsername("fwadmin");
-        cm.setPassword("xceladmin");
-        cm.init();
+        final BaseCatalogMover cm = prepare();
 
         final File f = new File(
                 "C:\\tmp\\support-tools\\trunk\\cs\\src\\main\\Populate\\ElementCatalog.html");

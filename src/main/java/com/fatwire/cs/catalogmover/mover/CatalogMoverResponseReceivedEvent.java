@@ -8,7 +8,7 @@ public class CatalogMoverResponseReceivedEvent extends CatalogMoverEvent {
      */
     private static final long serialVersionUID = 2156377120752609111L;
 
-    private final String body;
+    private final SimpleResponse body;
 
     private final Response response;
 
@@ -19,7 +19,7 @@ public class CatalogMoverResponseReceivedEvent extends CatalogMoverEvent {
     }
 
     public CatalogMoverResponseReceivedEvent(AbstractCatalogMover mover,
-            Response response, String body) {
+            Response response, SimpleResponse body) {
         super(mover);
         this.response = response;
         this.body = body;
@@ -29,7 +29,7 @@ public class CatalogMoverResponseReceivedEvent extends CatalogMoverEvent {
     /**
      * @return the body
      */
-    public String getBody() {
+    public SimpleResponse getBody() {
         return body;
     }
 

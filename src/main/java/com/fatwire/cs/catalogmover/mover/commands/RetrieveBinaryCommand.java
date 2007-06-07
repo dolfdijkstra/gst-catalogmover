@@ -2,10 +2,11 @@ package com.fatwire.cs.catalogmover.mover.commands;
 
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
+import com.fatwire.cs.catalogmover.mover.SimpleResponse;
 import com.fatwire.cs.core.http.Post;
 
 public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
-    private String binary;
+    private byte[] binary;
 
     private final String tablename;
 
@@ -38,8 +39,10 @@ public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("tablekey", tablekey);
         post.addMultipartData("columnname", columnname);
         post.addMultipartData("retrievestatus", "false");
-        binary = cm.executeForResponse(post);
-
+        SimpleResponse response = cm.execute(post);
+        if (response.getStatusCode() == 200) {
+            binary = response.getBody();
+        }
         //        "tablekeyvalue"
         //        /FSIIDetail
         //        "tablekey"
@@ -54,7 +57,7 @@ public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
     /**
      * @return the binary
      */
-    public String getBinary() {
+    public byte[] getBinary() {
         return binary;
     }
 

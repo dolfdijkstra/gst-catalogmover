@@ -124,7 +124,7 @@ public class TableExporter {
         printWriter.println();
 
         printWriter.print("<tr>");
-
+        printWriter.println();
         final int isz = getColumnCount();
         for (int i = 0; i < isz; i++) {
             switch (getType(i)) {
@@ -197,16 +197,16 @@ public class TableExporter {
         return tableData.getRowCount();
     }
 
-    private String getCell(final int rowNum, final int colNum) {
-        return tableData.getCell(rowNum, colNum).getCell();
-    }
+//    private String getCell(final int rowNum, final int colNum) {
+//        return tableData.getCell(rowNum, colNum).getCell();
+//    }
 
     private String getSchema(final int i) {
         return tableData.getHeaders().get(i).getSchema();
     }
 
     private String getHeader(final int i) {
-        return tableData.getHeaders().get(i).getHeader();
+        return tableData.getHeaders().get(i).getName();
     }
 
     private int getType(final int i) {

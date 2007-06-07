@@ -33,7 +33,7 @@ public class CommitCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("aclList", "Browser,SiteGod");
         post.addMultipartData("childtablename0", tempTableName);
         post.addMultipartData("tablename0", tableName);
-        final ResponseStatusCode status = cm.execute(post);
+        final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
         if (status.getResult()) {
             log.info(status.toString());
         }

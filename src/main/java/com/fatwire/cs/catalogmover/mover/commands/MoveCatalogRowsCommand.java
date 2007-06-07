@@ -79,7 +79,7 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
 
             monitor.subTask("Sending " + i + " rows to ContentServer.");
 
-            final ResponseStatusCode status = cm.execute(post);
+            final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
             monitor.worked(i);
             if (log.isTraceEnabled())
                 log.trace(status.toString());
@@ -110,7 +110,7 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
         final int cols = row.getNumberOfColumns();
         for (int i = 0; i < cols; i++) {
             final Header header = row.getHeader(i);
-            final String name = header.getHeader();
+            final String name = header.getName();
             String val = row.getData(i);
             if (val.length() == 0) {
                 continue;

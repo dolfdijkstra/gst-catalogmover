@@ -30,11 +30,12 @@ public class FilteringIterable<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         final Iterator<T> delegateIterator = delegate.iterator();
         return new Iterator<T>() {
+            private T next = null;
             {
                 proceedToNext();
             }
 
-            private T next = null;
+            
 
             public boolean hasNext() {
                 return next != null;
@@ -64,7 +65,7 @@ public class FilteringIterable<T> implements Iterable<T> {
             /**
              * 
              * @param row
-             * @return true if this row does not match a exclude filter, or true if there are no includeFilters or if it matches an include filter pattern.
+             * @return true if this row does not match an exclude filter, or true if there are no includeFilters or if it matches an include filter pattern.
              */
             private boolean match(final T row) {
                 for (Filter<T> filter : excludeFilters) {
