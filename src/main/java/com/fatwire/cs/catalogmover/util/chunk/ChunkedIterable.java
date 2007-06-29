@@ -165,7 +165,11 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
             assert false : "Unsupported operation remove()";
         }
     }
-
+/**
+ * @return an Iterator that iterates over an Iterable with the maximum size of chunkSize
+ * 
+ * @throws IllegalStateException if nothing was consumed of the chunk
+ */
     public Iterator<Iterable<T>> iterator() {
         return new ChunkedIterator(this._iterable.iterator());
     }
