@@ -8,7 +8,7 @@ import com.fatwire.cs.catalogmover.mover.commands.MoveCatalogCommand;
 public class CatalogMoverTest extends AbstractTest {
 
     public void testMoveCatalog() throws IOException, CatalogMoverException {
-        if (false)
+        if (isRemoteDisabled())
             return;
         final BaseCatalogMover cm = prepare();
 

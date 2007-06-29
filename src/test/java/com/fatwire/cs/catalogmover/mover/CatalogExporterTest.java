@@ -6,7 +6,7 @@ import com.fatwire.cs.catalogmover.mover.commands.ExportCatalogCommand;
 public class CatalogExporterTest extends AbstractTest {
 
     public void testElementCatalog() throws CatalogMoverException {
-        if (true)
+        if (isRemoteDisabled())
             return;
         final BaseCatalogMover cm = prepare();
         RemoteCatalog catalog = new RemoteCatalog("ElementCatalog", getExportPath());
@@ -20,7 +20,7 @@ public class CatalogExporterTest extends AbstractTest {
 
     }
     public void testAssetType() throws CatalogMoverException {
-        if (false)
+        if (isRemoteDisabled())
             return;
         final BaseCatalogMover cm = prepare();
         RemoteCatalog catalog = new RemoteCatalog("AssetType", getExportPath());
@@ -34,7 +34,7 @@ public class CatalogExporterTest extends AbstractTest {
 
     }
     public void testMungoBlobs() throws CatalogMoverException {
-        if (false)
+        if (isRemoteDisabled())
             return;
         final BaseCatalogMover cm = prepare();
         RemoteCatalog catalog = new RemoteCatalog("MungoBlobs", getExportPath());

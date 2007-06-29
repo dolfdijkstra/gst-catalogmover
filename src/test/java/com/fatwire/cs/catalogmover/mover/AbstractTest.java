@@ -18,6 +18,9 @@ public abstract class AbstractTest extends TestCase {
     public AbstractTest() {
         super();
     }
+    protected boolean isRemoteDisabled(){
+        return true;
+    }
 
     protected void setUp() throws Exception {
         super.setUp();

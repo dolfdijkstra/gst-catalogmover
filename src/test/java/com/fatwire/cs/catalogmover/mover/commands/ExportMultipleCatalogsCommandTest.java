@@ -20,7 +20,7 @@ public class ExportMultipleCatalogsCommandTest extends AbstractTest {
     }
 
     public void testExecute() throws CatalogMoverException {
-        if (false)
+        if (isRemoteDisabled())
             return;
         final BaseCatalogMover cm = prepare();
         List<String> catalogs = Arrays

@@ -14,7 +14,7 @@ import com.fatwire.cs.catalogmover.mover.commands.FilteringExportCatalogCommand;
 public class FilteringCatalogExporterTest extends AbstractTest {
 
     public void testElementCatalog() throws CatalogMoverException {
-        if (true) {
+        if (isRemoteDisabled()) {
             return;
         }
         final Pattern p = Pattern.compile("WebServices/.*");
@@ -37,7 +37,7 @@ public class FilteringCatalogExporterTest extends AbstractTest {
     }
 
     public void testElementCatalog2() throws CatalogMoverException {
-        if (false) {
+        if (isRemoteDisabled()) {
             return;
         }
 

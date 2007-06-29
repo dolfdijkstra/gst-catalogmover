@@ -17,7 +17,7 @@ public class ExportAllCatalogsCommandTest extends AbstractTest {
     }
 
     public void testExecute() throws CatalogMoverException {
-        if (false)
+        if (isRemoteDisabled())
             return;
         final BaseCatalogMover cm = prepare();
 
