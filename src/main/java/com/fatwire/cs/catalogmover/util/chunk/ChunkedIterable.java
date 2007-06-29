@@ -12,7 +12,7 @@
  * Violation of copyright laws may result in civil liability and
  * criminal penalties.
  */
-package com.fatwire.cs.catalogmover.util;
+package com.fatwire.cs.catalogmover.util.chunk;
 
 import java.util.Iterator;
 
@@ -95,6 +95,12 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
 
         private final Iterator<T> iterator;
 
+        private int progressCount = 0;
+
+        private int lastCount = 0;
+
+        private int chunckCount = 0;
+
         public ChunkedIterator(final Iterator<T> iterator) {
             super();
             this.iterator = iterator;
@@ -117,6 +123,12 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
          * @return Iterable that a chunk of the original iterable
          */
         public Iterable<T> next() {
+            if (chunckCount > 0 && lastCount == progressCount
+                    && iterator.hasNext())
+                throw new IllegalStateException(
+                        "Last iteration did not consume any elements from chunk");
+            chunckCount++;
+            lastCount = progressCount;
             return new Iterable<T>() {
 
                 public Iterator<T> iterator() {
@@ -130,6 +142,7 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
 
                         public T next() {
                             counter++;
+                            progressCount++;
                             return iterator.next();
                         }
 
@@ -156,6 +169,5 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
     public Iterator<Iterable<T>> iterator() {
         return new ChunkedIterator(this._iterable.iterator());
     }
-
 
 }

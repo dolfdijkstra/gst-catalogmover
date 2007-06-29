@@ -12,7 +12,7 @@
  * Violation of copyright laws may result in civil liability and
  * criminal penalties.
  */
-package com.fatwire.cs.catalogmover.util;
+package com.fatwire.cs.catalogmover.util.chunk;
 
 import java.util.Iterator;
 import java.util.List;

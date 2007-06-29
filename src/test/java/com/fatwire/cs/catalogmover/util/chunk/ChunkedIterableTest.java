@@ -1,10 +1,12 @@
-package com.fatwire.cs.catalogmover.util;
+package com.fatwire.cs.catalogmover.util.chunk;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
+
+import com.fatwire.cs.catalogmover.util.chunk.ChunkedIterable;
 
 import junit.framework.TestCase;
 
@@ -28,12 +30,10 @@ public class ChunkedIterableTest extends TestCase {
         int y = 0;
         for (final Iterable<Entry<Integer, String>> i : new ChunkedIterable<Entry<Integer, String>>(
                 l.entrySet(), 10)) {
-            for (@SuppressWarnings("unused")
-            final Entry<Integer, String> u : i) {
+            for (final Entry<Integer, String> u : i) {
                 y++;
             }
-            for (@SuppressWarnings("unused")
-            final Entry<Integer, String> u : i) {
+            for (final Entry<Integer, String> u : i) {
                 y++;
             }
 
@@ -64,4 +64,22 @@ public class ChunkedIterableTest extends TestCase {
         assertEquals("Number of outer iterations is incorrect", chunckSize, j);
         assertEquals("Number of total iterations is incorrect", l.size(), y);
     }
+
+    public void testDidNotConsume() {
+        int chunckSize = 2;
+        final List<Integer> l = new LinkedList<Integer>();
+        for (int i = 0; i < 4; i++) {
+            l.add(i);
+        }
+
+        try {
+            for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l,
+                    chunckSize)) {
+
+            }
+        } catch (Exception e) {
+            assertTrue(e instanceof IllegalStateException);
+        }
+    }
+
 }
