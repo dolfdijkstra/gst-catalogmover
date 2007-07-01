@@ -10,8 +10,6 @@ public abstract class BaseCatalogMover extends AbstractCatalogMover {
 
     public static final int MIRROR_PROTOCOL_VERSION = 3;
 
-    protected String mirrorprotocolversion = null;
-
     private String proxyHost;
 
     private int proxyPort;
