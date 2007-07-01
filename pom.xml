@@ -1,12 +1,26 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
     http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.fatwire.cs.support.tools</groupId>
+    <parent>
+        <groupId>com.fatwire.cs.support.tools</groupId>
+        <artifactId>tools-parent</artifactId>
+        <version>2</version>
+    </parent>
+    <groupId>com.fatwire.cs</groupId>
     <artifactId>catalogmover</artifactId>
     <packaging>jar</packaging>
     <version>1.0.1-SNAPSHOT</version>
     <name>ContentServer CatalogMover</name>
-    <url>http://www.fatwire.com</url>
+    <url>http://www.nl.fatwire.com</url>
+    <scm>
+        <connection>scm:svn:http://d670-1.nl.fatwire.com/svn/support/support-tools/trunk/catalogmover/</connection>
+        <developerConnection>
+            scm:svn:http://d670-1.nl.fatwire.com/svn/support/support-tools/trunk/catalogmover/
+        </developerConnection>
+        <url>http://d670-1.nl.fatwire.com/viewvc/support/support-tools/trunk/catalogmover/</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -54,112 +68,58 @@
             <version>2.4</version>
         </dependency>
     </dependencies>
-    <reporting>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-            </plugin>
-            <!--
-                <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                <configLocation>http://svn.apache.org/repos/asf/maven/plugins/trunk/maven-checkstyle-plugin/src/main/resources/config/maven_checks.xml</configLocation>
-                <headerLocation>http://svn.apache.org/repos/asf/maven/plugins/trunk/maven-checkstyle-plugin/src/main/resources/config/maven-header.txt</headerLocation>
-                </configuration>
-                </plugin>
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <configuration>
-                    <targetJdk>1.5</targetJdk>  
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <links>
-                        <link>http://java.sun.com/j2ee/1.4/docs/api</link>
-                        <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-                        <link>http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_0/</link>
-                        <link>http://jakarta.apache.org/commons/dbcp/apidocs/</link>
-                        <link>http://jakarta.apache.org/commons/fileupload/apidocs/</link>
-                        <link>http://jakarta.apache.org/commons/httpclient/apidocs/</link>
-                        <link>http://jakarta.apache.org/commons/logging/apidocs/</link>
-                        <link>http://jakarta.apache.org/commons/pool/apidocs/</link>
-                        <link>http://www.junit.org/junit/javadoc/</link>
-                        <link>http://logging.apache.org/log4j/docs/api/</link>
-                        <link>http://jakarta.apache.org/regexp/apidocs/</link>
-                        <link>http://jakarta.apache.org/velocity/api/</link>
-                    </links>
+                    <!-- 
+                        <excludes>
+                        <exclude>none</exclude>
+                        </excludes>
+                        <includes>
+                        <include>**/systest/**</include>
+                        </includes>
+                    -->
+                    <systemProperties>
+                        <property>
+                        <!--  disable integration tests -->
+                            <name>it.disable.test</name>
+                            <value>true</value>
+                        </property>
+
+                        <property>
+                            <name>it.url</name>
+                            <value>http://localhost:8080/cs/CatalogManager</value>
+                        </property>
+                        <property>
+                            <name>it.username</name>
+                            <value>fwadmin</value>
+                        </property>
+                        <property>
+                            <name>it.password</name>
+                            <value>xceladmin</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
             </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </reporting>
-    <build>
-        <plugins>
-            <!-- Compile to JDK 1.5 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                    <!-- encoding>ISO-8859-1</encoding-->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <distributionManagement>
-        <site>
-            <id>website</id>
-            <url>scp://d670-1.nl.fatwire.com/var/www/html/projects/${project.groupId}/${project.artifactId}/${project.version}</url>
-        </site>
-        <!-- use the following if you're not using a snapshot version. -->
-        <repository>
-            <id>fatwire-repository</id>
-            <name>FatWire Repository</name>
-            <url>scp://d670-1.nl.fatwire.com/var/www/html/maven2</url>
-        </repository>
-        <!-- use the following if you ARE using a snapshot version. -->
-        <snapshotRepository>
-            <id>fatwire-repository</id>
-            <name>FatWire Repository</name>
-            <url>scp://d670-1.nl.fatwire.com/var/www/html/snapshot-repo</url>
-        </snapshotRepository>
-    </distributionManagement>
     <repositories>
-        <repository>
-            <id>java.net</id>
-            <url>https://maven-repository.dev.java.net/nonav/repository</url>
-            <layout>legacy</layout>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
         <repository>
             <id>nl.fatwire.com</id>
             <url>http://www.nl.fatwire.com/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>d670-1.nl.fatwire.com</id>
-            <url>http://d670-1.nl.fatwire.com/snapshot-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
