@@ -6,8 +6,7 @@ import com.fatwire.cs.catalogmover.mover.MirrorProtocolVersionNotFoundException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.core.http.Post;
 
-public class MirrorGetConfigCommand extends AbstractCatalogMoverCommand
-        implements CatalogMoverCommand {
+public class MirrorGetConfigCommand extends AbstractCatalogMoverCommand {
 
     public MirrorGetConfigCommand(BaseCatalogMover cm) {
         super(cm);
