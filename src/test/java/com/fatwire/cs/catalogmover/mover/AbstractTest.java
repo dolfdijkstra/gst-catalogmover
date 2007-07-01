@@ -18,8 +18,9 @@ public abstract class AbstractTest extends TestCase {
     public AbstractTest() {
         super();
     }
-    protected boolean isRemoteDisabled(){
-        return true;
+
+    protected boolean isRemoteDisabled() {
+        return !"false".equals(System.getProperty("it.disable.test"));
     }
 
     protected void setUp() throws Exception {
@@ -41,11 +42,12 @@ public abstract class AbstractTest extends TestCase {
 
     protected BaseCatalogMover prepare() {
         final BaseCatalogMover cm = new CatalogExporter();
-
-        cm.setCsPath(URI
-                .create("http://radium.nl.fatwire.com:8080/cs/CatalogManager"));
-        cm.setUsername("firstsite");
-        cm.setPassword("firstsite");
+        String url = System.getProperty("it.url");
+        String username = System.getProperty("it.username");
+        String password = System.getProperty("it.password");
+        cm.setCsPath(URI.create(url));
+        cm.setUsername(username);
+        cm.setPassword(password);
         cm.init();
         return cm;
 
