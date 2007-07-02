@@ -3,8 +3,6 @@ package com.fatwire.cs.catalogmover.mover;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,19 +74,6 @@ public class LocalCatalog {
 
     public Iterable<Row> getRows() {
         return table;
-    }
-
-    public Iterable<Row> getRows1() {
-        final int rowCount = 1;//table.getRowCount();
-
-        final List<Row> rows = new ArrayList<Row>();
-        for (int rowNum = 0; rowNum < rowCount; rowNum++) {
-
-            rows.add(new Row(table, rowNum));
-
-        }
-        return rows;
-
     }
 
     public String getName() {
