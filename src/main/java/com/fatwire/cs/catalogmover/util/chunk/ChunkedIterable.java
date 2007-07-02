@@ -70,7 +70,7 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
     private final Iterable<T> _iterable;
 
     /**
-     * Creates an instance given a List and chunk size.
+     * Creates an instance given an iterable and chunk size.
      * 
      * @param iterable
      *            Original iterable
