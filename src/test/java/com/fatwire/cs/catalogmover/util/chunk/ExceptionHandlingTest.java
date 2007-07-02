@@ -82,6 +82,7 @@ public class ExceptionHandlingTest extends TestCase {
             this.handler = handler;
         }
 
+        @SuppressWarnings("unchecked")
         void doWork(Iterable<ICommand> iterable) {
             for (ICommand i : iterable) {
 
