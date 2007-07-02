@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fatwire.cs.catalogmover.catalogs.Header;
 import com.fatwire.cs.catalogmover.catalogs.Row;
 import com.fatwire.cs.catalogmover.catalogs.SortingRowIterable;
@@ -22,6 +25,8 @@ import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.catalogmover.util.StringUtils;
 
 public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
+    private final static Log log = LogFactory
+    .getLog(CatalogMoverCommand.class);
 
     private TableData tableData;
 
@@ -54,7 +59,7 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
             return;
         }
         monitor.subTask("downloading " + catalog.getTableName());
-        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(cm,
+        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(catalogMover,
                 catalog.getTableName());
 
         selectRowsCommand.execute();
@@ -117,12 +122,12 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                     monitor.subTask("downloading " + tableKeyValue + " for "
                             + catalog.getTableName());
                     final RetrieveBinaryCommand command = new RetrieveBinaryCommand(
-                            cm, catalog.getTableName(), tableKey,
+                            catalogMover, catalog.getTableName(), tableKey,
                             tableKeyValue, headerName);
                     command.execute();
 
                     try {
-                        AbstractCatalogMoverCommand.log.debug(row
+                        log.debug(row
                                 .getData(headerName));
                         monitor.subTask("saving " + tableKeyValue + " for "
                                 + catalog.getTableName());

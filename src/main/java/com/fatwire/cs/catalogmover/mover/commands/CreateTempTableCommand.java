@@ -34,7 +34,7 @@ public class CreateTempTableCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("tablekey", tableKey);
         post.addMultipartData("aclList", "Browser,SiteGod");
         post.addMultipartData("parenttablename", tableName);
-        final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
+        final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
         if (status.getResult()) {
             //tablename is in the status message
             ttTableName = status.getParams().get("tablename");

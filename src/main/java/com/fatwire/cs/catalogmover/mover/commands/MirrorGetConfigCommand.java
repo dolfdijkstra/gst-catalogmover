@@ -24,9 +24,9 @@ public class MirrorGetConfigCommand extends AbstractCatalogMoverCommand {
         final Post post = this.prepareNewPost();
         post.addMultipartData("ftcmd", "mirrorgetconfig");
 
-        final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
+        final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
         if (status.getResult()) {
-            cm.setMirrorProtocolVersion(status.getParams().get(
+            catalogMover.verifyMirrorProtocolVersion(status.getParams().get(
                     "mirrorprotocolversion"));
         } else {
             throw new MirrorProtocolVersionNotFoundException();

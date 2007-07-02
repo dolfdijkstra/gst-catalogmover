@@ -1,8 +1,6 @@
 package com.fatwire.cs.catalogmover.mover;
 
-import com.fatwire.cs.core.http.HostConfig;
-import com.fatwire.cs.core.http.HttpAccess;
-import com.fatwire.cs.core.http.RequestState;
+import com.fatwire.cs.core.http.Post;
 
 public abstract class BaseCatalogMover extends AbstractCatalogMover {
 
@@ -10,54 +8,26 @@ public abstract class BaseCatalogMover extends AbstractCatalogMover {
 
     public static final int MIRROR_PROTOCOL_VERSION = 3;
 
-    private String proxyHost;
-
-    private int proxyPort;
-
-    public BaseCatalogMover() {
-        super();
+    public BaseCatalogMover(final Transporter transporter) {
+        super(transporter);
     }
 
-    public void setMirrorProtocolVersion(String version)
+    public void verifyMirrorProtocolVersion(final String version)
             throws MirrorProtocolVersionMisMatchException {
         if (log.isDebugEnabled()) {
             log.debug("mirrorprotocolversion: " + version);
         }
-        if (Integer.parseInt(version) != MIRROR_PROTOCOL_VERSION) {
+        if (Integer.parseInt(version) != BaseCatalogMover.MIRROR_PROTOCOL_VERSION) {
             throw new MirrorProtocolVersionMisMatchException();
         }
 
     }
 
-    public void init() {
-        if (proxyHost == null) {
-            final HostConfig hc = new HostConfig(getCsPath());
-            httpAccess = new HttpAccess(hc);
-        } else {
-            final HostConfig hc = new HostConfig(getCsPath().getHost(),
-                    getCsPath().getPort(), getCsPath().getScheme(), proxyHost,
-                    proxyPort);
-            httpAccess = new HttpAccess(hc);
-
-        }
-        final RequestState state = new RequestState();
-        httpAccess.setState(state);
-
-    }
-
-    public void close() {
-        httpAccess.close();
-
-    }
-
-    public void setProxyHost(String host) {
-        this.proxyHost = host;
-
-    }
-
-    public void setProxyPort(int port) {
-        this.proxyPort = port;
-
+    public Post prepareNewPost() {
+        final Post post = super.prepareNewPost();
+        post.addMultipartData("cs.contenttype",
+                BaseCatalogMover.DEFAULT_CONTENT_TYPE);
+        return post;
     }
 
 }

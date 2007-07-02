@@ -4,34 +4,27 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
-import com.fatwire.cs.core.http.HttpAccess;
 import com.fatwire.cs.core.http.HttpAccessException;
 import com.fatwire.cs.core.http.Post;
 import com.fatwire.cs.core.http.Response;
 
 public abstract class AbstractCatalogMover {
-
-    private URI csPath;
-
-    protected HttpAccess httpAccess;
+    private final Transporter transporter;
 
     protected final Log log = LogFactory.getLog(getClass());
 
-    private String password;
-
-    private String username;
 
     private final CopyOnWriteArrayList<CatalogMoverEventListener> eventListeners = new CopyOnWriteArrayList<CatalogMoverEventListener>();
 
-    public AbstractCatalogMover() {
+    public AbstractCatalogMover(final Transporter transporter) {
         super();
+        this.transporter=transporter;
     }
 
     public ResponseStatusCode executeForResponseStatusCode(final Post post)
@@ -46,6 +39,13 @@ public abstract class AbstractCatalogMover {
 
         return status;
 
+    }
+    protected Post prepareNewPost() {
+        final Post post = new Post();
+        post.setUrl(transporter.getCsPath().getPath());
+        post.addMultipartData("authusername", transporter.getUsername());
+        post.addMultipartData("authpassword", transporter.getPassword());
+        return post;
     }
 
     public String executeForResponse(final Post post)
@@ -70,10 +70,11 @@ public abstract class AbstractCatalogMover {
     public SimpleResponse execute(final Post post)
             throws CatalogMoverException {
 
-        final long t = System.currentTimeMillis();
+       
         Response response = null;
         try {
-            response = httpAccess.execute(post);
+            final long t = System.currentTimeMillis();
+            response = transporter.execute(post);
             if (log.isTraceEnabled()) {
                 log.trace("request took "
                         + Long.toString(System.currentTimeMillis() - t)
@@ -120,43 +121,8 @@ public abstract class AbstractCatalogMover {
         }
 
     }
-
-    /**
-     * @return the csPath
-     */
-    public URI getCsPath() {
-        return csPath;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * 
-     * 
-     * @param csPath the full path to CatalogManager for instance http://localhost:8080/cs/CatalogManager
-     */
-    public void setCsPath(final URI csPath) {
-        this.csPath = csPath;
-    }
-
-    public void setPassword(final String password) {
-        this.password = password;
-    }
-
-    public void setUsername(final String username) {
-        this.username = username;
+    public void close() {
+        transporter.close();
     }
 
     protected boolean hasListeners() {

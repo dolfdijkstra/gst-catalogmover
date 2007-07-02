@@ -1,11 +1,17 @@
 package com.fatwire.cs.catalogmover.mover.commands;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.core.http.Post;
 
 public class CommitCommand extends AbstractCatalogMoverCommand {
+    private final static Log log = LogFactory
+    .getLog(CommitCommand.class);
+
     String tableName;
 
     String tempTableName;
@@ -27,13 +33,13 @@ public class CommitCommand extends AbstractCatalogMoverCommand {
     }
 
     protected void commit() throws CatalogMoverException {
-        final Post post = this.prepareNewPost();
+        final Post post = prepareNewPost();
         post.addMultipartData("ftcmd", "committables");
         post.addMultipartData("tablekey0", tableKey);
         post.addMultipartData("aclList", "Browser,SiteGod");
         post.addMultipartData("childtablename0", tempTableName);
         post.addMultipartData("tablename0", tableName);
-        final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
+        final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
         if (status.getResult()) {
             log.info(status.toString());
         }

@@ -25,7 +25,7 @@ public class SelectRowsCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("ftcmd", "selectrow(s)");
         post.addMultipartData("tablename", tableName);
 
-        response = cm.executeForResponse(post);
+        response = catalogMover.executeForResponse(post);
 
     }
 

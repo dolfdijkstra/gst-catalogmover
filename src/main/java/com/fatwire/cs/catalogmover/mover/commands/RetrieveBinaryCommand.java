@@ -39,7 +39,7 @@ public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("tablekey", tablekey);
         post.addMultipartData("columnname", columnname);
         post.addMultipartData("retrievestatus", "false");
-        SimpleResponse response = cm.execute(post);
+        SimpleResponse response = catalogMover.execute(post);
         if (response.getStatusCode() == 200) {
             binary = response.getBody();
         }

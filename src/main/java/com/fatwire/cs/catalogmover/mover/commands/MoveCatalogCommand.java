@@ -22,15 +22,15 @@ public class MoveCatalogCommand extends AbstractCatalogMoverCommand {
         monitor.beginTask("Moving rows to ContentServer for catalog "
                 + catalog.getName(), -1);
 
-        new MirrorGetConfigCommand(cm).execute();
+        new MirrorGetConfigCommand(catalogMover).execute();
         CreateTempTableCommand tempTableCommand = new CreateTempTableCommand(
-                cm, catalog.getName(), catalog.getTableKey());
+                catalogMover, catalog.getName(), catalog.getTableKey());
         tempTableCommand.execute();
         MoveCatalogRowsCommand moveCatalogRowsCommand = new MoveCatalogRowsCommand(
-                cm, tempTableCommand.getTempTableName(), catalog.getTableKey(),
+                catalogMover, tempTableCommand.getTempTableName(), catalog.getTableKey(),
                 catalog.getUploadPath(), catalog.getRows(), monitor);
         moveCatalogRowsCommand.execute();
-        CommitCommand commitCommand = new CommitCommand(cm,catalog.getName(),tempTableCommand.getTempTableName(), catalog.getTableKey());
+        CommitCommand commitCommand = new CommitCommand(catalogMover,catalog.getName(),tempTableCommand.getTempTableName(), catalog.getTableKey());
         commitCommand.commit();
 
     }

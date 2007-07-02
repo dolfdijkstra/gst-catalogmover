@@ -41,14 +41,16 @@ public abstract class AbstractTest extends TestCase {
     }
 
     protected BaseCatalogMover prepare() {
-        final BaseCatalogMover cm = new CatalogExporter();
+        
         String url = System.getProperty("it.url");
         String username = System.getProperty("it.username");
         String password = System.getProperty("it.password");
-        cm.setCsPath(URI.create(url));
-        cm.setUsername(username);
-        cm.setPassword(password);
-        cm.init();
+        HttpAccessTransporter transporter = new HttpAccessTransporter();
+        transporter.setCsPath(URI.create(url));
+        transporter.setUsername(username);
+        transporter.setPassword(password);
+        transporter.init();
+        final BaseCatalogMover cm = new CatalogExporter(transporter);
         return cm;
 
     }

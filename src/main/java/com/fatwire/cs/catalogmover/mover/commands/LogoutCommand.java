@@ -1,5 +1,8 @@
 package com.fatwire.cs.catalogmover.mover.commands;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.mover.NoStatusInResponseException;
@@ -8,6 +11,8 @@ import com.fatwire.cs.core.http.Post;
 
 public class LogoutCommand extends AbstractCatalogMoverCommand implements
         CatalogMoverCommand {
+    protected final static Log log = LogFactory
+    .getLog(LogoutCommand.class);
 
     public LogoutCommand(final BaseCatalogMover cm) {
         super(cm);
@@ -22,13 +27,12 @@ public class LogoutCommand extends AbstractCatalogMoverCommand implements
      */
     protected void logout() throws CatalogMoverException {
         final Post post = prepareNewPost();
-        post.setUrl(cm.getCsPath().getPath());
         post.addMultipartData("ftcmd", "logout");
         post.addMultipartData("killsession", "true");
 
-        final ResponseStatusCode status = cm.executeForResponseStatusCode(post);
+        final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
         if (status.getResult()) {
-            AbstractCatalogMoverCommand.log.info(status.toString());
+            log.info(status.toString());
         } else {
             throw new NoStatusInResponseException();
         }

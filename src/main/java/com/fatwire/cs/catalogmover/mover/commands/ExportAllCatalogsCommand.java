@@ -49,7 +49,7 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
      */
     protected void readSystemInfo() throws CatalogMoverException {
         monitor.subTask("downloading SystemInfo");
-        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(cm,
+        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(catalogMover,
                 "SystemInfo");
 
         selectRowsCommand.execute();
@@ -84,7 +84,7 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
      */
     protected void doAllCatalogs() throws CatalogMoverException {
         AbstractCatalogMoverCommand command = new ExportMultipleCatalogsCommand(
-                cm, catalogs, exportPath, monitor);
+                catalogMover, catalogs, exportPath, monitor);
         command.execute();
 
     }

@@ -2,6 +2,9 @@ package com.fatwire.cs.catalogmover.mover.commands;
 
 import java.io.File;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fatwire.cs.catalogmover.catalogs.Header;
 import com.fatwire.cs.catalogmover.catalogs.Row;
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
@@ -15,6 +18,9 @@ import com.fatwire.cs.core.http.Post;
 
 public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
         implements CatalogMoverCommand {
+    private final static Log log = LogFactory
+    .getLog(CatalogMoverCommand.class);
+
     private final class RowProcessor implements Processor<Row, CatalogMoverException> {
         private Post post;
 
@@ -37,7 +43,7 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
         
             monitor.subTask("Sending " + i + " rows to ContentServer.");
         
-            final ResponseStatusCode status = cm
+            final ResponseStatusCode status = catalogMover
                     .executeForResponseStatusCode(post);
             monitor.worked(i);
             if (log.isTraceEnabled())

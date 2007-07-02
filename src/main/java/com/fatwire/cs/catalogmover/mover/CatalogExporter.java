@@ -6,4 +6,8 @@ package com.fatwire.cs.catalogmover.mover;
  */
 public class CatalogExporter extends BaseCatalogMover {
 
+    public CatalogExporter(final Transporter transporter) {
+        super(transporter);
+    }
+
 }
