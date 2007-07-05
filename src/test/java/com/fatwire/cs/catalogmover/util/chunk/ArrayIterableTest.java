@@ -1,5 +1,8 @@
 package com.fatwire.cs.catalogmover.util.chunk;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import junit.framework.TestCase;
 
 public class ArrayIterableTest extends TestCase {
@@ -20,8 +23,21 @@ public class ArrayIterableTest extends TestCase {
             count++;
             assertEquals("foo", s);
         }
-        assertEquals(2,count);
+        assertEquals(2, count);
 
+    }
+
+    public void testNoSuchElement() {
+        String[] data = new String[] { "foo" };
+        Iterator<String> i = new ArrayIterable<String>(data).iterator();
+        i.next();
+        boolean found = false;
+        try {
+            i.next();
+        } catch (NoSuchElementException e) {
+            found = true;
+        }
+        assertTrue(found);
     }
 
 }

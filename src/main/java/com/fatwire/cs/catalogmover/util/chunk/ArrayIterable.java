@@ -1,6 +1,7 @@
 package com.fatwire.cs.catalogmover.util.chunk;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Makes an Iterable from an array, so an array can be used in methods that expect an iterable
@@ -27,6 +28,7 @@ public class ArrayIterable<T> implements Iterable<T> {
             }
 
             public T next() {
+                if (count >= array.length) throw new NoSuchElementException();
                 return array[count++];
             }
 
