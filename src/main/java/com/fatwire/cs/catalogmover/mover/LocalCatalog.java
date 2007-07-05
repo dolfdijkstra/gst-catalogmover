@@ -58,8 +58,12 @@ public class LocalCatalog {
         final StringBuilder builder = new StringBuilder();
         final char[] c = new char[2048];
         int i = 0;
-        while ((i = reader.read(c)) != -1) {
-            builder.append(c, 0, i);
+        try {
+            while ((i = reader.read(c)) != -1) {
+                builder.append(c, 0, i);
+            }
+        } finally {
+            reader.close();
         }
         return builder.toString();
     }
