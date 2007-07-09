@@ -55,8 +55,7 @@ public class ChunkedIterableTest extends TestCase {
         int y = 0;
         for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l,
                 chunckSize)) {
-            for (@SuppressWarnings("unused")
-            final Integer u : i) {
+            for (final Integer u : i) {
                 y++;
             }
             j++;
