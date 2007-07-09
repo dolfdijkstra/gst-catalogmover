@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.URI;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import junit.framework.TestCase;
 
@@ -41,7 +43,7 @@ public abstract class AbstractTest extends TestCase {
     }
 
     protected BaseCatalogMover prepare() {
-        
+
         String url = System.getProperty("it.url");
         String username = System.getProperty("it.username");
         String password = System.getProperty("it.password");
@@ -49,8 +51,8 @@ public abstract class AbstractTest extends TestCase {
         transporter.setCsPath(URI.create(url));
         transporter.setUsername(username);
         transporter.setPassword(password);
-        transporter.init();
-        final BaseCatalogMover cm = new CatalogExporter(transporter);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        final BaseCatalogMover cm = new CatalogExporter(transporter,executor);
         return cm;
 
     }
