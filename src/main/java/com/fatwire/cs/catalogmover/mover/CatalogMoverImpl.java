@@ -1,5 +1,7 @@
 package com.fatwire.cs.catalogmover.mover;
 
+import java.util.concurrent.ExecutorService;
+
 
 /**
  * @author Dolf.Dijkstra
@@ -7,7 +9,7 @@ package com.fatwire.cs.catalogmover.mover;
  */
 public class CatalogMoverImpl extends BaseCatalogMover {
 
-    public CatalogMoverImpl(final Transporter transporter) {
-        super(transporter);
+    public CatalogMoverImpl(final Transporter transporter, ExecutorService executor) {
+        super(transporter, executor);
     }
 }

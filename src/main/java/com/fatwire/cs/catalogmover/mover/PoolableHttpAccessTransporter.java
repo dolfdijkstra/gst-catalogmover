@@ -7,13 +7,24 @@ import com.fatwire.cs.core.http.Post;
 import com.fatwire.cs.core.http.RequestState;
 import com.fatwire.cs.core.http.Response;
 
-public class HttpAccessTransporter extends AbstractHttpAccessTransporter
+/**
+ * this class holds HttpAccess in a ThreadLocal and shares the RequestState
+ * @author Dolf.Dijkstra
+ * @since Jul 4, 2007
+ */
+
+public class PoolableHttpAccessTransporter extends AbstractHttpAccessTransporter
         implements Transporter {
-    private HttpAccess httpAccess;
+    private final RequestState state = new RequestState();
 
+    private final ThreadLocal<HttpAccess> httpAccess = new ThreadLocal<HttpAccess>() {
 
-    protected HttpAccess getHttpAccess() {
-        if (httpAccess == null) {
+        /* (non-Javadoc)
+         * @see java.lang.ThreadLocal#initialValue()
+         */
+        @Override
+        protected HttpAccess initialValue() {
+            HttpAccess httpAccess;
             if (getProxyHost() == null) {
                 final HostConfig hc = new HostConfig(getCsPath());
                 httpAccess = new HttpAccess(hc);
@@ -24,20 +35,23 @@ public class HttpAccessTransporter extends AbstractHttpAccessTransporter
                 httpAccess = new HttpAccess(hc);
 
             }
-            final RequestState state = new RequestState();
-            httpAccess.setState(state);
 
+            httpAccess.setState(state);
+            return httpAccess;
         }
-        return httpAccess;
+
+    };
+
+
+    HttpAccess getHttpAccess() {
+        return httpAccess.get();
     }
 
-    @Override
     public void close() {
         getHttpAccess().close();
     }
 
-    @Override
-    public synchronized Response execute(Post post) throws HttpAccessException {
+    public Response execute(Post post) throws HttpAccessException {
         return getHttpAccess().execute(post);
     }
 

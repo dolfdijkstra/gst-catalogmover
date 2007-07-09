@@ -15,11 +15,11 @@ import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 
 public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
-    public static String SYSTEM_INFO = "SystemInfo";
+    public static final String SYSTEM_INFO = "SystemInfo";
 
-    public static String SYSTEM_ASSETS = "SystemAssets";
+    public static final String SYSTEM_ASSETS = "SystemAssets";
 
-    public static String[] excludes = new String[] { SYSTEM_INFO, SYSTEM_ASSETS };
+    static final String[] excludes = new String[] { SYSTEM_INFO, SYSTEM_ASSETS };
 
     final List<String> catalogs;
 
