@@ -1,5 +1,11 @@
 package com.fatwire.cs.catalogmover.util.chunk;
 
+/**
+ * @author Dolf.Dijkstra
+ * @since Jul 5, 2007
+ * @param <T>
+ * @param <E>
+ */
 public interface IterableProcessor<T,E extends Exception> {
 
     /**
@@ -9,7 +15,7 @@ public interface IterableProcessor<T,E extends Exception> {
      * @param iterable
      * @throws E 
      */
-    public void process(Iterable<T> innerIterable) throws E;
+    void process(Iterable<T> innerIterable) throws E;
     
 
 

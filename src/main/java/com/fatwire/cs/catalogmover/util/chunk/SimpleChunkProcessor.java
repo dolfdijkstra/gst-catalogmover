@@ -1,10 +1,20 @@
 package com.fatwire.cs.catalogmover.util.chunk;
 
+/**
+ * @author Dolf.Dijkstra
+ * @since Jul 5, 2007
+ * @param <T>
+ * @param <E>
+ */
 public class SimpleChunkProcessor<T, E extends Exception> implements ChunkProcessor<T, E> {
 
     protected final int size;
     protected final Iterable<T> iterable;
 
+    /**
+     * @param iterable
+     * @param size
+     */
     public SimpleChunkProcessor(final Iterable<T> iterable, final int size) {
             this.size = size;
             this.iterable = iterable;
