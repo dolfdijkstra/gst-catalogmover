@@ -118,6 +118,7 @@ public abstract class AbstractCatalogMover {
             if (response != null) {
                 response.close();
             }
+            //transporter.close();
         }
 
     }

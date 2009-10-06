@@ -2,9 +2,12 @@ package com.fatwire.cs.catalogmover.mover.commands;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,8 +31,6 @@ import com.fatwire.cs.catalogmover.util.StringUtils;
 public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
     private final static Log log = LogFactory.getLog(CatalogMoverCommand.class);
 
-    
-
     private final RemoteCatalog catalog;
 
     private final IProgressMonitor monitor;
@@ -37,9 +38,6 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
     private final List<Filter<Row>> includeFilters;
 
     private final List<Filter<Row>> excludeFilters;
-
-    
-    
 
     public FilteringExportCatalogCommand(final BaseCatalogMover cm,
             final RemoteCatalog catalog,
@@ -91,16 +89,16 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                     tableData.getDatabaseType(), false);
             monitor.subTask("saving " + catalog.getTableName());
             catalog.writeCatalog(b.toString());
-            doUrlFields(tableData,rows);
+            doUrlFields(tableData, rows);
         } catch (final IOException e) {
             throw new CatalogMoverException(e.getMessage(), e);
         }
         monitor.worked(1);
-        
 
     }
 
-    protected void doUrlFields(final TableData tableData,final Iterable<Row> rows) throws CatalogMoverException {
+    protected void doUrlFields(final TableData tableData,
+            final Iterable<Row> rows) throws CatalogMoverException {
 
         final Set<String> urlFields = new HashSet<String>();
         for (final Header header : tableData.getHeaders().values()) {
@@ -113,6 +111,7 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
             return;
         }
         final String tableKey = tableData.getTableKey();
+        List<Future<String>> futures = new LinkedList<Future<String>>();
         for (final Row row : rows) {
             final String tableKeyValue = row.getData(tableKey);
             if (monitor.isCanceled()) {
@@ -122,7 +121,7 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
             for (final String headerName : urlFields) {
                 //no need to download if no value provided 
                 if (StringUtils.goodString(row.getData(headerName))) {
-                    catalogMover.submit(new Callable<String>() {
+                    Callable<String> callable = new Callable<String>() {
 
                         public String call() throws CatalogMoverException {
                             monitor.subTask("downloading " + tableKeyValue
@@ -146,13 +145,25 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                                 throw new CatalogMoverException(e.getMessage(),
                                         e);
                             }
+                            monitor.worked(1);
                             return "dummy value";
                         }
 
-                    });
+                    };
+                    futures.add(catalogMover.submit(callable));
                 }
             }
-            monitor.worked(1);
+            
         }
+        for (Future<String> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException e) {
+                throw new CatalogMoverException(e);
+            } catch (ExecutionException e) {
+                throw new CatalogMoverException(e);
+            }
+        }
+
     }
 }

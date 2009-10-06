@@ -19,7 +19,12 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
     public static final String SYSTEM_ASSETS = "SystemAssets";
 
-    static final String[] excludes = new String[] { SYSTEM_INFO, SYSTEM_ASSETS };
+    public static final String SYSTEM_PAGE_CACHE = "SystemPageCache";
+
+    public static final String SYSTEM_ITEM_CACHE = "SystemItemCache";
+
+    static final String[] excludes = new String[] { SYSTEM_INFO, SYSTEM_ASSETS,
+            SYSTEM_PAGE_CACHE, SYSTEM_ITEM_CACHE };
 
     final List<String> catalogs;
 
@@ -49,8 +54,8 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
      */
     protected void readSystemInfo() throws CatalogMoverException {
         monitor.subTask("downloading SystemInfo");
-        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(catalogMover,
-                "SystemInfo");
+        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(
+                catalogMover, "SystemInfo");
 
         selectRowsCommand.execute();
         final String response = selectRowsCommand.getResponse();

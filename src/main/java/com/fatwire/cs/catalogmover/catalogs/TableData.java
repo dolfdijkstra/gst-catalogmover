@@ -58,10 +58,10 @@ public class TableData implements Iterable<Row> {
         int dot = value.lastIndexOf('.');
         int comma = value.lastIndexOf(',');
         if (comma !=-1 && dot > comma) {
-            return value.substring(0, comma)
-                    + value.substring(dot, value.length());
+            return (value.substring(0, comma)
+                    + value.substring(dot, value.length())).replace('\\', '/');
         }
-        return value;
+        return value.replace('\\', '/');
     }
 
     public void addHeader(final int column, final String header,

@@ -6,6 +6,9 @@ public class StdOutProgressMonitor implements IProgressMonitor {
     public void beginTask(final String string, final int i) {
         task = string;
         System.out.println("begin task " + string);
+        if (string ==null){
+            new Exception().printStackTrace();
+        }
 
     }
 
@@ -18,7 +21,7 @@ public class StdOutProgressMonitor implements IProgressMonitor {
     }
 
     public void worked(final int i) {
-        System.out.println(" task " + task + " has worked " + i);
+        //System.out.println(" task " + task + " has worked " + i);
     }
 
 }

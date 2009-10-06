@@ -53,7 +53,9 @@ public class RemoteCatalog {
 
     protected void write(final String string, final File file)
             throws IOException {
-        file.getParentFile().mkdirs();
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
         final FileWriter writer = new FileWriter(file);
         try {
             writer.write(string);
@@ -71,7 +73,9 @@ public class RemoteCatalog {
 
     protected void write(final byte[] bytes, final File file)
             throws IOException {
-        file.getParentFile().mkdirs();
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
         final OutputStream writer = new FileOutputStream(file);
         try {
             writer.write(bytes);
