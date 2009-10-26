@@ -142,7 +142,7 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                                         .getData(headerName));
 
                             } catch (final IOException e) {
-                                throw new CatalogMoverException(e.getMessage(),
+                                throw new CatalogMoverException(e.getMessage() +" on " + catalog.getTableName() +" key:" + tableKeyValue,
                                         e);
                             }
                             monitor.worked(1);

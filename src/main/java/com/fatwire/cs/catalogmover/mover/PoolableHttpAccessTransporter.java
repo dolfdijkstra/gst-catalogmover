@@ -2,11 +2,12 @@ package com.fatwire.cs.catalogmover.mover;
 
 import java.io.IOException;
 
+import org.apache.commons.httpclient.Executor;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.lang.StringUtils;
 
 import com.fatwire.cs.core.http.HostConfig;
 import com.fatwire.cs.core.http.HttpAccess;
@@ -34,13 +35,17 @@ public class PoolableHttpAccessTransporter extends
         protected HttpAccess initialValue() {
             HttpAccess httpAccess;
             final RequestState state = new RequestState();
-            if (getProxyHost() == null) {
+            if (StringUtils.isBlank(getProxyHost())) {
                 final HostConfig hc = new HostConfig(getCsPath());
                 httpAccess = new HttpAccess(hc);
             } else {
                 final HostConfig hc = new HostConfig(getCsPath().getHost(),
                         getCsPath().getPort(), getCsPath().getScheme(),
                         getProxyHost(), getProxyPort());
+                if (!StringUtils.isBlank(getProxyUsername())) {
+                    state.setProxyCredentials(RequestState.AuthScope.ANY,
+                            getProxyUsername(), getProxyPassword());
+                }
                 httpAccess = new MyHttpAccess(hc);
 
             }
@@ -68,7 +73,10 @@ public class PoolableHttpAccessTransporter extends
     }
 
     public Response execute(Post post) throws HttpAccessException {
-        return getHttpAccess().execute(post);
+        final HttpAccess ha = getHttpAccess();
+
+        final Response r = ha.execute(post);
+        return r;
     }
 
     class MyHttpAccess extends HttpAccess {
@@ -80,15 +88,20 @@ public class PoolableHttpAccessTransporter extends
         /* (non-Javadoc)
          * @see com.fatwire.cs.core.http.HttpAccess#executeMethod(org.apache.commons.httpclient.HttpClient, org.apache.commons.httpclient.HttpMethod, org.apache.commons.httpclient.HostConfiguration)
          */
+
+        protected void executeMethod(HttpClient client, HttpMethod method,
+                HostConfiguration hostconfig) throws IOException {
+            client.setHttpConnectionManager(httpConnectionManager);
+            new Executor().executeMethod(client, method, hostconfig);
+        }
+
+        /* (non-Javadoc)
+         * @see com.fatwire.cs.core.http.HttpAccess#close()
+         */
         @Override
-        protected void executeMethod(HttpClient client, HttpMethod meth,
-                HostConfiguration hc) throws IOException {
-            if (client.getHttpConnectionManager() != httpConnectionManager) {
-                System.out.println(Thread.currentThread().getName()
-                        + "  setting connection manager");
-                client.setHttpConnectionManager(httpConnectionManager);
-            }
-            super.executeMethod(client, meth, hc);
+        public void close() {
+            System.out.println("close");
+            super.close();
         }
 
     }

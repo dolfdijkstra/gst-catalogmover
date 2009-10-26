@@ -39,19 +39,15 @@ public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("tablekey", tablekey);
         post.addMultipartData("columnname", columnname);
         post.addMultipartData("retrievestatus", "false");
+        long t = System.nanoTime();
         SimpleResponse response = catalogMover.execute(post);
         if (response.getStatusCode() == 200) {
             binary = response.getBody();
+        } else {
+            long t1= (System.nanoTime()-t)/1000;
+            throw new CatalogMoverException("retrievebinary for " + tablename
+                    + " " + tablekey + "=" + tablekeyvalue +" returned a status " + response.getStatusCode() + " after " + t1 +" micro seconds");
         }
-        //        "tablekeyvalue"
-        //        /FSIIDetail
-        //        "tablekey"
-        //        elementname
-        //        "columnname"
-        //        url
-        //        "retrievestatus"
-        //        true
-
     }
 
     /**

@@ -1,10 +1,13 @@
 package com.fatwire.cs.catalogmover.app;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,35 +47,59 @@ public class Main {
     /**
      * @param args
      * @throws CatalogMoverException 
+     * @throws IOException 
      */
-    public static void main(String[] args) throws CatalogMoverException {
+    public static void main(String[] a) throws CatalogMoverException,
+            IOException {
         initLog4j();
-        //        URI uri = URI.create("http://localhost:8080/cs/CatalogManager");
-        //        String username = "ContentServer";
-        //        String password = "password";
-        //        File populateDirectory = new File("C:\\TEMP\\support-tools-3.7");
-        //        String pattern ="Support/.*";
-        if (args.length !=5) throw new IllegalArgumentException("arguments should be 5, uri,username, password,populateDirectory,pattern ");
-        URI uri = URI.create(args[0]);
-        String username = args[1];
-        String password = args[2];
-        File populateDirectory = new File(args[3]);
-        String pattern = args[4];
-        doMain(uri, username, password, populateDirectory, pattern);
 
-    }
+        Properties p = new Properties();
+        FileInputStream in = new FileInputStream(a[0]);
+        p.load(in);
+        in.close();
 
-    public static void doMain(URI uri, String username, String password,
-            File populateDirectory, String pattern)
-            throws CatalogMoverException {
+        URI uri = URI.create(p.getProperty("host"));
+        String username = p.getProperty("user");
+        String password = p.getProperty("password");
+        File populateDirectory = new File(p.getProperty("target"));
+        System.out.println(populateDirectory);
+        String pattern = p.getProperty("pattern");
 
+        String proxyHost = null;
+        int proxyPort = 8080;
+
+        proxyHost = p.getProperty("proxy_host");
+        proxyPort = Integer.parseInt(p.getProperty("proxy_port", "8080"));
+
+        String proxyUsername = null;
+        String proxyPassword = null;
+        proxyUsername = p.getProperty("proxy_user");
+        proxyPassword = p.getProperty("proxy_password");
         Set<String> catalogs = new HashSet<String>();
         catalogs.add("ElementCatalog");
         catalogs.add("SiteCatalog");
         catalogs.add("SystemSQL");
         //catalogs.add("SystemInfo");
 
-        int size = 10;
+        try {
+            doMain(uri, username, password, proxyHost, proxyPort,
+                    proxyUsername, proxyPassword, populateDirectory, pattern,
+                    catalogs);
+            System.out.println("done");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+    }
+ 
+
+    public static void doMain(URI uri, String username, String password,
+            String proxyHost, int proxyPort, String proxyUsername,
+            String proxyPassword, File populateDirectory, String pattern,
+            Set<String> catalogs) throws CatalogMoverException {
+
+        int size = 3;
         MultiThreadedHttpConnectionManager conManager = HttpClientUtil
                 .getConnectionManager(size);
         final PoolableHttpAccessTransporter transporter = new PoolableHttpAccessTransporter(
@@ -81,6 +108,11 @@ public class Main {
         transporter.setCsPath(uri);
         transporter.setUsername(username);
         transporter.setPassword(password);
+        transporter.setProxyHost(proxyHost);
+        transporter.setProxyPort(proxyPort);
+
+        transporter.setProxyUsername(proxyUsername);
+        transporter.setProxyPassword(proxyPassword);
         //transporter.init();
         ExecutorService executor = Executors.newFixedThreadPool(size);
         final CatalogExporter cm = new CatalogExporter(transporter, executor);
@@ -110,7 +142,6 @@ public class Main {
                 }
 
             }
-
         } finally {
             cm.close();
             executor.shutdown();

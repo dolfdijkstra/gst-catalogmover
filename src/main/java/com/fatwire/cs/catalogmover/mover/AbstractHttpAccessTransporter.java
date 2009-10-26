@@ -2,6 +2,8 @@ package com.fatwire.cs.catalogmover.mover;
 
 import java.net.URI;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fatwire.cs.core.http.HttpAccessException;
 import com.fatwire.cs.core.http.Post;
 import com.fatwire.cs.core.http.Response;
@@ -9,15 +11,22 @@ import com.fatwire.cs.core.http.Response;
 public abstract class AbstractHttpAccessTransporter {
 
     private URI csPath;
+
     private String password;
+
     private String username;
+
     private String proxyHost;
+
+    private String proxyPassword;
+
+    private String proxyUsername;
+
     private int proxyPort;
 
     public abstract Response execute(Post post) throws HttpAccessException;
 
     public abstract void close();
-
 
     public AbstractHttpAccessTransporter() {
         super();
@@ -62,7 +71,7 @@ public abstract class AbstractHttpAccessTransporter {
      * @param proxyHost the proxyHost to set
      */
     public void setProxyHost(String proxyHost) {
-        this.proxyHost = proxyHost;
+        this.proxyHost = StringUtils.isBlank(proxyHost)?null:proxyHost;
     }
 
     /**
@@ -91,6 +100,35 @@ public abstract class AbstractHttpAccessTransporter {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * @return the proxyPassword
+     */
+    public String getProxyPassword() {
+        return proxyPassword;
+    }
+
+    /**
+     * @param proxyPassword the proxyPassword to set
+     */
+    public void setProxyPassword(String proxyPassword) {
+        this.proxyPassword = StringUtils.isBlank(proxyPassword)?null:proxyPassword;
+    }
+
+    /**
+     * @return the proxyUsername
+     */
+    public String getProxyUsername() {
+        return proxyUsername;
+    }
+
+    /**
+     * @param proxyUsername the proxyUsername to set
+     */
+    public void setProxyUsername(String proxyUsername) {
+        
+        this.proxyUsername = StringUtils.isBlank(proxyUsername)?null:proxyUsername;
     }
 
 }
