@@ -1,6 +1,6 @@
 package com.fatwire.cs.catalogmover.mover;
 
-import com.fatwire.cs.core.http.Response;
+import com.fatwire.cs.catalogmover.http.Response;
 
 public class CatalogMoverResponseReceivedEvent extends CatalogMoverEvent {
     /**

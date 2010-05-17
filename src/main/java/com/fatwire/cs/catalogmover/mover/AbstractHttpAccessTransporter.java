@@ -4,9 +4,8 @@ import java.net.URI;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.fatwire.cs.core.http.HttpAccessException;
-import com.fatwire.cs.core.http.Post;
-import com.fatwire.cs.core.http.Response;
+import com.fatwire.cs.catalogmover.http.Post;
+import com.fatwire.cs.catalogmover.http.Response;
 
 public abstract class AbstractHttpAccessTransporter {
 
@@ -24,7 +23,7 @@ public abstract class AbstractHttpAccessTransporter {
 
     private int proxyPort;
 
-    public abstract Response execute(Post post) throws HttpAccessException;
+    public abstract Response execute(Post post) throws Exception;
 
     public abstract void close();
 

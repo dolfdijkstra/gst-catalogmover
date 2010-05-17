@@ -1,9 +1,9 @@
 package com.fatwire.cs.catalogmover.mover.commands;
 
+import com.fatwire.cs.catalogmover.http.Post;
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
-import com.fatwire.cs.core.http.Post;
 
 public class CreateTempTableCommand extends AbstractCatalogMoverCommand {
 

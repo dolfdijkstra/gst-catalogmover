@@ -1,6 +1,6 @@
 package com.fatwire.cs.catalogmover.mover;
 
-public class CatalogMoverException extends Exception {
+public class CatalogMoverException extends RuntimeException {
 
     /**
      * 

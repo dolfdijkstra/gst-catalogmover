@@ -9,22 +9,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.fatwire.cs.catalogmover.http.Post;
+import com.fatwire.cs.catalogmover.http.Response;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
-import com.fatwire.cs.core.http.HttpAccessException;
-import com.fatwire.cs.core.http.Post;
-import com.fatwire.cs.core.http.Response;
 
 public abstract class AbstractCatalogMover {
     private final Transporter transporter;
 
     protected final Log log = LogFactory.getLog(getClass());
 
-
     private final CopyOnWriteArrayList<CatalogMoverEventListener> eventListeners = new CopyOnWriteArrayList<CatalogMoverEventListener>();
 
     public AbstractCatalogMover(final Transporter transporter) {
         super();
-        this.transporter=transporter;
+        this.transporter = transporter;
     }
 
     public ResponseStatusCode executeForResponseStatusCode(final Post post)
@@ -40,6 +38,7 @@ public abstract class AbstractCatalogMover {
         return status;
 
     }
+
     protected Post prepareNewPost() {
         final Post post = new Post();
         post.setUrl(transporter.getCsPath().getPath());
@@ -67,10 +66,8 @@ public abstract class AbstractCatalogMover {
 
     }
 
-    public SimpleResponse execute(final Post post)
-            throws CatalogMoverException {
+    public SimpleResponse execute(final Post post) throws CatalogMoverException {
 
-       
         Response response = null;
         try {
             final long t = System.currentTimeMillis();
@@ -104,26 +101,25 @@ public abstract class AbstractCatalogMover {
                         in.close();
                     }
                 }
+
                 if (hasListeners()) {
                     fireEvent(new CatalogMoverResponseReceivedEvent(this,
                             response, simpleResponse));
                 }
             }
             return simpleResponse;
-        } catch (final HttpAccessException e) {
-            throw new CatalogMoverException(e);
         } catch (final IOException e) {
             throw new CatalogMoverException(e);
         } finally {
             if (response != null) {
                 response.close();
             }
-            //transporter.close();
         }
 
     }
+
     public void close() {
-        transporter.close();
+        //transporter.close();
     }
 
     protected boolean hasListeners() {

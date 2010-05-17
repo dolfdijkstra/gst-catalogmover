@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.fatwire.cs.catalogmover.catalogs.Header;
 import com.fatwire.cs.catalogmover.catalogs.Row;
+import com.fatwire.cs.catalogmover.http.Post;
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.mover.IProgressMonitor;
@@ -14,7 +15,6 @@ import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.catalogmover.util.StringUtils;
 import com.fatwire.cs.catalogmover.util.chunk.BaseChunkProcessor;
 import com.fatwire.cs.catalogmover.util.chunk.Processor;
-import com.fatwire.cs.core.http.Post;
 
 public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
         implements CatalogMoverCommand {

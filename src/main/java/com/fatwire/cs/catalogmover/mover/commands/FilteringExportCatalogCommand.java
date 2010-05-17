@@ -28,6 +28,15 @@ import com.fatwire.cs.catalogmover.mover.ResponseStatusFailureException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.catalogmover.util.StringUtils;
 
+
+/**
+ * Export command for a ContentSever Catalog that uses an include and exclude Filter for selecting the rows to export.
+ * 
+ * @author Dolf.Dijkstra
+ * @since Nov 18, 2009
+ * @see CatalogMoverCommand
+ * @see Filter
+ */
 public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
     private final static Log log = LogFactory.getLog(CatalogMoverCommand.class);
 

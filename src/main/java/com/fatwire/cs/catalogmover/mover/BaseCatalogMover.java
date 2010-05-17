@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import com.fatwire.cs.core.http.Post;
+import com.fatwire.cs.catalogmover.http.Post;
 
 public abstract class BaseCatalogMover extends AbstractCatalogMover {
 

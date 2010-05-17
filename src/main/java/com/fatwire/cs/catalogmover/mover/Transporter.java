@@ -2,13 +2,12 @@ package com.fatwire.cs.catalogmover.mover;
 
 import java.net.URI;
 
-import com.fatwire.cs.core.http.HttpAccessException;
-import com.fatwire.cs.core.http.Post;
-import com.fatwire.cs.core.http.Response;
+import com.fatwire.cs.catalogmover.http.Post;
+import com.fatwire.cs.catalogmover.http.Response;
 
 public interface Transporter {
 
-    Response execute(Post post) throws HttpAccessException;
+    Response execute(Post post) throws CatalogMoverException;
 
     void close();
 
