@@ -60,13 +60,14 @@ public class Main {
     public static void main(String[] a) throws CatalogMoverException,
             IOException {
         if (a.length < 1) {
-            throw new IllegalArgumentException(
-                    "You need to add a properties file name as the first argument");
+            System.err
+                    .println("You need to add a properties file name as the first argument");
+            System.exit(-1);
         }
         initLog4j();
 
         Properties p = new Properties();
-        if (a[0].length() == 1) {
+        if (a.length == 1) {
             FileInputStream in = new FileInputStream(a[0]);
             p.load(in);
             in.close();
@@ -84,6 +85,15 @@ public class Main {
 
             }
         }
+        if (StringUtils.isBlank(p.getProperty("host")))
+            throw new IllegalArgumentException(
+                    "The parameter 'host' can not be blank");
+        if (StringUtils.isBlank(p.getProperty("user")))
+            throw new IllegalArgumentException(
+                    "The parameter 'user' can not be blank");
+        if (StringUtils.isBlank(p.getProperty("password")))
+            throw new IllegalArgumentException(
+                    "The parameter 'password' can not be blank");
 
         URI uri = URI.create(p.getProperty("host"));
         String username = p.getProperty("user");
@@ -150,7 +160,9 @@ public class Main {
 
             state.setProxyCredentials(AuthScope.ANY, credentials);
         }
-        ProxyHost proxyHost1 = StringUtils.isNotBlank(proxyHost)? new ProxyHost(proxyHost,proxyPort):null;
+        ProxyHost proxyHost1 = StringUtils.isNotBlank(proxyHost) ? new ProxyHost(
+                proxyHost, proxyPort)
+                : null;
         HttpClientTransporter transporter = new HttpClientTransporter(
                 conManager, state, proxyHost1);
 
