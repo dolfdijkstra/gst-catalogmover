@@ -1,7 +1,6 @@
 package com.fatwire.cs.catalogmover.http;
 
 import java.io.IOException;
-import java.net.URI;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
@@ -17,7 +16,11 @@ import com.fatwire.cs.catalogmover.mover.Transporter;
 public class HttpClientTransporter extends AbstractHttpAccessTransporter
         implements Transporter {
 
-    HttpClient client;
+    private HttpClient client;
+
+    public HttpClientTransporter() {
+        this.client = new HttpClient();
+    }
 
     /**
      * @param state 
@@ -43,6 +46,7 @@ public class HttpClientTransporter extends AbstractHttpAccessTransporter
         PostMethod pm = post.createMethod();
         try {
             int status = client.executeMethod(pm);
+            
         } catch (HttpException e) {
             throw new CatalogMoverException(e.getMessage(), e);
         } catch (IOException e) {

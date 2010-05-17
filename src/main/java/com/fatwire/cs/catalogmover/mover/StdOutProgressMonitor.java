@@ -17,7 +17,8 @@ public class StdOutProgressMonitor implements IProgressMonitor {
     }
 
     public void subTask(final String string) {
-        System.out.println("sub task " + string);
+        //System.out.println("sub task " + string);
+        System.out.print(".");
     }
 
     public void worked(final int i) {

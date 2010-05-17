@@ -76,6 +76,7 @@ public class RemoteCatalog {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
+        if (bytes.length==0) log.warn("Writing zero bytes for "+ file.toString());
         final OutputStream writer = new FileOutputStream(file);
         try {
             writer.write(bytes);

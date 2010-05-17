@@ -8,8 +8,8 @@ public class HttpClientUtil {
         MultiThreadedHttpConnectionManager connectionManager;
         connectionManager = new MultiThreadedHttpConnectionManager();
         connectionManager.getParams().setConnectionTimeout(60000);
-        connectionManager.getParams().setMaxTotalConnections(size);
-        connectionManager.getParams().setDefaultMaxConnectionsPerHost(size);
+        connectionManager.getParams().setMaxTotalConnections(size+1);
+        connectionManager.getParams().setDefaultMaxConnectionsPerHost(size+1);
 
         return connectionManager;
     }

@@ -42,12 +42,14 @@ public class Main {
 
     static void initLog4j() {
         ConsoleAppender appender = new ConsoleAppender();
-        appender.setLayout(new PatternLayout("%-5p [%.10t]: %m%n"));
+        appender.setLayout(new PatternLayout("%-5p %c [%.10t]: %m%n"));
         appender.setName("console");
         appender.activateOptions();
         Logger.getRootLogger().addAppender(appender);
         Logger.getRootLogger().setLevel(Level.INFO);
         Logger.getLogger("com.fatwire").setLevel(Level.INFO);
+        Logger.getLogger("httpclient.wire.header").setLevel(Level.INFO);
+        //Logger.getLogger(org.apache.commons.httpclient.HttpConnection.class).setLevel(Level.TRACE);
     }
 
     /**

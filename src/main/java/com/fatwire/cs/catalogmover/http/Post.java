@@ -2,6 +2,7 @@ package com.fatwire.cs.catalogmover.http;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,24 +17,25 @@ public class Post {
 
     public static final String DEFAULT_FILE_ENCODING = Charset.defaultCharset()
             .name();
+    public static final String DEFAULT_CHARSET = "UTF-8";
 
     public static final String DEFAULT_CONTENT_TYPE = "application/octet-stream";
 
-    private String url;
+    private URI url;
 
     private final Map<String, Part> _multiPartMap = new HashMap<String, Part>();
 
-    public void setUrl(String path) {
+    public void setUrl(URI path) {
         url = path;
 
     }
 
     public void addMultipartData(String name, String value) {
-        _multiPartMap.put(name, new StringPart(name, value));
+        _multiPartMap.put(name, new StringPart(name, value,DEFAULT_CHARSET));
 
     }
 
-    public String getUrl() {
+    public URI getUrl() {
         return url;
     }
 
@@ -50,24 +52,8 @@ public class Post {
 
     }
 
-    /**
-     * File f = new File("/path/fileToUpload.txt");
-      PostMethod filePost = new PostMethod("http://host/some_path");
-      Part[] parts = {
-          new StringPart("param_name", "value"),
-          new FilePart(f.getName(), f)
-      };
-      filePost.setRequestEntity(
-          new MultipartRequestEntity(parts, filePost.getParams())
-          );
-      HttpClient client = new HttpClient();
-      int status = client.executeMethod(filePost);
-
-     * 
-     */
-
     public PostMethod createMethod() {
-        PostMethod pm = new PostMethod(getUrl());
+        PostMethod pm = new PostMethod(getUrl().toASCIIString());
 
         pm
                 .setRequestEntity(new MultipartRequestEntity(_multiPartMap.values().toArray(new Part[_multiPartMap.size()]), pm

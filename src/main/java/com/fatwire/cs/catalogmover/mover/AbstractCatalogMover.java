@@ -41,7 +41,7 @@ public abstract class AbstractCatalogMover {
 
     protected Post prepareNewPost() {
         final Post post = new Post();
-        post.setUrl(transporter.getCsPath().getPath());
+        post.setUrl(transporter.getCsPath());
         post.addMultipartData("authusername", transporter.getUsername());
         post.addMultipartData("authpassword", transporter.getPassword());
         return post;
@@ -60,7 +60,7 @@ public abstract class AbstractCatalogMover {
             }
 
         } else {
-            throw new IllegalResponseStatusException(post.getUrl(), response
+            throw new IllegalResponseStatusException(post.getUrl().toASCIIString(), response
                     .getStatusCode());
         }
 

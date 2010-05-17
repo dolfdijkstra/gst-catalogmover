@@ -28,7 +28,6 @@ import com.fatwire.cs.catalogmover.mover.ResponseStatusFailureException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.catalogmover.util.StringUtils;
 
-
 /**
  * Export command for a ContentSever Catalog that uses an include and exclude Filter for selecting the rows to export.
  * 
@@ -141,7 +140,8 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                             command.execute();
 
                             try {
-                                log.debug(row.getData(headerName));
+                                if (log.isDebugEnabled())
+                                    log.debug(row.getData(headerName));
                                 monitor.subTask("saving " + tableKeyValue
                                         + " for " + catalog.getTableName());
 
@@ -151,8 +151,9 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                                         .getData(headerName));
 
                             } catch (final IOException e) {
-                                throw new CatalogMoverException(e.getMessage() +" on " + catalog.getTableName() +" key:" + tableKeyValue,
-                                        e);
+                                throw new CatalogMoverException(e.getMessage()
+                                        + " on " + catalog.getTableName()
+                                        + " key:" + tableKeyValue, e);
                             }
                             monitor.worked(1);
                             return "dummy value";
@@ -162,7 +163,7 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
                     futures.add(catalogMover.submit(callable));
                 }
             }
-            
+
         }
         for (Future<String> future : futures) {
             try {

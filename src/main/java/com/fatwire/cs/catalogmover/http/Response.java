@@ -21,7 +21,7 @@ public class Response {
     }
 
     public String getResponseEncoding() throws IOException {
-        return pm.getResponseBodyAsString();
+        return pm.getResponseCharSet();
     }
 
     public InputStream getResponseBodyAsStream() throws IOException {

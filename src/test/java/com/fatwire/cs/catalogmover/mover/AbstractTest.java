@@ -14,6 +14,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
+import com.fatwire.cs.catalogmover.http.HttpClientTransporter;
+
 public abstract class AbstractTest extends TestCase {
     private static String tmpdir;
 
@@ -47,7 +49,7 @@ public abstract class AbstractTest extends TestCase {
         String url = System.getProperty("it.url");
         String username = System.getProperty("it.username");
         String password = System.getProperty("it.password");
-        HttpAccessTransporter transporter = new HttpAccessTransporter();
+        HttpClientTransporter transporter = new HttpClientTransporter();
         transporter.setCsPath(URI.create(url));
         transporter.setUsername(username);
         transporter.setPassword(password);
