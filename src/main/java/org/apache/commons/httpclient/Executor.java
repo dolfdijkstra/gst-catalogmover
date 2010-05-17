@@ -23,6 +23,7 @@ public class Executor {
 
         HttpMethodDirector methodDirector = new HttpMethodDirector(
                 client.getHttpConnectionManager(), hostconfig, client.getParams(), state);
+        
         methodDirector.executeMethod(method);
         method.getStatusCode();
     }
