@@ -51,7 +51,7 @@ public class TableData implements Iterable<Row> {
             cells.put(new Key(row, column), new Cell(row, headers.get(column),
                     cell));
         }
-        rowCount = Math.max(rowCount, row);
+        rowCount = Math.max(rowCount, row+1);
     }
 
     private String stripFileNumberFromUpload(String value) {
@@ -109,7 +109,7 @@ public class TableData implements Iterable<Row> {
     }
 
     public int getRowCount() {
-        return rowCount + 1;
+        return rowCount;
     }
 
     public boolean isTracked() {
