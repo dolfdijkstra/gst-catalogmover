@@ -182,9 +182,14 @@ public class Main {
                 command.execute();
 
             } else {
-                final List<Filter<Row>> includeFilters = new ArrayList<Filter<Row>>();
-                includeFilters.add(new PatternBasedIdColumnRowFilter(Pattern
-                        .compile(pattern)));
+                List<Filter<Row>> includeFilters = null;
+                if (StringUtils.isNotBlank(pattern)) {
+                    includeFilters = new ArrayList<Filter<Row>>();
+
+                    includeFilters.add(new PatternBasedIdColumnRowFilter(
+                            Pattern.compile(pattern)));
+                }
+
                 for (String name : catalogs) {
                     monitor.beginTask("Exporting " + name, -1);
                     RemoteCatalog rc = new RemoteCatalog(name,
