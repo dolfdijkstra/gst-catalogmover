@@ -9,7 +9,7 @@ public interface Transporter {
 
     Response execute(Post post) throws CatalogMoverException;
 
-    void close();
+    //void close();
 
     /**
      * 
