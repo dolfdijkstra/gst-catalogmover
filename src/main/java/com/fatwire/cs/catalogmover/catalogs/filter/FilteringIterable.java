@@ -7,9 +7,9 @@ import java.util.List;
 public class FilteringIterable<T> implements Iterable<T> {
     private final Iterable<T> delegate;
 
-    private List<Filter<T>> includeFilters = Collections.emptyList();
+    private List<Filter<T>> includeFilters;
 
-    private List<Filter<T>> excludeFilters = Collections.emptyList();;
+    private List<Filter<T>> excludeFilters;
 
     public FilteringIterable(final Iterable<T> delegate,
             final List<Filter<T>> includeFilters,
@@ -17,13 +17,11 @@ public class FilteringIterable<T> implements Iterable<T> {
         super();
         this.delegate = delegate;
 
-        if (includeFilters != null) {
-            this.includeFilters = includeFilters;
+        this.includeFilters = includeFilters != null ? includeFilters
+                : Collections.<Filter<T>> emptyList();
 
-        }
-        if (excludeFilters != null) {
-            this.excludeFilters = excludeFilters;
-        }
+        this.excludeFilters = excludeFilters != null ? excludeFilters
+                : Collections.<Filter<T>> emptyList();
 
     }
 
@@ -34,8 +32,6 @@ public class FilteringIterable<T> implements Iterable<T> {
             {
                 proceedToNext();
             }
-
-            
 
             public boolean hasNext() {
                 return next != null;
@@ -53,7 +49,6 @@ public class FilteringIterable<T> implements Iterable<T> {
             }
 
             private void proceedToNext() {
-
                 next = null;
                 while (delegateIterator.hasNext() && next == null) {
                     final T r = delegateIterator.next();
