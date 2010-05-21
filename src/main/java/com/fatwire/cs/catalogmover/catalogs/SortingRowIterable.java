@@ -11,9 +11,6 @@ public class SortingRowIterable implements Iterable<Row> {
 
     public SortingRowIterable(final Iterable<Row> delegate) {
         this(delegate, new RowComparator());
-        for (Row row : delegate) {
-            sorted.add(row);
-        }
     }
 
     public SortingRowIterable(final Iterable<Row> delegate,
