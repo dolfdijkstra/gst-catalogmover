@@ -19,12 +19,10 @@ public class LocalCatalogDiffer implements Iterable<Row> {
      * @param catalog1
      * @param catalog2
      */
-    public LocalCatalogDiffer(final LocalCatalog catalog1,
-            final LocalCatalog catalog2) {
+    public LocalCatalogDiffer(final LocalCatalog catalog1, final LocalCatalog catalog2) {
         super();
         if (!catalog1.getName().equals(catalog2.getName()))
-            throw new IllegalArgumentException(
-                    "Catalogs don't have the same name");
+            throw new IllegalArgumentException("Catalogs don't have the same name");
         this.catalog1 = catalog1;
         this.catalog2 = catalog2;
     }
@@ -34,9 +32,8 @@ public class LocalCatalogDiffer implements Iterable<Row> {
      * 
      */
     public Iterator<Row> iterator() {
-        return new DiffIterator<Row>(new SortingRowIterable(catalog1.getRows(),comparator)
-                .iterator(), new SortingRowIterable(catalog2.getRows(),comparator)
-                .iterator(), comparator);
+        return new DiffIterator<Row>(new SortingRowIterable(catalog1.getRows(), comparator).iterator(),
+                new SortingRowIterable(catalog2.getRows(), comparator).iterator(), comparator);
 
     }
 

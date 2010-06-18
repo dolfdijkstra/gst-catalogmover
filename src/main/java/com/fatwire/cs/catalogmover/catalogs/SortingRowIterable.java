@@ -13,8 +13,7 @@ public class SortingRowIterable implements Iterable<Row> {
         this(delegate, new RowComparator());
     }
 
-    public SortingRowIterable(final Iterable<Row> delegate,
-            Comparator<Row> comparator) {
+    public SortingRowIterable(final Iterable<Row> delegate, Comparator<Row> comparator) {
         sorted = new TreeSet<Row>(comparator);
         for (Row row : delegate) {
             sorted.add(row);

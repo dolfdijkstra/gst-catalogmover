@@ -9,6 +9,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class Response {
 
     final PostMethod pm;
+
     /**
      * @param pm
      */
@@ -31,7 +32,7 @@ public class Response {
 
     public void close() {
         pm.releaseConnection();
-        
+
     }
 
     /**

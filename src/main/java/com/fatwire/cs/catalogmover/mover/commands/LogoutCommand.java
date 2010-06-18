@@ -9,10 +9,8 @@ import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.mover.NoStatusInResponseException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 
-public class LogoutCommand extends AbstractCatalogMoverCommand implements
-        CatalogMoverCommand {
-    protected final static Log log = LogFactory
-    .getLog(LogoutCommand.class);
+public class LogoutCommand extends AbstractCatalogMoverCommand implements CatalogMoverCommand {
+    protected final static Log log = LogFactory.getLog(LogoutCommand.class);
 
     public LogoutCommand(final BaseCatalogMover cm) {
         super(cm);

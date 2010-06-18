@@ -15,8 +15,7 @@ import org.apache.commons.httpclient.methods.multipart.StringPart;
 
 public class Post {
 
-    public static final String DEFAULT_FILE_ENCODING = Charset.defaultCharset()
-            .name();
+    public static final String DEFAULT_FILE_ENCODING = Charset.defaultCharset().name();
     public static final String DEFAULT_CHARSET = "UTF-8";
 
     public static final String DEFAULT_CONTENT_TYPE = "application/octet-stream";
@@ -31,7 +30,7 @@ public class Post {
     }
 
     public void addMultipartData(String name, String value) {
-        _multiPartMap.put(name, new StringPart(name, value,DEFAULT_CHARSET));
+        _multiPartMap.put(name, new StringPart(name, value, DEFAULT_CHARSET));
 
     }
 
@@ -41,10 +40,8 @@ public class Post {
 
     public void addMultipartData(String name, String value, String absolutePath) {
         try {
-            _multiPartMap
-                    .put(name, new FilePart(name, value,
-                            new File(absolutePath), DEFAULT_CONTENT_TYPE,
-                            DEFAULT_FILE_ENCODING));
+            _multiPartMap.put(name, new FilePart(name, value, new File(absolutePath), DEFAULT_CONTENT_TYPE,
+                    DEFAULT_FILE_ENCODING));
         } catch (FileNotFoundException e) {
 
             throw new java.lang.RuntimeException(e.getMessage(), e);
@@ -55,9 +52,8 @@ public class Post {
     public PostMethod createMethod() {
         PostMethod pm = new PostMethod(getUrl().toASCIIString());
 
-        pm
-                .setRequestEntity(new MultipartRequestEntity(_multiPartMap.values().toArray(new Part[_multiPartMap.size()]), pm
-                        .getParams()));
+        pm.setRequestEntity(new MultipartRequestEntity(_multiPartMap.values().toArray(new Part[_multiPartMap.size()]),
+                pm.getParams()));
         return pm;
 
     }

@@ -12,8 +12,7 @@ public class Header {
 
     private final int type;
 
-    Header(final int column, final String name, final String schema,
-            final int type) {
+    Header(final int column, final String name, final String schema, final int type) {
         this.column = column;
         this.name = name;
         this.schema = schema;

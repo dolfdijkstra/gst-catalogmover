@@ -4,7 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Makes an Iterable from an array, so an array can be used in methods that expect an iterable
+ * Makes an Iterable from an array, so an array can be used in methods that
+ * expect an iterable
  * 
  * @author Dolf.Dijkstra
  * @since Jun 29, 2007
@@ -28,13 +29,13 @@ public class ArrayIterable<T> implements Iterable<T> {
             }
 
             public T next() {
-                if (count >= array.length) throw new NoSuchElementException();
+                if (count >= array.length)
+                    throw new NoSuchElementException();
                 return array[count++];
             }
 
             public void remove() {
-                throw new UnsupportedOperationException(
-                        "Remove is not supported.");
+                throw new UnsupportedOperationException("Remove is not supported.");
 
             }
 

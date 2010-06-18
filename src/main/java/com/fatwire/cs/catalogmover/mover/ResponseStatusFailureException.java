@@ -15,17 +15,15 @@ public class ResponseStatusFailureException extends CatalogMoverException {
     /**
      * 
      */
-    public ResponseStatusFailureException(final String message,
-            final ResponseStatusCode status) {
-        super(message + " reason: " + status.getReason() +", errorID: " + status.getErrorID());
+    public ResponseStatusFailureException(final String message, final ResponseStatusCode status) {
+        super(message + " reason: " + status.getReason() + ", errorID: " + status.getErrorID());
         this.status = status;
     }
 
     /**
      * @param cause
      */
-    public ResponseStatusFailureException(final String message,
-            final ResponseStatusCode status, final Throwable cause) {
+    public ResponseStatusFailureException(final String message, final ResponseStatusCode status, final Throwable cause) {
         super(message + " reason: " + status.getReason(), cause);
         this.status = status;
     }

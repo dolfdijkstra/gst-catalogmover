@@ -12,14 +12,12 @@ public class CatalogMoverResponseReceivedEvent extends CatalogMoverEvent {
 
     private final Response response;
 
-    public CatalogMoverResponseReceivedEvent(AbstractCatalogMover mover,
-            Response response) {
+    public CatalogMoverResponseReceivedEvent(AbstractCatalogMover mover, Response response) {
         this(mover, response, null);
 
     }
 
-    public CatalogMoverResponseReceivedEvent(AbstractCatalogMover mover,
-            Response response, SimpleResponse body) {
+    public CatalogMoverResponseReceivedEvent(AbstractCatalogMover mover, Response response, SimpleResponse body) {
         super(mover);
         this.response = response;
         this.body = body;

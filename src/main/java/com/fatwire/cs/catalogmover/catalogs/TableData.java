@@ -44,28 +44,24 @@ public class TableData implements Iterable<Row> {
     public void addCell(final int row, final int column, final String cell) {
         Header header = headers.get(column);
         if (header != null && header.getName().startsWith("url")) {
-            cells.put(new Key(row, column), new Cell(row, headers.get(column),
-                    stripFileNumberFromUpload(cell)));
+            cells.put(new Key(row, column), new Cell(row, headers.get(column), stripFileNumberFromUpload(cell)));
 
         } else {
-            cells.put(new Key(row, column), new Cell(row, headers.get(column),
-                    cell));
+            cells.put(new Key(row, column), new Cell(row, headers.get(column), cell));
         }
-        rowCount = Math.max(rowCount, row+1);
+        rowCount = Math.max(rowCount, row + 1);
     }
 
     private String stripFileNumberFromUpload(String value) {
         int dot = value.lastIndexOf('.');
         int comma = value.lastIndexOf(',');
-        if (comma !=-1 && dot > comma) {
-            return (value.substring(0, comma)
-                    + value.substring(dot, value.length())).replace('\\', '/');
+        if (comma != -1 && dot > comma) {
+            return (value.substring(0, comma) + value.substring(dot, value.length())).replace('\\', '/');
         }
         return value.replace('\\', '/');
     }
 
-    public void addHeader(final int column, final String header,
-            final String schema, final int value) {
+    public void addHeader(final int column, final String header, final String schema, final int value) {
         headers.put(column, new Header(column, header, schema, value));
     }
 

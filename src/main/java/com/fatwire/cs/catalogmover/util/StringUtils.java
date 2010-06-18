@@ -19,16 +19,14 @@ public class StringUtils {
         return (s != null) && (s.length() > 0);
     }
 
-    public static final Collection<String> arguments(final String cmd,
-            final int sep) {
+    public static final Collection<String> arguments(final String cmd, final int sep) {
         final byte data[] = { (byte) '\0' };
         data[0] = (byte) sep;
         final String str = new String(data);
         return StringUtils.arguments(cmd, str);
     }
 
-    public static final List<String> arguments(final String cmd,
-            final String sep) {
+    public static final List<String> arguments(final String cmd, final String sep) {
         final List<String> v = new LinkedList<String>();
         StringUtils.arguments(v, cmd, sep);
         return v;
@@ -40,11 +38,9 @@ public class StringUtils {
     //
     // StringTokenizer doesn't work since it requires a
     // token and this doesn't
-    public static final Collection<String> arguments(
-            final Collection<String> v, final String cmd, final String sep) {
+    public static final Collection<String> arguments(final Collection<String> v, final String cmd, final String sep) {
         try {
-            final StringTokenizer tokenizer = new StringTokenizer(cmd, sep,
-                    false);
+            final StringTokenizer tokenizer = new StringTokenizer(cmd, sep, false);
             while (tokenizer.hasMoreTokens()) {
                 // tokenizer returns true always at least
                 // once, so watch out for dead string
@@ -54,13 +50,10 @@ public class StringUtils {
                 }
             }
         } catch (final NoSuchElementException exception) {
-            LogFactory.getLog(StringUtils.class).error(
-                    "NoSuchElementException creating a list from " + cmd,
-                    exception);
+            LogFactory.getLog(StringUtils.class).error("NoSuchElementException creating a list from " + cmd, exception);
         } catch (final StringIndexOutOfBoundsException exception) {
-            LogFactory.getLog(StringUtils.class).error(
-                    "StringIndexOutOfBoundsException creating a list from "
-                            + cmd, exception);
+            LogFactory.getLog(StringUtils.class).error("StringIndexOutOfBoundsException creating a list from " + cmd,
+                    exception);
         }
         return v;
     }
@@ -83,14 +76,16 @@ public class StringUtils {
 
     /**
      * Build a map of parameters given input in the form of "a=b&c=d..."
-     *
-     * @param inputParam in The input string containing the parameters.
-     * @param map        The output map of key/value pairs
-     * @param bDecode    true to indicate that decoding is desired
+     * 
+     * @param inputParam
+     *            in The input string containing the parameters.
+     * @param map
+     *            The output map of key/value pairs
+     * @param bDecode
+     *            true to indicate that decoding is desired
      * @since 4.0
      */
-    public static final void seedTo(final String inputParam,
-            final Map<String, String> map, final boolean bDecode) {
+    public static final void seedTo(final String inputParam, final Map<String, String> map, final boolean bDecode) {
         if (StringUtils.emptyString(inputParam)) {
             return;
         }
@@ -140,19 +135,15 @@ public class StringUtils {
 
     }
 
-    private static final String PLATFORM_DEFAULT_CHARSET = Charset
-            .defaultCharset().name();
+    private static final String PLATFORM_DEFAULT_CHARSET = Charset.defaultCharset().name();
 
-    private static final URLCodec APACHE_COMMONS_CODEC = new URLCodec(
-            StringUtils.PLATFORM_DEFAULT_CHARSET);
+    private static final URLCodec APACHE_COMMONS_CODEC = new URLCodec(StringUtils.PLATFORM_DEFAULT_CHARSET);
 
     private static String decode(final String n) {
         try {
-            return StringUtils.APACHE_COMMONS_CODEC.decode(n,
-                    StringUtils.PLATFORM_DEFAULT_CHARSET);
+            return StringUtils.APACHE_COMMONS_CODEC.decode(n, StringUtils.PLATFORM_DEFAULT_CHARSET);
         } catch (final UnsupportedEncodingException e) {
-            throw new IllegalStateException(
-                    "Platform default encoding is not supported??? ", e);
+            throw new IllegalStateException("Platform default encoding is not supported??? ", e);
         } catch (final DecoderException e) {
             throw new RuntimeException(e);
         }

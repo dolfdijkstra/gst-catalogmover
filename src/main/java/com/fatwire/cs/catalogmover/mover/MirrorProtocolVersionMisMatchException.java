@@ -1,6 +1,5 @@
 package com.fatwire.cs.catalogmover.mover;
 
-
 public class MirrorProtocolVersionMisMatchException extends CatalogMoverException {
 
     /**

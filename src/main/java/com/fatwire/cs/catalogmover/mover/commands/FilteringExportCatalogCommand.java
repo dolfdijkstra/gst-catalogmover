@@ -29,7 +29,8 @@ import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 import com.fatwire.cs.catalogmover.util.StringUtils;
 
 /**
- * Export command for a ContentSever Catalog that uses an include and exclude Filter for selecting the rows to export.
+ * Export command for a ContentSever Catalog that uses an include and exclude
+ * Filter for selecting the rows to export.
  * 
  * @author Dolf.Dijkstra
  * @since Nov 18, 2009
@@ -47,10 +48,8 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
 
     private final List<Filter<Row>> excludeFilters;
 
-    public FilteringExportCatalogCommand(final BaseCatalogMover cm,
-            final RemoteCatalog catalog,
-            final List<Filter<Row>> includeFilters,
-            final List<Filter<Row>> excludeFilters,
+    public FilteringExportCatalogCommand(final BaseCatalogMover cm, final RemoteCatalog catalog,
+            final List<Filter<Row>> includeFilters, final List<Filter<Row>> excludeFilters,
             final IProgressMonitor monitor) {
         super(cm);
 
@@ -67,20 +66,17 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
             return;
         }
         monitor.subTask("downloading " + catalog.getTableName());
-        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(
-                catalogMover, catalog.getTableName());
+        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(catalogMover, catalog.getTableName());
 
         selectRowsCommand.execute();
         final String response = selectRowsCommand.getResponse();
         final ResponseStatusCode status = new ResponseStatusCode();
-        //final boolean foundStatus =
-        //let the caller deal with the foundStatus
-        //don't throw an exception here
+        // final boolean foundStatus =
+        // let the caller deal with the foundStatus
+        // don't throw an exception here
         status.setFromData(response);
         if (!status.getResult() && status.getErrorID() != -101) {
-            throw new ResponseStatusFailureException(
-                    "Could not export catalog " + catalog.getTableName(),
-                    status);
+            throw new ResponseStatusFailureException("Could not export catalog " + catalog.getTableName(), status);
         }
         TableData tableData;
         tableData = new TableParser().parseHTML(response);
@@ -90,11 +86,9 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
         }
         Iterable<Row> rows;
         try {
-            Iterable<Row> filtered = new FilteringIterable<Row>(tableData,
-                    includeFilters, excludeFilters);
+            Iterable<Row> filtered = new FilteringIterable<Row>(tableData, includeFilters, excludeFilters);
             rows = new SortingRowIterable(filtered);
-            StringBuffer b = new TableExporter(tableData).exportHTML(rows,
-                    tableData.getDatabaseType(), false);
+            StringBuffer b = new TableExporter(tableData).exportHTML(rows, tableData.getDatabaseType(), false);
             monitor.subTask("saving " + catalog.getTableName());
             catalog.writeCatalog(b.toString());
             doUrlFields(tableData, rows);
@@ -105,8 +99,7 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
 
     }
 
-    protected void doUrlFields(final TableData tableData,
-            final Iterable<Row> rows) throws CatalogMoverException {
+    protected void doUrlFields(final TableData tableData, final Iterable<Row> rows) throws CatalogMoverException {
 
         final Set<String> urlFields = new HashSet<String>();
         for (final Header header : tableData.getHeaders().values()) {
@@ -127,32 +120,27 @@ public class FilteringExportCatalogCommand extends AbstractCatalogMoverCommand {
             }
 
             for (final String headerName : urlFields) {
-                //no need to download if no value provided 
+                // no need to download if no value provided
                 if (StringUtils.goodString(row.getData(headerName))) {
                     Callable<String> callable = new Callable<String>() {
 
                         public String call() throws CatalogMoverException {
-                            monitor.subTask("downloading " + tableKeyValue
-                                    + " for " + catalog.getTableName());
-                            final RetrieveBinaryCommand command = new RetrieveBinaryCommand(
-                                    catalogMover, catalog.getTableName(),
-                                    tableKey, tableKeyValue, headerName);
+                            monitor.subTask("downloading " + tableKeyValue + " for " + catalog.getTableName());
+                            final RetrieveBinaryCommand command = new RetrieveBinaryCommand(catalogMover, catalog
+                                    .getTableName(), tableKey, tableKeyValue, headerName);
                             command.execute();
 
                             try {
                                 if (log.isDebugEnabled())
                                     log.debug(row.getData(headerName));
-                                monitor.subTask("saving " + tableKeyValue
-                                        + " for " + catalog.getTableName());
+                                monitor.subTask("saving " + tableKeyValue + " for " + catalog.getTableName());
 
-                                //write the url field
+                                // write the url field
 
-                                catalog.writeUrlField(command.getBinary(), row
-                                        .getData(headerName));
+                                catalog.writeUrlField(command.getBinary(), row.getData(headerName));
 
                             } catch (final IOException e) {
-                                throw new CatalogMoverException(e.getMessage()
-                                        + " on " + catalog.getTableName()
+                                throw new CatalogMoverException(e.getMessage() + " on " + catalog.getTableName()
                                         + " key:" + tableKeyValue, e);
                             }
                             monitor.worked(1);

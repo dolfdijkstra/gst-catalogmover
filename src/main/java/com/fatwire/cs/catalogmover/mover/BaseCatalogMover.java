@@ -13,13 +13,12 @@ public abstract class BaseCatalogMover extends AbstractCatalogMover {
     public static final int MIRROR_PROTOCOL_VERSION = 3;
     private final ExecutorService executor;
 
-    public BaseCatalogMover(final Transporter transporter,final ExecutorService executor) {
+    public BaseCatalogMover(final Transporter transporter, final ExecutorService executor) {
         super(transporter);
-        this.executor= executor;
+        this.executor = executor;
     }
 
-    public void verifyMirrorProtocolVersion(final String version)
-            throws MirrorProtocolVersionMisMatchException {
+    public void verifyMirrorProtocolVersion(final String version) throws MirrorProtocolVersionMisMatchException {
         if (log.isDebugEnabled()) {
             log.debug("mirrorprotocolversion: " + version);
         }
@@ -31,8 +30,7 @@ public abstract class BaseCatalogMover extends AbstractCatalogMover {
 
     public Post prepareNewPost() {
         final Post post = super.prepareNewPost();
-        post.addMultipartData("cs.contenttype",
-                BaseCatalogMover.DEFAULT_CONTENT_TYPE);
+        post.addMultipartData("cs.contenttype", BaseCatalogMover.DEFAULT_CONTENT_TYPE);
         return post;
     }
 

@@ -25,11 +25,10 @@ public abstract class AbstractCatalogMover {
         this.transporter = transporter;
     }
 
-    public ResponseStatusCode executeForResponseStatusCode(final Post post)
-            throws CatalogMoverException {
+    public ResponseStatusCode executeForResponseStatusCode(final Post post) throws CatalogMoverException {
         final ResponseStatusCode status = new ResponseStatusCode();
-        //let the caller deal with the foundStatus
-        //don't throw an exception here
+        // let the caller deal with the foundStatus
+        // don't throw an exception here
         status.setFromData(executeForResponse(post));
         if (hasListeners()) {
             fireEvent(new CatalogMoverStatusReceivedEvent(this, status));
@@ -47,21 +46,18 @@ public abstract class AbstractCatalogMover {
         return post;
     }
 
-    public String executeForResponse(final Post post)
-            throws CatalogMoverException {
+    public String executeForResponse(final Post post) throws CatalogMoverException {
 
         SimpleResponse response = execute(post);
         if (response.getStatusCode() == 200) {
             try {
-                return new String(response.getBody(), response
-                        .getResponseEncoding());
+                return new String(response.getBody(), response.getResponseEncoding());
             } catch (UnsupportedEncodingException e) {
                 throw new CatalogMoverException(e);
             }
 
         } else {
-            throw new IllegalResponseStatusException(post.getUrl().toASCIIString(), response
-                    .getStatusCode());
+            throw new IllegalResponseStatusException(post.getUrl().toASCIIString(), response.getStatusCode());
         }
 
     }
@@ -73,17 +69,14 @@ public abstract class AbstractCatalogMover {
             final long t = System.currentTimeMillis();
             response = transporter.execute(post);
             if (log.isTraceEnabled()) {
-                log.trace("request took "
-                        + Long.toString(System.currentTimeMillis() - t)
-                        + " ms.");
+                log.trace("request took " + Long.toString(System.currentTimeMillis() - t) + " ms.");
                 log.trace(response);
             }
             SimpleResponseImpl simpleResponse = new SimpleResponseImpl();
             simpleResponse.setStatusCode(response.getStatusCode());
             if (response.getStatusCode() == 200) {
 
-                simpleResponse.setResponseEncoding(response
-                        .getResponseEncoding());
+                simpleResponse.setResponseEncoding(response.getResponseEncoding());
 
                 final InputStream in = response.getResponseBodyAsStream();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -103,8 +96,7 @@ public abstract class AbstractCatalogMover {
                 }
 
                 if (hasListeners()) {
-                    fireEvent(new CatalogMoverResponseReceivedEvent(this,
-                            response, simpleResponse));
+                    fireEvent(new CatalogMoverResponseReceivedEvent(this, response, simpleResponse));
                 }
             }
             return simpleResponse;
@@ -119,7 +111,7 @@ public abstract class AbstractCatalogMover {
     }
 
     public void close() {
-        //transporter.close();
+        // transporter.close();
     }
 
     protected boolean hasListeners() {

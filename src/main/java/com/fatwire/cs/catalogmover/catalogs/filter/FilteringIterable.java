@@ -11,17 +11,14 @@ public class FilteringIterable<T> implements Iterable<T> {
 
     private List<Filter<T>> excludeFilters;
 
-    public FilteringIterable(final Iterable<T> delegate,
-            final List<Filter<T>> includeFilters,
+    public FilteringIterable(final Iterable<T> delegate, final List<Filter<T>> includeFilters,
             final List<Filter<T>> excludeFilters) {
         super();
         this.delegate = delegate;
 
-        this.includeFilters = includeFilters != null ? includeFilters
-                : Collections.<Filter<T>> emptyList();
+        this.includeFilters = includeFilters != null ? includeFilters : Collections.<Filter<T>> emptyList();
 
-        this.excludeFilters = excludeFilters != null ? excludeFilters
-                : Collections.<Filter<T>> emptyList();
+        this.excludeFilters = excludeFilters != null ? excludeFilters : Collections.<Filter<T>> emptyList();
 
     }
 
@@ -60,7 +57,9 @@ public class FilteringIterable<T> implements Iterable<T> {
             /**
              * 
              * @param row
-             * @return true if this row does not match an exclude filter, or true if there are no includeFilters or if it matches an include filter pattern.
+             * @return true if this row does not match an exclude filter, or
+             *         true if there are no includeFilters or if it matches an
+             *         include filter pattern.
              */
             private boolean match(final T row) {
                 for (Filter<T> filter : excludeFilters) {
@@ -68,7 +67,7 @@ public class FilteringIterable<T> implements Iterable<T> {
                         return false;
                     }
                 }
-                //if there are no include filters all rows match
+                // if there are no include filters all rows match
                 if (includeFilters.isEmpty()) {
                     return true;
                 }

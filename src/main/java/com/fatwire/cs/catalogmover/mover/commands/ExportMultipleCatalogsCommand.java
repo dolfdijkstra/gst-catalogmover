@@ -11,8 +11,7 @@ import com.fatwire.cs.catalogmover.mover.IProgressMonitor;
 import com.fatwire.cs.catalogmover.mover.RemoteCatalog;
 
 public class ExportMultipleCatalogsCommand extends AbstractCatalogMoverCommand {
-    private final static Log log = LogFactory
-    .getLog(ExportMultipleCatalogsCommand.class);
+    private final static Log log = LogFactory.getLog(ExportMultipleCatalogsCommand.class);
 
     final Iterable<String> catalogs;
 
@@ -20,8 +19,7 @@ public class ExportMultipleCatalogsCommand extends AbstractCatalogMoverCommand {
 
     final IProgressMonitor monitor;
 
-    public ExportMultipleCatalogsCommand(BaseCatalogMover cm,
-            Iterable<String> catalogs, File exportPath,
+    public ExportMultipleCatalogsCommand(BaseCatalogMover cm, Iterable<String> catalogs, File exportPath,
             final IProgressMonitor monitor) {
         super(cm);
         this.catalogs = catalogs;
@@ -34,8 +32,7 @@ public class ExportMultipleCatalogsCommand extends AbstractCatalogMoverCommand {
         for (String name : catalogs) {
 
             RemoteCatalog rc = new RemoteCatalog(name, this.exportPath);
-            ExportCatalogCommand command = new ExportCatalogCommand(catalogMover, rc,
-                    monitor);
+            ExportCatalogCommand command = new ExportCatalogCommand(catalogMover, rc, monitor);
             try {
                 command.execute();
             } catch (Exception e) {

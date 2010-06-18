@@ -9,8 +9,7 @@ import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 
 public class CommitCommand extends AbstractCatalogMoverCommand {
-    private final static Log log = LogFactory
-    .getLog(CommitCommand.class);
+    private final static Log log = LogFactory.getLog(CommitCommand.class);
 
     String tableName;
 
@@ -18,8 +17,7 @@ public class CommitCommand extends AbstractCatalogMoverCommand {
 
     String tableKey;
 
-    public CommitCommand(final BaseCatalogMover cm, String tableName,
-            String tempTableName, String tableKey) {
+    public CommitCommand(final BaseCatalogMover cm, String tableName, String tempTableName, String tableKey) {
         super(cm);
         this.tableName = tableName;
         this.tempTableName = tempTableName;

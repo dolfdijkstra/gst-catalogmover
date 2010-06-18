@@ -44,12 +44,14 @@ public class Row {
         return rowNum;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "Row from " + data.getTableName() +":" + rowNum;
+        return "Row from " + data.getTableName() + ":" + rowNum;
     }
 
 }

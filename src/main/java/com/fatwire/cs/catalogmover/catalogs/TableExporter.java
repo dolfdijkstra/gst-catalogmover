@@ -43,22 +43,21 @@ public class TableExporter {
      * 
      * @param SelectedRows
      *            vector of row indicess to include or specify null for all rows
-     * @throws IOException 
+     * @throws IOException
      */
-    public StringBuffer exportHTML(final Iterable<Row> selectedRows,
-            final String sDBType, final boolean bRowSummary) throws IOException {
+    public StringBuffer exportHTML(final Iterable<Row> selectedRows, final String sDBType, final boolean bRowSummary)
+            throws IOException {
         final StringWriter oStringWriter = new StringWriter();
         final PrintWriter oPrintWriter = new PrintWriter(oStringWriter);
 
-
-            // this entry writes the page wrapping stuff,
-            // the one that writes to a stream has that
-            // already
-            oPrintWriter.print(HTML.startpage(HTML.gencomment()));
-            exportHTML(selectedRows, sDBType, bRowSummary, oPrintWriter);
-            oPrintWriter.print(HTML.endpage());
-            oPrintWriter.flush();
-            return new StringBuffer(oStringWriter.toString());
+        // this entry writes the page wrapping stuff,
+        // the one that writes to a stream has that
+        // already
+        oPrintWriter.print(HTML.startpage(HTML.gencomment()));
+        exportHTML(selectedRows, sDBType, bRowSummary, oPrintWriter);
+        oPrintWriter.print(HTML.endpage());
+        oPrintWriter.flush();
+        return new StringBuffer(oStringWriter.toString());
     }
 
     /**
@@ -67,15 +66,13 @@ public class TableExporter {
      * @param selectedRows
      *            vector of row indicess to include or specify null for all rows
      */
-    public void exportHTML(final Iterable<Row> selectedRows,
-            final String dbType, final boolean rowSummary,
+    public void exportHTML(final Iterable<Row> selectedRows, final String dbType, final boolean rowSummary,
             final PrintWriter printWriter) throws IOException {
         String type;
         //
         // Create an identifier based on the table name
         //
-        final String wrapperUniqueID = Long.toString(tableData.getTableName()
-                .hashCode() & 0xFFFF);
+        final String wrapperUniqueID = Long.toString(tableData.getTableName().hashCode() & 0xFFFF);
         printWriter.println();
         printWriter.print(TableExporter.brk);
 
@@ -92,10 +89,8 @@ public class TableExporter {
         printWriter.print(wrapperUniqueID);
         printWriter.print(TableParser.m_sWrapperEndTag);
         printWriter.println();
-        final String wrapperStart = TableParser.m_sWRAPID + wrapperUniqueID
-                + TableParser.m_sStartID;
-        final String wrapperEnd = TableParser.m_sWRAPID + wrapperUniqueID
-                + TableParser.m_sEndID;
+        final String wrapperStart = TableParser.m_sWRAPID + wrapperUniqueID + TableParser.m_sStartID;
+        final String wrapperEnd = TableParser.m_sWRAPID + wrapperUniqueID + TableParser.m_sEndID;
 
         printWriter.println(HTML.comment(getTableName()));
         printWriter.print(HTML.table(1, 0, 2));
@@ -128,29 +123,29 @@ public class TableExporter {
         final int isz = getColumnCount();
         for (int i = 0; i < isz; i++) {
             switch (getType(i)) {
-            case COLTYPETEXT:
-                type = TableExporter.text;
-                break;
+                case COLTYPETEXT:
+                    type = TableExporter.text;
+                    break;
 
-            case COLTYPENUMBER:
-                type = TableExporter.number;
-                break;
+                case COLTYPENUMBER:
+                    type = TableExporter.number;
+                    break;
 
-            case COLTYPEDATE:
-                type = TableExporter.datetime;
-                break;
+                case COLTYPEDATE:
+                    type = TableExporter.datetime;
+                    break;
 
-            case COLTYPEBINARY:
-                type = TableExporter.binarydata;
-                break;
+                case COLTYPEBINARY:
+                    type = TableExporter.binarydata;
+                    break;
 
-            case COLTYPEUNKNOWN:
-                type = TableExporter.unknown;
-                break;
+                case COLTYPEUNKNOWN:
+                    type = TableExporter.unknown;
+                    break;
 
-            default:
-                type = null;
-                break;
+                default:
+                    type = null;
+                    break;
             }
 
             // table info
@@ -197,9 +192,9 @@ public class TableExporter {
         return tableData.getRowCount();
     }
 
-//    private String getCell(final int rowNum, final int colNum) {
-//        return tableData.getCell(rowNum, colNum).getCell();
-//    }
+    // private String getCell(final int rowNum, final int colNum) {
+    // return tableData.getCell(rowNum, colNum).getCell();
+    // }
 
     private String getSchema(final int i) {
         return tableData.getHeaders().get(i).getSchema();

@@ -23,8 +23,7 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
     public static final String SYSTEM_ITEM_CACHE = "SystemItemCache";
 
-    static final String[] excludes = new String[] { SYSTEM_INFO, SYSTEM_ASSETS,
-            SYSTEM_PAGE_CACHE, SYSTEM_ITEM_CACHE };
+    static final String[] excludes = new String[] { SYSTEM_INFO, SYSTEM_ASSETS, SYSTEM_PAGE_CACHE, SYSTEM_ITEM_CACHE };
 
     final List<String> catalogs;
 
@@ -32,8 +31,7 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
     final IProgressMonitor monitor;
 
-    public ExportAllCatalogsCommand(BaseCatalogMover cm, File exportPath,
-            final IProgressMonitor monitor) {
+    public ExportAllCatalogsCommand(BaseCatalogMover cm, File exportPath, final IProgressMonitor monitor) {
         super(cm);
         catalogs = new ArrayList<String>();
         this.exportPath = exportPath;
@@ -50,12 +48,12 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
     /**
      * Reads SystemInfo and builds a list of catalogs
+     * 
      * @throws CatalogMoverException
      */
     protected void readSystemInfo() throws CatalogMoverException {
         monitor.subTask("downloading SystemInfo");
-        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(
-                catalogMover, "SystemInfo");
+        final SelectRowsCommand selectRowsCommand = new SelectRowsCommand(catalogMover, "SystemInfo");
 
         selectRowsCommand.execute();
         final String response = selectRowsCommand.getResponse();
@@ -63,8 +61,7 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
         status.setFromData(response);
         if (!status.getResult()) {
-            throw new ResponseStatusFailureException(
-                    "Could not export catalog SystemInfo", status);
+            throw new ResponseStatusFailureException("Could not export catalog SystemInfo", status);
         }
 
         final TableData tableData = new TableParser().parseHTML(response);
@@ -85,11 +82,12 @@ public class ExportAllCatalogsCommand extends AbstractCatalogMoverCommand {
 
     /**
      * downloads all catalogs
+     * 
      * @throws CatalogMoverException
      */
     protected void doAllCatalogs() throws CatalogMoverException {
-        AbstractCatalogMoverCommand command = new ExportMultipleCatalogsCommand(
-                catalogMover, catalogs, exportPath, monitor);
+        AbstractCatalogMoverCommand command = new ExportMultipleCatalogsCommand(catalogMover, catalogs, exportPath,
+                monitor);
         command.execute();
 
     }

@@ -16,7 +16,8 @@ public class SimpleResponseImpl implements SimpleResponse {
     }
 
     /**
-     * @param body the body to set
+     * @param body
+     *            the body to set
      */
     public void setBody(byte[] body) {
         this.body = body;
@@ -30,7 +31,8 @@ public class SimpleResponseImpl implements SimpleResponse {
     }
 
     /**
-     * @param responseEncoding the responseEncoding to set
+     * @param responseEncoding
+     *            the responseEncoding to set
      */
     public void setResponseEncoding(String responseEncoding) {
         this.responseEncoding = responseEncoding;
@@ -44,7 +46,8 @@ public class SimpleResponseImpl implements SimpleResponse {
     }
 
     /**
-     * @param statusCode the statusCode to set
+     * @param statusCode
+     *            the statusCode to set
      */
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;

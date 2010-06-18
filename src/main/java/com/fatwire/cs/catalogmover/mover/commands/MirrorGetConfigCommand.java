@@ -26,8 +26,7 @@ public class MirrorGetConfigCommand extends AbstractCatalogMoverCommand {
 
         final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
         if (status.getResult()) {
-            catalogMover.verifyMirrorProtocolVersion(status.getParams().get(
-                    "mirrorprotocolversion"));
+            catalogMover.verifyMirrorProtocolVersion(status.getParams().get("mirrorprotocolversion"));
         } else {
             throw new MirrorProtocolVersionNotFoundException();
         }

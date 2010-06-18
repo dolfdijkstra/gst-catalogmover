@@ -29,8 +29,7 @@ public class LocalCatalog {
         super();
 
         if (!path.getName().endsWith(".html")) {
-            throw new IllegalArgumentException(path
-                    + " is not an Catalog.html file.");
+            throw new IllegalArgumentException(path + " is not an Catalog.html file.");
         }
         location = path.getAbsoluteFile();
         log.debug("Catalog: " + location.getAbsolutePath());

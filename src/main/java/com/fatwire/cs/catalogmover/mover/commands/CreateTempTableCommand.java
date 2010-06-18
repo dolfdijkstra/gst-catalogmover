@@ -13,8 +13,7 @@ public class CreateTempTableCommand extends AbstractCatalogMoverCommand {
 
     private final String tableKey;
 
-    public CreateTempTableCommand(BaseCatalogMover cm, final String tableName,
-            final String tableKey) {
+    public CreateTempTableCommand(BaseCatalogMover cm, final String tableName, final String tableKey) {
         super(cm);
         this.tableName = tableName;
         this.tableKey = tableKey;
@@ -26,7 +25,7 @@ public class CreateTempTableCommand extends AbstractCatalogMoverCommand {
     }
 
     /**
-     * @throws CatalogMoverException 
+     * @throws CatalogMoverException
      */
     protected void createTempTable() throws CatalogMoverException {
         final Post post = this.prepareNewPost();
@@ -36,7 +35,7 @@ public class CreateTempTableCommand extends AbstractCatalogMoverCommand {
         post.addMultipartData("parenttablename", tableName);
         final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
         if (status.getResult()) {
-            //tablename is in the status message
+            // tablename is in the status message
             ttTableName = status.getParams().get("tablename");
         }
 
@@ -48,6 +47,5 @@ public class CreateTempTableCommand extends AbstractCatalogMoverCommand {
     public String getTempTableName() {
         return ttTableName;
     }
-
 
 }

@@ -6,17 +6,16 @@ package com.fatwire.cs.catalogmover.util.chunk;
  * @param <T>
  * @param <E>
  */
-public interface IterableProcessor<T,E extends Exception> {
+public interface IterableProcessor<T, E extends Exception> {
 
     /**
      * 
-     * Callback method to process a chunk from the iterable.
-     * Mostly used with a ChunkedIterable
+     * Callback method to process a chunk from the iterable. Mostly used with a
+     * ChunkedIterable
+     * 
      * @param iterable
-     * @throws E 
+     * @throws E
      */
     void process(Iterable<T> innerIterable) throws E;
-    
-
 
 }

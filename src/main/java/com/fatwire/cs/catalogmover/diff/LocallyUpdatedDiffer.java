@@ -7,7 +7,8 @@ import com.fatwire.cs.catalogmover.catalogs.Row;
 import com.fatwire.cs.catalogmover.mover.LocalCatalog;
 
 /**
- * an Iterable of rows with url fields that are updated since the a passed in timestamp  
+ * an Iterable of rows with url fields that are updated since the a passed in
+ * timestamp
  * 
  * @author Dolf.Dijkstra
  * @since 18-mei-2007
@@ -48,8 +49,7 @@ public class LocallyUpdatedDiffer implements Iterable<Row> {
                     Row row = delegatingIterator.next();
                     for (int i = 0; i < row.getNumberOfColumns(); i++) {
                         if (row.getHeader(i).getName().startsWith("url")) {
-                            File f = new File(catalog.getUploadPath(), row
-                                    .getData(i));
+                            File f = new File(catalog.getUploadPath(), row.getData(i));
                             if (f.exists() && (f.lastModified() > timeStamp)) {
                                 next = row;
                                 break;

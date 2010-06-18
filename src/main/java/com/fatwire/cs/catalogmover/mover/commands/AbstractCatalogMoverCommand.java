@@ -4,8 +4,7 @@ import com.fatwire.cs.catalogmover.http.Post;
 import com.fatwire.cs.catalogmover.mover.BaseCatalogMover;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 
-public abstract class AbstractCatalogMoverCommand implements
-        CatalogMoverCommand {
+public abstract class AbstractCatalogMoverCommand implements CatalogMoverCommand {
 
     final protected BaseCatalogMover catalogMover;
 

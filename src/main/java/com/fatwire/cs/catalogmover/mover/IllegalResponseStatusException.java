@@ -1,8 +1,6 @@
 package com.fatwire.cs.catalogmover.mover;
 
-
 public class IllegalResponseStatusException extends CatalogMoverException {
-
 
     /**
      * 
@@ -23,8 +21,8 @@ public class IllegalResponseStatusException extends CatalogMoverException {
         super(s);
     }
 
-    public IllegalResponseStatusException(String url,int statuscode, Throwable cause) {
-        super(url +" gave a response code of " + statuscode,cause);
+    public IllegalResponseStatusException(String url, int statuscode, Throwable cause) {
+        super(url + " gave a response code of " + statuscode, cause);
     }
 
     /**
@@ -34,8 +32,8 @@ public class IllegalResponseStatusException extends CatalogMoverException {
         super(cause);
     }
 
-    public IllegalResponseStatusException(String url,int statuscode) {
-        super(url +" gave a response code of " + statuscode);
+    public IllegalResponseStatusException(String url, int statuscode) {
+        super(url + " gave a response code of " + statuscode);
     }
 
 }

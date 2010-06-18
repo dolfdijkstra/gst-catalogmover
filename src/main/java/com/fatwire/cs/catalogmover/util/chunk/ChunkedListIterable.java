@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * Evolution of ChunkedListIterable so that it is now a Iterable
- *
+ * 
  */
 public class ChunkedListIterable<T> implements Iterable<List<T>> {
     private int _chunkSize;
@@ -38,8 +38,7 @@ public class ChunkedListIterable<T> implements Iterable<List<T>> {
      */
     public ChunkedListIterable(final List<T> lst, final int chunkSize) {
         if (chunkSize <= 0) {
-            throw new IllegalArgumentException(
-                    "Chunk size must be greater than 0");
+            throw new IllegalArgumentException("Chunk size must be greater than 0");
         }
         final int size = lst.size();
         _chunkSize = (size > chunkSize) ? chunkSize : size;

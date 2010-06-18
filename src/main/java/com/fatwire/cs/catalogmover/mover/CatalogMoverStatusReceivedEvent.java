@@ -10,8 +10,7 @@ public class CatalogMoverStatusReceivedEvent extends CatalogMoverEvent {
 
     private final ResponseStatusCode status;
 
-    public CatalogMoverStatusReceivedEvent(AbstractCatalogMover mover,
-            ResponseStatusCode status) {
+    public CatalogMoverStatusReceivedEvent(AbstractCatalogMover mover, ResponseStatusCode status) {
         super(mover);
         this.status = status;
     }

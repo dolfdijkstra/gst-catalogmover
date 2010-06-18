@@ -16,10 +16,8 @@ import com.fatwire.cs.catalogmover.util.StringUtils;
 import com.fatwire.cs.catalogmover.util.chunk.BaseChunkProcessor;
 import com.fatwire.cs.catalogmover.util.chunk.Processor;
 
-public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
-        implements CatalogMoverCommand {
-    private final static Log log = LogFactory
-    .getLog(CatalogMoverCommand.class);
+public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand implements CatalogMoverCommand {
+    private final static Log log = LogFactory.getLog(CatalogMoverCommand.class);
 
     private final class RowProcessor implements Processor<Row, CatalogMoverException> {
         private Post post;
@@ -40,11 +38,10 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
         public boolean endChunk() throws CatalogMoverException {
             if (log.isTraceEnabled())
                 log.trace(post.toString());
-        
+
             monitor.subTask("Sending " + i + " rows to ContentServer.");
-        
-            final ResponseStatusCode status = catalogMover
-                    .executeForResponseStatusCode(post);
+
+            final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
             monitor.worked(i);
             if (log.isTraceEnabled())
                 log.trace(status.toString());
@@ -66,7 +63,7 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
 
         public boolean process(Row row) throws CatalogMoverException {
             if (!monitor.isCanceled()) {
-        
+
                 addToPost(row, i);
                 i++;
             }
@@ -90,18 +87,16 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
                     val = val.replace('\\', '/');
                     final String folder = getFolder(val);
                     if (folder != null) {
-                        post.addMultipartData(name + "_folder" + rowNum,
-                                folder);
+                        post.addMultipartData(name + "_folder" + rowNum, folder);
                     }
-                    post.addMultipartData(name + rowNum, val,
-                            getAbsolutePath(val));
+                    post.addMultipartData(name + rowNum, val, getAbsolutePath(val));
                 } else {
                     post.addMultipartData(name + rowNum, val);
-        
+
                 }
-        
+
             }
-        
+
         }
     }
 
@@ -117,9 +112,8 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
 
     private final IProgressMonitor monitor;
 
-    public MoveCatalogRowsCommand(BaseCatalogMover cm, String tableName,
-            String tableKey, final File uploadPath, final Iterable<Row> rows,
-            IProgressMonitor monitor) {
+    public MoveCatalogRowsCommand(BaseCatalogMover cm, String tableName, String tableKey, final File uploadPath,
+            final Iterable<Row> rows, IProgressMonitor monitor) {
         super(cm);
         if (StringUtils.emptyString(tableName)) {
             throw new NullPointerException("tableName is null or blank");
@@ -147,13 +141,12 @@ public class MoveCatalogRowsCommand extends AbstractCatalogMoverCommand
      * 
      * @param rows
      * @param monitor
-     * @throws CatalogMoverException 
+     * @throws CatalogMoverException
      */
     protected void move() throws CatalogMoverException {
 
         final Processor<Row, CatalogMoverException> processor = new RowProcessor();
-        new BaseChunkProcessor<Row, CatalogMoverException>(rows, ROWSPERPOST)
-                .process(processor);
+        new BaseChunkProcessor<Row, CatalogMoverException>(rows, ROWSPERPOST).process(processor);
     }
 
     private String getAbsolutePath(final String url) {

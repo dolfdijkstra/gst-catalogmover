@@ -20,22 +20,25 @@ import org.apache.commons.logging.LogFactory;
  * messages. It can be represented as a java object, or it can be represented as
  * a string, in the form of an HTML comment. It can be constructed using
  * standard Java constructors and setter methods, and it can also be set from a
- * random string of input data, which will then be parsed. <p/> The
- * ResponseStatusCode object contains four primary fields:
+ * random string of input data, which will then be parsed.
+ * <p/>
+ * The ResponseStatusCode object contains four primary fields:
  * <ul>
- * <li>command string (represents the command that was executed that resulted
- * in the result represented herein</li>
+ * <li>command string (represents the command that was executed that resulted in
+ * the result represented herein</li>
  * <li>result flag (boolean representation of success/failure)</li>
- * <li>result string (text representation of success/failure) </li>
+ * <li>result string (text representation of success/failure)</li>
  * <li>reason string (represents the reason for which the result occurred</li>
  * </ul>
  * Additionally, the ResponseStatusCode can contain input parameters as
  * argumetns to the command specified. This enables helpful debug messages in
- * cases of failure. <p/> The ResponseStatusCode can contain multiple codes.
- * This is possible when the ResponseStatusCode object is set from a data, and
- * the data contains multiple serialized status code objects. Navigation through
- * the list of status codes in this case is done using the {@link #setNextError}
- * and {@link #rewind} methods.
+ * cases of failure.
+ * <p/>
+ * The ResponseStatusCode can contain multiple codes. This is possible when the
+ * ResponseStatusCode object is set from a data, and the data contains multiple
+ * serialized status code objects. Navigation through the list of status codes
+ * in this case is done using the {@link #setNextError} and {@link #rewind}
+ * methods.
  */
 public class ResponseStatusCode {
     public static final String Unknown = "Unknown ";
@@ -101,8 +104,7 @@ public class ResponseStatusCode {
     }
 
     // the parts.
-    private final StringBuffer result = new StringBuffer(
-            ResponseStatusCode.Unknown);
+    private final StringBuffer result = new StringBuffer(ResponseStatusCode.Unknown);
 
     private String reason;
 
@@ -156,8 +158,7 @@ public class ResponseStatusCode {
      * @param sReason
      *            reason string
      */
-    public ResponseStatusCode(final String sCommand, final int iError,
-            final String sReason) {
+    public ResponseStatusCode(final String sCommand, final int iError, final String sReason) {
         command = sCommand;
         err = iError;
         reason = sReason;
@@ -188,8 +189,7 @@ public class ResponseStatusCode {
         if (StringUtils.goodString(sState)) {
             state = sState;
         } else {
-            state = bState ? ResponseStatusCode.successStr
-                    : ResponseStatusCode.failureStr;
+            state = bState ? ResponseStatusCode.successStr : ResponseStatusCode.failureStr;
         }
 
         // construct the shell of the string
@@ -220,8 +220,7 @@ public class ResponseStatusCode {
         if (hparams != null) {
             try {
 
-                for (final Map.Entry<String, String> oEntry : hparams
-                        .entrySet()) {
+                for (final Map.Entry<String, String> oEntry : hparams.entrySet()) {
                     final String name = oEntry.getKey();
                     final String value = oEntry.getValue().toString();
 
@@ -235,8 +234,7 @@ public class ResponseStatusCode {
                 getLog().trace("Failure composing status code", e);
             }
         }
-        result.append(ResponseStatusCode._params).append(p.toString()).append(
-                ResponseStatusCode.sep);
+        result.append(ResponseStatusCode._params).append(p.toString()).append(ResponseStatusCode.sep);
         result.append(ResponseStatusCode.statusPostfix); // end comment
     }
 
@@ -279,8 +277,7 @@ public class ResponseStatusCode {
         final Map<String, String> iparams = new HashMap<String, String>();
         if (hparams != null) {
             try {
-                for (final Map.Entry<String, String> oEntry : hparams
-                        .entrySet()) {
+                for (final Map.Entry<String, String> oEntry : hparams.entrySet()) {
                     final String name = oEntry.getKey();
                     final String value = oEntry.getValue().toString();
                     if (StringUtils.goodString(value)) {
@@ -288,8 +285,7 @@ public class ResponseStatusCode {
                     }
                 }
             } catch (final Exception e) {
-                getLog().error("Failure getting params in ResponseStatusCode",
-                        e);
+                getLog().error("Failure getting params in ResponseStatusCode", e);
             }
         }
         return iparams;
@@ -365,10 +361,13 @@ public class ResponseStatusCode {
     }
 
     /**
-     * Looks for the well defined coded message in the data. <p/> This method
-     * will retain part of the input data object, and will set the status code
-     * to the first error occurrence. <p/> To scroll from one error instance to
-     * the next, call {@link #setNextError()}.
+     * Looks for the well defined coded message in the data.
+     * <p/>
+     * This method will retain part of the input data object, and will set the
+     * status code to the first error occurrence.
+     * <p/>
+     * To scroll from one error instance to the next, call
+     * {@link #setNextError()}.
      * 
      * @param data
      *            response data
@@ -411,20 +410,17 @@ public class ResponseStatusCode {
      *         input data)
      */
     public boolean setFromString(String s) {
-        if (!StringUtils.goodString(s)
-                || !s.startsWith(ResponseStatusCode.statusPrefix)) {
+        if (!StringUtils.goodString(s) || !s.startsWith(ResponseStatusCode.statusPrefix)) {
             return false;
         }
 
         try {
-            s = s.substring(ResponseStatusCode.statusPrefix.length()
-                    + ResponseStatusCode.sep.length()); // past
+            s = s.substring(ResponseStatusCode.statusPrefix.length() + ResponseStatusCode.sep.length()); // past
             // header to
             // result,
             // past
             // first sep
-            final List<String> parts = StringUtils.arguments(s,
-                    ResponseStatusCode.sep);
+            final List<String> parts = StringUtils.arguments(s, ResponseStatusCode.sep);
             // if (parts.size() != 6) // 5 parts, 1 terminated comment
             if (parts.size() < 6) {
                 return false;
@@ -482,7 +478,8 @@ public class ResponseStatusCode {
     }
 
     /**
-     * Find next encoded message in the previous set data response string. <p/>
+     * Find next encoded message in the previous set data response string.
+     * <p/>
      * In other words, the object contains a string with multiple status codes
      * in it, this method advances the cursor to the next entry.
      */

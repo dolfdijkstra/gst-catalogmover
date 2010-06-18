@@ -16,9 +16,8 @@ public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
 
     private final String columnname;
 
-    public RetrieveBinaryCommand(BaseCatalogMover cm, final String tableName,
-            final String tableKey, final String tableKeyValue,
-            final String columnName) {
+    public RetrieveBinaryCommand(BaseCatalogMover cm, final String tableName, final String tableKey,
+            final String tableKeyValue, final String columnName) {
         super(cm);
         this.tablename = tableName;
         this.columnname = columnName;
@@ -44,9 +43,9 @@ public class RetrieveBinaryCommand extends AbstractCatalogMoverCommand {
         if (response.getStatusCode() == 200) {
             binary = response.getBody();
         } else {
-            long t1= (System.nanoTime()-t)/1000;
-            throw new CatalogMoverException("retrievebinary for " + tablename
-                    + " " + tablekey + "=" + tablekeyvalue +" returned a status " + response.getStatusCode() + " after " + t1 +" micro seconds");
+            long t1 = (System.nanoTime() - t) / 1000;
+            throw new CatalogMoverException("retrievebinary for " + tablename + " " + tablekey + "=" + tablekeyvalue
+                    + " returned a status " + response.getStatusCode() + " after " + t1 + " micro seconds");
         }
     }
 

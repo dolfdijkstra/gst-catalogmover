@@ -6,8 +6,9 @@ package com.fatwire.cs.catalogmover.catalogs;
 public final class HTML {
     /**
      * bold a string
-     *
-     * @param s input
+     * 
+     * @param s
+     *            input
      * @return <b>input</b>
      */
     public static final String boldthis(final String s) {
@@ -15,9 +16,8 @@ public final class HTML {
     }
 
     /**
-     * table caption used by CS tools
-     * DO NOT CHANGE THIS CODE
-     *
+     * table caption used by CS tools DO NOT CHANGE THIS CODE
+     * 
      * @param data
      * @return string
      */
@@ -27,7 +27,7 @@ public final class HTML {
 
     /**
      * comment a string
-     *
+     * 
      * @param s
      * @return string
      */
@@ -37,7 +37,7 @@ public final class HTML {
 
     /**
      * endpage
-     *
+     * 
      * @return String with end html tags
      */
     public static final String endpage() {
@@ -46,7 +46,7 @@ public final class HTML {
 
     /**
      * end a table def
-     *
+     * 
      * @return string
      */
     public static final String endtable() {
@@ -55,7 +55,7 @@ public final class HTML {
 
     /**
      * make a product comment
-     *
+     * 
      * @return string
      */
     public static final String gencomment() {
@@ -64,8 +64,9 @@ public final class HTML {
 
     /**
      * make a column heading
-     *
-     * @param data header data
+     * 
+     * @param data
+     *            header data
      * @return string
      */
     public static final String header(final String data) {
@@ -74,8 +75,9 @@ public final class HTML {
 
     /**
      * make a row
-     *
-     * @param coldata header data
+     * 
+     * @param coldata
+     *            header data
      * @return string
      */
     public static final String row(final String coldata) {
@@ -84,7 +86,7 @@ public final class HTML {
 
     /**
      * startpage
-     *
+     * 
      * @return String with start html tags
      */
     public static final String startpage(final String t) {
@@ -93,26 +95,25 @@ public final class HTML {
 
     /**
      * make a table (begin)
-     *
+     * 
      * @param border
      * @param spacing
      * @param padding
      * @return string
      */
-    public static final String table(final int border, final int spacing,
-            final int padding) {
+    public static final String table(final int border, final int spacing, final int padding) {
         final String s = Integer.toString(border);
         final String s2 = Integer.toString(padding);
         final String s3 = Integer.toString(spacing);
 
-        return ("\n<TABLE BORDER=" + s + " CELLSPACING=" + s3 + " CELLPADDING="
-                + s2 + ">\n");
+        return ("\n<TABLE BORDER=" + s + " CELLSPACING=" + s3 + " CELLPADDING=" + s2 + ">\n");
     }
 
     /**
      * underline a string
-     *
-     * @param s input
+     * 
+     * @param s
+     *            input
      * @return <u>input</u>
      */
     public static final String underlinethis(final String s) {

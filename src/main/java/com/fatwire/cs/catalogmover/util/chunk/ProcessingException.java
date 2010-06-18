@@ -1,7 +1,9 @@
 package com.fatwire.cs.catalogmover.util.chunk;
 
 /**
- * Exception that can be thrown by a Processor to indicate a failure when processing an element.
+ * Exception that can be thrown by a Processor to indicate a failure when
+ * processing an element.
+ * 
  * @author Dolf.Dijkstra
  * @since Jun 26, 2007
  * @see Processor

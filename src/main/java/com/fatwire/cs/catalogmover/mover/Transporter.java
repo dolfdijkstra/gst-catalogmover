@@ -9,11 +9,12 @@ public interface Transporter {
 
     Response execute(Post post) throws CatalogMoverException;
 
-    //void close();
+    // void close();
 
     /**
      * 
-     * return the full path to CatalogManager for instance http://localhost:8080/cs/CatalogManager
+     * return the full path to CatalogManager for instance
+     * http://localhost:8080/cs/CatalogManager
      */
 
     URI getCsPath();

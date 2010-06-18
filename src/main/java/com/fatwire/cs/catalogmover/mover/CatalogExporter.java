@@ -8,8 +8,7 @@ import java.util.concurrent.ExecutorService;
  */
 public class CatalogExporter extends BaseCatalogMover {
 
-    public CatalogExporter(final Transporter transporter,
-            ExecutorService executor) {
+    public CatalogExporter(final Transporter transporter, ExecutorService executor) {
         super(transporter, executor);
     }
 

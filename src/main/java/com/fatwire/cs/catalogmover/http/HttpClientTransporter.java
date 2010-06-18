@@ -13,8 +13,7 @@ import com.fatwire.cs.catalogmover.mover.AbstractHttpAccessTransporter;
 import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.mover.Transporter;
 
-public class HttpClientTransporter extends AbstractHttpAccessTransporter
-        implements Transporter {
+public class HttpClientTransporter extends AbstractHttpAccessTransporter implements Transporter {
 
     private HttpClient client;
 
@@ -23,13 +22,12 @@ public class HttpClientTransporter extends AbstractHttpAccessTransporter
     }
 
     /**
-     * @param state 
-     * @param proxyPort 
-     * @param proxyHost 
+     * @param state
+     * @param proxyPort
+     * @param proxyHost
      * @param client
      */
-    public HttpClientTransporter(HttpConnectionManager httpConnectionManager,
-            HttpState state, ProxyHost proxyHost) {
+    public HttpClientTransporter(HttpConnectionManager httpConnectionManager, HttpState state, ProxyHost proxyHost) {
         this.client = new HttpClient(httpConnectionManager);
         if (state != null)
             client.setState(state);
@@ -46,7 +44,7 @@ public class HttpClientTransporter extends AbstractHttpAccessTransporter
         PostMethod pm = post.createMethod();
         try {
             int status = client.executeMethod(pm);
-            
+
         } catch (HttpException e) {
             throw new CatalogMoverException(e.getMessage(), e);
         } catch (IOException e) {

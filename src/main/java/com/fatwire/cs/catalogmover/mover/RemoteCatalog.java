@@ -25,7 +25,8 @@ public class RemoteCatalog {
 
     /**
      * @param tableName
-     * @param exportPath the directory to where the catalog must be exported
+     * @param exportPath
+     *            the directory to where the catalog must be exported
      */
     public RemoteCatalog(final String tableName, final File exportPath) {
         super();
@@ -51,8 +52,7 @@ public class RemoteCatalog {
         return tableName;
     }
 
-    protected void write(final String string, final File file)
-            throws IOException {
+    protected void write(final String string, final File file) throws IOException {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -64,19 +64,19 @@ public class RemoteCatalog {
                 try {
                     writer.close();
                 } catch (final IOException e) {
-                    //ignore
+                    // ignore
                 }
             }
         }
 
     }
 
-    protected void write(final byte[] bytes, final File file)
-            throws IOException {
+    protected void write(final byte[] bytes, final File file) throws IOException {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        if (bytes.length==0) log.warn("Writing zero bytes for "+ file.toString());
+        if (bytes.length == 0)
+            log.warn("Writing zero bytes for " + file.toString());
         final OutputStream writer = new FileOutputStream(file);
         try {
             writer.write(bytes);
@@ -85,7 +85,7 @@ public class RemoteCatalog {
                 try {
                     writer.close();
                 } catch (final IOException e) {
-                    //ignore
+                    // ignore
                 }
             }
         }
@@ -96,13 +96,11 @@ public class RemoteCatalog {
         write(content, getExportFile());
     }
 
-    public void writeUrlField(final String content, final String urlField)
-            throws IOException {
+    public void writeUrlField(final String content, final String urlField) throws IOException {
         write(content, new File(getUploadPath(), urlField));
     }
 
-    public void writeUrlField(final byte[] content, final String urlField)
-            throws IOException {
+    public void writeUrlField(final byte[] content, final String urlField) throws IOException {
         write(content, new File(getUploadPath(), urlField));
     }
 

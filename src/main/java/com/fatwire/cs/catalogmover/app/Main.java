@@ -49,19 +49,17 @@ public class Main {
         Logger.getRootLogger().setLevel(Level.INFO);
         Logger.getLogger("com.fatwire").setLevel(Level.INFO);
         Logger.getLogger("httpclient.wire.header").setLevel(Level.INFO);
-        //Logger.getLogger(org.apache.commons.httpclient.HttpConnection.class).setLevel(Level.TRACE);
+        // Logger.getLogger(org.apache.commons.httpclient.HttpConnection.class).setLevel(Level.TRACE);
     }
 
     /**
      * @param args
-     * @throws CatalogMoverException 
-     * @throws IOException 
+     * @throws CatalogMoverException
+     * @throws IOException
      */
-    public static void main(String[] a) throws CatalogMoverException,
-            IOException {
+    public static void main(String[] a) throws CatalogMoverException, IOException {
         if (a.length < 1) {
-            System.err
-                    .println("You need to add a properties file name as the first argument");
+            System.err.println("You need to add a properties file name as the first argument");
             System.exit(-1);
         }
         initLog4j();
@@ -86,20 +84,16 @@ public class Main {
             }
         }
         if (StringUtils.isBlank(p.getProperty("host")))
-            throw new IllegalArgumentException(
-                    "The parameter 'host' can not be blank");
+            throw new IllegalArgumentException("The parameter 'host' can not be blank");
         if (StringUtils.isBlank(p.getProperty("user")))
-            throw new IllegalArgumentException(
-                    "The parameter 'user' can not be blank");
+            throw new IllegalArgumentException("The parameter 'user' can not be blank");
         if (StringUtils.isBlank(p.getProperty("password")))
-            throw new IllegalArgumentException(
-                    "The parameter 'password' can not be blank");
+            throw new IllegalArgumentException("The parameter 'password' can not be blank");
 
         URI uri = URI.create(p.getProperty("host"));
         String username = p.getProperty("user");
         String password = p.getProperty("password");
-        File populateDirectory = new File(p.getProperty("target", "./target/"
-                + uri.getHost() + "_"
+        File populateDirectory = new File(p.getProperty("target", "./target/" + uri.getHost() + "_"
                 + (uri.getPort() == -1 ? "80" : uri.getPort())));
         System.out.println(populateDirectory);
         String pattern = p.getProperty("pattern");
@@ -127,12 +121,11 @@ public class Main {
                 }
             }
         }
-        //catalogs.add("SystemInfo");
+        // catalogs.add("SystemInfo");
 
         try {
-            doMain(uri, username, password, proxyHost, proxyPort,
-                    proxyUsername, proxyPassword, populateDirectory, pattern,
-                    catalogs);
+            doMain(uri, username, password, proxyHost, proxyPort, proxyUsername, proxyPassword, populateDirectory,
+                    pattern, catalogs);
             System.out.println("done");
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,30 +134,21 @@ public class Main {
 
     }
 
-    public static void doMain(URI uri, String username, String password,
-            String proxyHost, int proxyPort, String proxyUsername,
-            String proxyPassword, File populateDirectory, String pattern,
-            Set<String> catalogs) throws CatalogMoverException {
+    public static void doMain(URI uri, String username, String password, String proxyHost, int proxyPort,
+            String proxyUsername, String proxyPassword, File populateDirectory, String pattern, Set<String> catalogs)
+            throws CatalogMoverException {
 
         int size = 3;
-        MultiThreadedHttpConnectionManager conManager = HttpClientUtil
-                .getConnectionManager(size);
-        //        final PoolableHttpAccessTransporter transporter = new PoolableHttpAccessTransporter(
-        //                conManager);
+        MultiThreadedHttpConnectionManager conManager = HttpClientUtil.getConnectionManager(size);
 
         HttpState state = new HttpState();
-        if (!StringUtils.isBlank(proxyUsername)
-                && !StringUtils.isBlank(proxyPassword)) {
-            Credentials credentials = new UsernamePasswordCredentials(
-                    proxyUsername, proxyPassword);
+        if (!StringUtils.isBlank(proxyUsername) && !StringUtils.isBlank(proxyPassword)) {
+            Credentials credentials = new UsernamePasswordCredentials(proxyUsername, proxyPassword);
 
             state.setProxyCredentials(AuthScope.ANY, credentials);
         }
-        ProxyHost proxyHost1 = StringUtils.isNotBlank(proxyHost) ? new ProxyHost(
-                proxyHost, proxyPort)
-                : null;
-        HttpClientTransporter transporter = new HttpClientTransporter(
-                conManager, state, proxyHost1);
+        ProxyHost proxyHost1 = StringUtils.isNotBlank(proxyHost) ? new ProxyHost(proxyHost, proxyPort) : null;
+        HttpClientTransporter transporter = new HttpClientTransporter(conManager, state, proxyHost1);
 
         transporter.setCsPath(uri);
         transporter.setUsername(username);
@@ -177,8 +161,7 @@ public class Main {
 
                 monitor.beginTask("Exporting all catalogs", -1);
 
-                final ExportAllCatalogsCommand command = new ExportAllCatalogsCommand(
-                        cm, populateDirectory, monitor);
+                final ExportAllCatalogsCommand command = new ExportAllCatalogsCommand(cm, populateDirectory, monitor);
                 command.execute();
 
             } else {
@@ -186,16 +169,14 @@ public class Main {
                 if (StringUtils.isNotBlank(pattern)) {
                     includeFilters = new ArrayList<Filter<Row>>();
 
-                    includeFilters.add(new PatternBasedIdColumnRowFilter(
-                            Pattern.compile(pattern)));
+                    includeFilters.add(new PatternBasedIdColumnRowFilter(Pattern.compile(pattern)));
                 }
 
                 for (String name : catalogs) {
                     monitor.beginTask("Exporting " + name, -1);
-                    RemoteCatalog rc = new RemoteCatalog(name,
-                            populateDirectory);
-                    FilteringExportCatalogCommand command = new FilteringExportCatalogCommand(
-                            cm, rc, includeFilters, null, monitor);
+                    RemoteCatalog rc = new RemoteCatalog(name, populateDirectory);
+                    FilteringExportCatalogCommand command = new FilteringExportCatalogCommand(cm, rc, includeFilters,
+                            null, monitor);
 
                     command.execute();
                     monitor.worked(1);

@@ -117,8 +117,7 @@ public class TableParser {
         ibrBufferPos = new IntStatus(0);
         // ---
         // Fetch the version of the table'
-        final String sVersion = extractBetweenTokens(sBuffer,
-                TableParser.m_sStartTableVersionTag,
+        final String sVersion = extractBetweenTokens(sBuffer, TableParser.m_sStartTableVersionTag,
                 TableParser.m_sEndTableVersionTag, ibrBufferPos);
 
         // ---
@@ -133,20 +132,17 @@ public class TableParser {
         // If the version is recent enough, try to find the
         // wrapper string that was used
         if (m_nTableVersion >= TableData.BASETMLVERSION) {
-            sWrapper = extractBetweenTokens(sBuffer,
-                    TableParser.m_sWrapperStartTag,
-                    TableParser.m_sWrapperEndTag, ibrBufferPos);
+            sWrapper = extractBetweenTokens(sBuffer, TableParser.m_sWrapperStartTag, TableParser.m_sWrapperEndTag,
+                    ibrBufferPos);
             // if we found a wrapper, redefine the table
             // column strings we will search for
             // NOTE that if no wrapper is found, these will be
             // left as standard <td> and </td> tags
             if (sWrapper.length() > 0) {
-                TableParser.m_sStartColumnTag2 = sWrapper
-                        + TableParser.m_sStartID;
+                TableParser.m_sStartColumnTag2 = sWrapper + TableParser.m_sStartID;
                 TableParser.m_sEndColumnTag2 = sWrapper + TableParser.m_sEndID;
             } else {
-                log
-                        .error("TableParser version/wrapper mismatch - required wrapper not found");
+                log.error("TableParser version/wrapper mismatch - required wrapper not found");
                 TableParser.m_sStartColumnTag2 = TableParser.m_sStartColumnTag;
                 TableParser.m_sEndColumnTag2 = TableParser.m_sEndColumnTag;
             }
@@ -179,9 +175,8 @@ public class TableParser {
 
         // ---
         // Fetch the table name
-        sTableName = extractBetweenTokens(sTable,
-                TableParser.m_sStartTableNameTag,
-                TableParser.m_sEndTableNameTag, ibrBufferPos);
+        sTableName = extractBetweenTokens(sTable, TableParser.m_sStartTableNameTag, TableParser.m_sEndTableNameTag,
+                ibrBufferPos);
         if (sTableName == null) {
             log.error("Table Name not found in table");
             m_TableData = null;
@@ -191,23 +186,20 @@ public class TableParser {
         }
 
         // fetch the table type
-        sTableType = extractBetweenTokens(sTable,
-                TableParser.m_sStartTableTypeTag,
-                TableParser.m_sEndTableTypeTag, ibrBufferPos);
+        sTableType = extractBetweenTokens(sTable, TableParser.m_sStartTableTypeTag, TableParser.m_sEndTableTypeTag,
+                ibrBufferPos);
         if (sTableType != null) {
             m_TableData.setTableType(sTableType);
         }
 
-        sDBType = extractBetweenTokens(sTable, TableParser.m_sStartDBTypeTag,
-                TableParser.m_sEndDBTypeTag, ibrBufferPos);
+        sDBType = extractBetweenTokens(sTable, TableParser.m_sStartDBTypeTag, TableParser.m_sEndDBTypeTag, ibrBufferPos);
         if (sDBType != null) {
             m_TableData.setDatabaseType(sDBType);
         }
 
         // ---
         // get the first row out...
-        sRow = extractBetweenTokens(sTable, TableParser.m_sStartRowTag,
-                TableParser.m_sEndRowTag, ibrBufferPos);
+        sRow = extractBetweenTokens(sTable, TableParser.m_sStartRowTag, TableParser.m_sEndRowTag, ibrBufferPos);
 
         // ---
         // if not even a first row, nothing we can do here...
@@ -232,8 +224,7 @@ public class TableParser {
             // column is not picked up. It may or
             // not make any difference parsing a
             // regular table, in most cases not.
-            sRow = extractBetweenTokensSafe(sTable, TableParser.m_sStartRowTag,
-                    TableParser.m_sEndRowTag, ibrBufferPos);
+            sRow = extractBetweenTokensSafe(sTable, TableParser.m_sStartRowTag, TableParser.m_sEndRowTag, ibrBufferPos);
 
             if (sRow != null) {
                 parseRow(sRow, nRow);
@@ -279,8 +270,7 @@ public class TableParser {
 
         // ---
         // look for table end
-        nFound = caselessFindStr(sBuffer, TableParser.m_sEndTag,
-                (nFound + TableParser.m_sBeginTable.length()));
+        nFound = caselessFindStr(sBuffer, TableParser.m_sEndTag, (nFound + TableParser.m_sBeginTable.length()));
         if (nFound == -1) {
             return -1;
         }
@@ -302,8 +292,7 @@ public class TableParser {
         sData = new String(sBuffer);
         ibrEnd = new IntStatus(0);
 
-        sCell = extractBetweenTokens(sData, TableParser.m_sStartColumnTag2,
-                TableParser.m_sEndColumnTag2, ibrEnd);
+        sCell = extractBetweenTokens(sData, TableParser.m_sStartColumnTag2, TableParser.m_sEndColumnTag2, ibrEnd);
 
         // log the warning tell sCell has wrong wrapper
         if (sCell == null) {
@@ -322,13 +311,11 @@ public class TableParser {
             // that's what this is all for...
             m_TableData.addCell(nRow, nColumn, sCell);
 
-            sCell = extractBetweenTokens(sData, TableParser.m_sStartColumnTag2,
-                    TableParser.m_sEndColumnTag2, ibrEnd);
+            sCell = extractBetweenTokens(sData, TableParser.m_sStartColumnTag2, TableParser.m_sEndColumnTag2, ibrEnd);
         }
     }
 
-    protected String parseSchema(final String sSchema,
-            final IntStatus ibrColType) {
+    protected String parseSchema(final String sSchema, final IntStatus ibrColType) {
         int nColType = TableData.COLTYPEUNKNOWN;
         int nSep;
         String sSchemaName;
@@ -376,9 +363,8 @@ public class TableParser {
         // ---
         // see if there are any real headers here
         ibrEnd = new IntStatus(0);
-        sHeader = extractBetweenTokens(sRow,
-                TableParser.m_sStartHeaderColumnTag,
-                TableParser.m_sEndHeaderColumnTag, ibrEnd);
+        sHeader = extractBetweenTokens(sRow, TableParser.m_sStartHeaderColumnTag, TableParser.m_sEndHeaderColumnTag,
+                ibrEnd);
 
         while (sHeader != null) {
             nColumn++;
@@ -386,8 +372,7 @@ public class TableParser {
             // ---
             // Extract the schema from the header record.
             ibrBogus = new IntStatus(0);
-            sSchema = extractBetweenTokens(sHeader,
-                    TableParser.m_sStartSchemaTag, TableParser.m_sEndSchemaTag,
+            sSchema = extractBetweenTokens(sHeader, TableParser.m_sStartSchemaTag, TableParser.m_sEndSchemaTag,
                     ibrBogus);
 
             if (sSchema == null) {
@@ -406,8 +391,7 @@ public class TableParser {
             // now add the header data to the TableData
             m_TableData.addHeader(nColumn, sHeader, sSchema, ibrColType.value);
 
-            sHeader = extractBetweenTokens(sRow,
-                    TableParser.m_sStartHeaderColumnTag,
+            sHeader = extractBetweenTokens(sRow, TableParser.m_sStartHeaderColumnTag,
                     TableParser.m_sEndHeaderColumnTag, ibrEnd);
 
         } // while
@@ -417,25 +401,21 @@ public class TableParser {
         // row for headers.
         if (nColumn == -1) {
             if (caselessFindStr(sRow, TableParser.m_sStartBoldTag) != -1) {
-                sHeader = extractBetweenTokens(sRow,
-                        TableParser.m_sStartColumnTag,
-                        TableParser.m_sEndColumnTag, ibrEnd);
+                sHeader = extractBetweenTokens(sRow, TableParser.m_sStartColumnTag, TableParser.m_sEndColumnTag, ibrEnd);
                 while (sHeader != null) {
                     nColumn++;
 
                     // ---
                     // Extract the schema from the header record.
                     ibrBogus = new IntStatus(0);
-                    sSchema = extractBetweenTokens(sHeader,
-                            TableParser.m_sStartColumnTag,
+                    sSchema = extractBetweenTokens(sHeader, TableParser.m_sStartColumnTag,
                             TableParser.m_sEndHeaderColumnTag, ibrBogus);
 
                     if (sSchema == null) {
                         sSchema = "";
                     }
 
-                    final IntStatus ibrColType = new IntStatus(
-                            TableData.COLTYPEUNKNOWN);
+                    final IntStatus ibrColType = new IntStatus(TableData.COLTYPEUNKNOWN);
                     sSchema = parseSchema(sSchema, ibrColType);
 
                     // ---
@@ -445,12 +425,10 @@ public class TableParser {
 
                     // ---
                     // now add the header data to the CTableData
-                    m_TableData.addHeader(nColumn, sHeader, sSchema,
-                            ibrColType.value);
+                    m_TableData.addHeader(nColumn, sHeader, sSchema, ibrColType.value);
 
-                    sHeader = extractBetweenTokens(sRow,
-                            TableParser.m_sStartColumnTag,
-                            TableParser.m_sEndColumnTag, ibrEnd);
+                    sHeader = extractBetweenTokens(sRow, TableParser.m_sStartColumnTag, TableParser.m_sEndColumnTag,
+                            ibrEnd);
                 } // while
             }
         }
@@ -465,8 +443,7 @@ public class TableParser {
         return caselessFindStr(sString, sFind, 0);
     }
 
-    protected int caselessFindStr(final String sString, final String sFind,
-            final int nBegin) {
+    protected int caselessFindStr(final String sString, final String sFind, final int nBegin) {
         int index = nBegin;
         int len = sString.length();
         int j;
@@ -504,13 +481,11 @@ public class TableParser {
     // ///////////////////////////////////////////////////////////////////////////
     // this assumes find string is ALL LOWER CASE (since presumably
     // it is predefined token)
-    protected int caselessFindStrReverse(final String sString,
-            final String sFind) {
+    protected int caselessFindStrReverse(final String sString, final String sFind) {
         return caselessFindStrReverse(sString, sFind, -1);
     }
 
-    protected int caselessFindStrReverse(final String sString,
-            final String sFind, int nBegin) {
+    protected int caselessFindStrReverse(final String sString, final String sFind, int nBegin) {
         final int findLen = sFind.length();
         int i, j;
 
@@ -537,8 +512,7 @@ public class TableParser {
         return -1;
     }
 
-    protected String extractBetweenTokens(final String sBuffer,
-            final String sHeadToken, final String sTailToken,
+    protected String extractBetweenTokens(final String sBuffer, final String sHeadToken, final String sTailToken,
             final IntStatus ibrStart) {
         String sExtracted = null;
         int head, tail;
@@ -553,8 +527,7 @@ public class TableParser {
 
         // ---
         // look for end
-        tail = caselessFindStr(sBuffer, sTailToken,
-                (head + sHeadToken.length()));
+        tail = caselessFindStr(sBuffer, sTailToken, (head + sHeadToken.length()));
 
         if (tail == -1) {
             return sExtracted;
@@ -572,8 +545,7 @@ public class TableParser {
 
     // make sure the tokens we find are not inside the
     // currently defined column tokens
-    protected String extractBetweenTokensSafe(final String sBuffer,
-            final String sHeadToken, final String sTailToken,
+    protected String extractBetweenTokensSafe(final String sBuffer, final String sHeadToken, final String sTailToken,
             final IntStatus ibrStart) {
         String sExtracted = null;
         int head, tail, lastStartTag, lastEndTag;
@@ -588,19 +560,15 @@ public class TableParser {
             }
 
             // look back for column end tag
-            lastEndTag = caselessFindStrReverse(sBuffer,
-                    TableParser.m_sEndColumnTag2, head);
+            lastEndTag = caselessFindStrReverse(sBuffer, TableParser.m_sEndColumnTag2, head);
 
             // look back for column start tag
-            lastStartTag = caselessFindStrReverse(sBuffer,
-                    TableParser.m_sStartColumnTag2, head);
+            lastStartTag = caselessFindStrReverse(sBuffer, TableParser.m_sStartColumnTag2, head);
 
             // make sure that the end tag is closer than the start tag,
             // otherwise we are in a column
-            if (((lastEndTag > -1) && (lastStartTag > -1))
-                    && (lastStartTag > lastEndTag)) {
-                ibrStart.value = caselessFindStr(sBuffer,
-                        TableParser.m_sEndColumnTag2, head);
+            if (((lastEndTag > -1) && (lastStartTag > -1)) && (lastStartTag > lastEndTag)) {
+                ibrStart.value = caselessFindStr(sBuffer, TableParser.m_sEndColumnTag2, head);
                 if (ibrStart.value == -1) {
                     return sExtracted;
                 }
@@ -621,20 +589,16 @@ public class TableParser {
             }
 
             // look back for column end tag
-            lastEndTag = caselessFindStrReverse(sBuffer,
-                    TableParser.m_sEndColumnTag2, tail);
+            lastEndTag = caselessFindStrReverse(sBuffer, TableParser.m_sEndColumnTag2, tail);
 
             // look back for column start tag
-            lastStartTag = caselessFindStrReverse(sBuffer,
-                    TableParser.m_sStartColumnTag2, tail);
+            lastStartTag = caselessFindStrReverse(sBuffer, TableParser.m_sStartColumnTag2, tail);
 
             // make sure that the end tag is closer than the start tag,
             // otherwise we are in a column
-            if (((lastEndTag > -1) && (lastStartTag > -1))
-                    && (lastStartTag > lastEndTag)
+            if (((lastEndTag > -1) && (lastStartTag > -1)) && (lastStartTag > lastEndTag)
                     && (lastStartTag > ibrStart.value)) {
-                ibrStart.value = caselessFindStr(sBuffer,
-                        TableParser.m_sEndColumnTag2, tail);
+                ibrStart.value = caselessFindStr(sBuffer, TableParser.m_sEndColumnTag2, tail);
                 if (ibrStart.value == -1) {
                     return sExtracted;
                 }

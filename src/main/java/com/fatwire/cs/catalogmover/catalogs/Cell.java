@@ -82,8 +82,8 @@ class Key implements Comparable<Key> {
         }
         if ((row == o.row) && (column < o.column)) {
             return -1;
-            //		if (column < o.column)
-            //			return -1;
+            // if (column < o.column)
+            // return -1;
         }
 
         return 1;

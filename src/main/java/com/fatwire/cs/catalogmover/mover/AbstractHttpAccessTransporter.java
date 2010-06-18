@@ -39,7 +39,8 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param csPath the csPath to set
+     * @param csPath
+     *            the csPath to set
      */
     public void setCsPath(URI csPath) {
         this.csPath = csPath;
@@ -53,7 +54,8 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param password the password to set
+     * @param password
+     *            the password to set
      */
     public void setPassword(String password) {
         this.password = password;
@@ -67,10 +69,11 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param proxyHost the proxyHost to set
+     * @param proxyHost
+     *            the proxyHost to set
      */
     public void setProxyHost(String proxyHost) {
-        this.proxyHost = StringUtils.isBlank(proxyHost)?null:proxyHost;
+        this.proxyHost = StringUtils.isBlank(proxyHost) ? null : proxyHost;
     }
 
     /**
@@ -81,7 +84,8 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param proxyPort the proxyPort to set
+     * @param proxyPort
+     *            the proxyPort to set
      */
     public void setProxyPort(int proxyPort) {
         this.proxyPort = proxyPort;
@@ -95,7 +99,8 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param username the username to set
+     * @param username
+     *            the username to set
      */
     public void setUsername(String username) {
         this.username = username;
@@ -109,10 +114,11 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param proxyPassword the proxyPassword to set
+     * @param proxyPassword
+     *            the proxyPassword to set
      */
     public void setProxyPassword(String proxyPassword) {
-        this.proxyPassword = StringUtils.isBlank(proxyPassword)?null:proxyPassword;
+        this.proxyPassword = StringUtils.isBlank(proxyPassword) ? null : proxyPassword;
     }
 
     /**
@@ -123,11 +129,12 @@ public abstract class AbstractHttpAccessTransporter {
     }
 
     /**
-     * @param proxyUsername the proxyUsername to set
+     * @param proxyUsername
+     *            the proxyUsername to set
      */
     public void setProxyUsername(String proxyUsername) {
-        
-        this.proxyUsername = StringUtils.isBlank(proxyUsername)?null:proxyUsername;
+
+        this.proxyUsername = StringUtils.isBlank(proxyUsername) ? null : proxyUsername;
     }
 
 }

@@ -6,8 +6,7 @@ import com.fatwire.cs.catalogmover.mover.RemoteCatalog;
 
 public class ExportCatalogCommand extends FilteringExportCatalogCommand {
 
-    public ExportCatalogCommand(final BaseCatalogMover cm,
-            final RemoteCatalog catalog, final IProgressMonitor monitor) {
+    public ExportCatalogCommand(final BaseCatalogMover cm, final RemoteCatalog catalog, final IProgressMonitor monitor) {
         super(cm, catalog, null, null, monitor);
 
     }

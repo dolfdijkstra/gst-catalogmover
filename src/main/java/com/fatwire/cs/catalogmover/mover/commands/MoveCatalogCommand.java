@@ -10,8 +10,7 @@ public class MoveCatalogCommand extends AbstractCatalogMoverCommand {
 
     private final IProgressMonitor monitor;
 
-    public MoveCatalogCommand(final BaseCatalogMover cm, final LocalCatalog catalog,
-            final IProgressMonitor monitor) {
+    public MoveCatalogCommand(final BaseCatalogMover cm, final LocalCatalog catalog, final IProgressMonitor monitor) {
         super(cm);
         this.catalog = catalog;
         this.monitor = monitor;
@@ -19,18 +18,17 @@ public class MoveCatalogCommand extends AbstractCatalogMoverCommand {
 
     @Override
     public void execute() throws CatalogMoverException {
-        monitor.beginTask("Moving rows to ContentServer for catalog "
-                + catalog.getName(), -1);
+        monitor.beginTask("Moving rows to ContentServer for catalog " + catalog.getName(), -1);
 
         new MirrorGetConfigCommand(catalogMover).execute();
-        CreateTempTableCommand tempTableCommand = new CreateTempTableCommand(
-                catalogMover, catalog.getName(), catalog.getTableKey());
+        CreateTempTableCommand tempTableCommand = new CreateTempTableCommand(catalogMover, catalog.getName(), catalog
+                .getTableKey());
         tempTableCommand.execute();
-        MoveCatalogRowsCommand moveCatalogRowsCommand = new MoveCatalogRowsCommand(
-                catalogMover, tempTableCommand.getTempTableName(), catalog.getTableKey(),
-                catalog.getUploadPath(), catalog.getRows(), monitor);
+        MoveCatalogRowsCommand moveCatalogRowsCommand = new MoveCatalogRowsCommand(catalogMover, tempTableCommand
+                .getTempTableName(), catalog.getTableKey(), catalog.getUploadPath(), catalog.getRows(), monitor);
         moveCatalogRowsCommand.execute();
-        CommitCommand commitCommand = new CommitCommand(catalogMover,catalog.getName(),tempTableCommand.getTempTableName(), catalog.getTableKey());
+        CommitCommand commitCommand = new CommitCommand(catalogMover, catalog.getName(), tempTableCommand
+                .getTempTableName(), catalog.getTableKey());
         commitCommand.commit();
 
     }
