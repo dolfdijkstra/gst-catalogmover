@@ -1,5 +1,4 @@
 /*
- * $Logfile:$ $Revision:$ $Date:$
  *
  * Copyright (c) 2005 FatWire Corporation, All Rights Reserved.
  */
@@ -21,7 +20,7 @@ import java.util.Iterator;
  * 
  * 
  * 
- * Typical usage is like this: <code>
+ * Typical usage is like this: <pre>
  final List<Integer> l = new LinkedList<Integer>();
  for (int i = 0; i < 100; i++) {
  l.add(i);
@@ -32,9 +31,9 @@ import java.util.Iterator;
  for (final Integer u : i) {
  System.out.println(j + ":" + u);
  }
- *j++;
- *}
- </code>
+ j++;
+ }
+ </pre>
  * 
  * <p>
  * The returned Iterable.iterator is backed by the iterator of the original
@@ -60,7 +59,7 @@ import java.util.Iterator;
  * 
  */
 /**
- * @author Dolf.Dijkstra
+ * @author Dolf Dijkstra
  * 
  * @param <T>
  */
@@ -81,8 +80,7 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
      */
     public ChunkedIterable(final Iterable<T> iterable, final int chunkSize) {
         if (chunkSize <= 0) {
-            throw new IllegalArgumentException(
-                    "Chunk size must be greater than 0");
+            throw new IllegalArgumentException("Chunk size must be greater than 0");
         }
         if (iterable == null) {
             throw new NullPointerException("Iterable can not be null.");
@@ -123,10 +121,8 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
          * @return Iterable that a chunk of the original iterable
          */
         public Iterable<T> next() {
-            if (chunckCount > 0 && lastCount == progressCount
-                    && iterator.hasNext())
-                throw new IllegalStateException(
-                        "Last iteration did not consume any elements from chunk");
+            if (chunckCount > 0 && lastCount == progressCount && iterator.hasNext())
+                throw new IllegalStateException("Last iteration did not consume any elements from chunk");
             chunckCount++;
             lastCount = progressCount;
             return new Iterable<T>() {
@@ -165,11 +161,14 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
             assert false : "Unsupported operation remove()";
         }
     }
-/**
- * @return an Iterator that iterates over an Iterable with the maximum size of chunkSize
- * 
- * @throws IllegalStateException if nothing was consumed of the chunk
- */
+
+    /**
+     * @return an Iterator that iterates over an Iterable with the maximum size
+     *         of chunkSize
+     * 
+     * @throws IllegalStateException
+     *             if nothing was consumed of the chunk
+     */
     public Iterator<Iterable<T>> iterator() {
         return new ChunkedIterator(this._iterable.iterator());
     }
