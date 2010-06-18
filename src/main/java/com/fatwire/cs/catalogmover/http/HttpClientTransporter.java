@@ -43,7 +43,8 @@ public class HttpClientTransporter extends AbstractHttpAccessTransporter impleme
     public Response execute(Post post) {
         PostMethod pm = post.createMethod();
         try {
-            int status = client.executeMethod(pm);
+            
+            client.executeMethod(pm);
 
         } catch (HttpException e) {
             throw new CatalogMoverException(e.getMessage(), e);
