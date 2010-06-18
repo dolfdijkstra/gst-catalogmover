@@ -16,24 +16,25 @@ package com.fatwire.cs.catalogmover.util.chunk;
 import java.util.Iterator;
 
 /**
- * Evolution of ChunkedListIterable so that it is now a Iterable
+ * <p>Evolution of ChunkedListIterable so that it is now a Iterable</p>
  * 
+ * <p>Typical usage is like this:</p>
  * 
+ * <pre>
+ * final List&lt;Integer&gt; l = new LinkedList&lt;Integer&gt;();
+ * for (int i = 0; i &lt; 100; i++) {
+ *     l.add(i);
+ * }
+ * int j = 0;
+ * for (final Iterable&lt;Integer&gt; i : new ChunkedIterable&lt;Integer&gt;(l, 10)) {
+ *     System.out.println(j);
+ *     for (final Integer u : i) {
+ *         System.out.println(j + &quot;:&quot; + u);
+ *     }
+ *     j++;
+ * }
  * 
- * Typical usage is like this: <pre>
- final List<Integer> l = new LinkedList<Integer>();
- for (int i = 0; i < 100; i++) {
- l.add(i);
- }
- int j = 0;
- for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l, 10)) {
- System.out.println(j);
- for (final Integer u : i) {
- System.out.println(j + ":" + u);
- }
- j++;
- }
- </pre>
+ * </pre>
  * 
  * <p>
  * The returned Iterable.iterator is backed by the iterator of the original
@@ -41,24 +42,23 @@ import java.util.Iterator;
  * then once.
  * </p>
  * 
- * In the code below, the second loop over <italic>i</italic>will not return
- * any results: <code>
- for (final Iterable<Entry<Integer, String>> i : new ChunkedIterable<Entry<Integer, String>>(
- l.entrySet(), 10)) {
- System.out.println(j);
- for (final Entry<Integer, String> u : i) {
- System.out.println(j + ":" + u);
- }
- for (final Entry<Integer, String> u : i) {
- System.out.println(j + ":" + u);
- }
-
- j++;
- }
- </code>
+ * In the code below, the second loop over <italic>i</italic>will not return any
+ * results:
  * 
- */
-/**
+ * <pre>
+ * for (final Iterable&lt;Entry&lt;Integer, String&gt;&gt; i : new ChunkedIterable&lt;Entry&lt;Integer, String&gt;&gt;(l.entrySet(), 10)) {
+ *     System.out.println(j);
+ *     for (final Entry&lt;Integer, String&gt; u : i) {
+ *         System.out.println(j + &quot;:&quot; + u);
+ *     }
+ *     for (final Entry&lt;Integer, String&gt; u : i) {
+ *         System.out.println(j + &quot;:&quot; + u);
+ *     }
+ * 
+ *     j++;
+ * }
+ * </pre>
+ * 
  * @author Dolf Dijkstra
  * 
  * @param <T>
@@ -71,14 +71,12 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
     /**
      * Creates an instance given an iterable and chunk size.
      * 
-     * @param iterable
-     *            Original iterable
-     * @param chunkSize
-     *            size of each chunk
-     * @throws IllegalArgumentException
-     *             if chunkSize is <= 0.
+     * @param iterable Original iterable
+     * @param chunkSize size of each chunk
+     * @throws IllegalArgumentException if chunkSize is <= 0.
      */
     public ChunkedIterable(final Iterable<T> iterable, final int chunkSize) {
+
         if (chunkSize <= 0) {
             throw new IllegalArgumentException("Chunk size must be greater than 0");
         }
@@ -166,8 +164,7 @@ public class ChunkedIterable<T> implements Iterable<Iterable<T>> {
      * @return an Iterator that iterates over an Iterable with the maximum size
      *         of chunkSize
      * 
-     * @throws IllegalStateException
-     *             if nothing was consumed of the chunk
+     * @throws IllegalStateException if nothing was consumed of the chunk
      */
     public Iterator<Iterable<T>> iterator() {
         return new ChunkedIterator(this._iterable.iterator());
