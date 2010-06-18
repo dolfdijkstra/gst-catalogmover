@@ -1,0 +1,24 @@
+CatalogMover
+
+  This project was created out of the need to do diffs on elements.
+  
+  Traditional CatalogMover does not order the rows in any catalog.html file in a predetermined
+  order, making diffs difficult.
+  
+Usage
+
+  Sample properties file
+
+-----
+host=http://localhost:8080/cs/CatalogManager
+user=ContentServer
+password=password
+#target=target/localhost_8080
+pattern=Support/.*
+#proxy_host=myproxyhost
+#proxy_port=8080"
+#proxy_user=authproxy
+#proxy_password=letmein
+#catalogs=ElementCatalog,SiteCatalog,SystemSQL (Setting SystemInfo will download all catalogs)
+
+--------  
