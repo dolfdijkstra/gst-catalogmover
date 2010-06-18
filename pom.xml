@@ -2,44 +2,36 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
     http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fatwire.gst</groupId>
+        <artifactId>gst-parent</artifactId>
+        <version>1</version>
+    </parent>
     <groupId>com.fatwire.gst</groupId>
     <artifactId>gst-catalogmover</artifactId>
+    <version>2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <version>1.1.0-SNAPSHOT</version>
     <name>FatWire GST: ContentServer CatalogMover</name>
-    <url>http://www.nl.fatwire.com/dta/gst-catalogmover</url>
+    <url>http://www.nl.fatwire.com/dta/contrib/gst-catalogmover</url>
     <inceptionYear>2007</inceptionYear>
+    <organization>
+        <name>FatWire</name>
+        <url>http://www.fatwire.com</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Dolf Dijkstra</name>
+        </developer>
+    </developers>
     <scm>
         <connection>scm:svn:http://www.nl.fatwire.com/svn/dta/contrib/gst-catalogmover/trunk</connection>
-        <developerConnection>scm:svn:http://www.fatwire.com/svn/dta/contrib/gst-catalogmover/trunk</developerConnection>
+        <developerConnection>scm:svn:http://www.nl.fatwire.com/svn/dta/contrib/gst-catalogmover/trunk</developerConnection>
         <url>http://www.nl.fatwire.com/viewvc/dta/contrib/gst-catalogmover/trunk</url>
     </scm>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>logkit</groupId>
-                    <artifactId>logkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>avalon-framework</groupId>
-                    <artifactId>avalon-framework</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -87,19 +79,8 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <!--
-                        <excludes> <exclude>none</exclude> </excludes> <includes> <include>**/systest/**</include> </includes>
-                    -->
                     <systemProperties>
                         <property>
                             <!--  disable integration tests -->
@@ -135,14 +116,20 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <id>make-assembly</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>single</goal> <!-- goals == mojos -->
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <site>
+            <id>website</id>
+            <url>scp://d670-1.nl.fatwire.com/var/www/html/dta/contrib/gst-catalogmover</url>
+        </site>
+    </distributionManagement>
 </project>
