@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,18 +13,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
-
-import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.HttpState;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.ProxyHost;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 
 import com.fatwire.cs.catalogmover.catalogs.Row;
 import com.fatwire.cs.catalogmover.catalogs.filter.Filter;
@@ -38,18 +27,44 @@ import com.fatwire.cs.catalogmover.mover.commands.ExportAllCatalogsCommand;
 import com.fatwire.cs.catalogmover.mover.commands.FilteringExportCatalogCommand;
 import com.fatwire.cs.catalogmover.util.HttpClientUtil;
 
+import org.apache.commons.httpclient.Credentials;
+import org.apache.commons.httpclient.HttpState;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.ProxyHost;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
+
 public class Main {
 
     static void initLog4j() {
-        ConsoleAppender appender = new ConsoleAppender();
-        appender.setLayout(new PatternLayout("%-5p %c [%.10t]: %m%n"));
-        appender.setName("console");
-        appender.activateOptions();
-        Logger.getRootLogger().addAppender(appender);
-        Logger.getRootLogger().setLevel(Level.INFO);
-        Logger.getLogger("com.fatwire").setLevel(Level.INFO);
-        Logger.getLogger("httpclient.wire.header").setLevel(Level.INFO);
-        // Logger.getLogger(org.apache.commons.httpclient.HttpConnection.class).setLevel(Level.TRACE);
+        URL p = Thread.currentThread().getContextClassLoader().getResource("log4j.properties");
+        if (p != null) {
+            PropertyConfigurator.configure(p);
+        } else {
+            p = Thread.currentThread().getContextClassLoader().getResource("log4j.xml");
+            if (p != null) {
+                org.apache.log4j.xml.DOMConfigurator.configure(p);
+            }
+        }
+
+        if (p == null) {
+
+            ConsoleAppender appender = new ConsoleAppender();
+            appender.setLayout(new PatternLayout("%-5p %c [%.10t]: %m%n"));
+            appender.setName("console");
+            appender.activateOptions();
+            Logger.getRootLogger().addAppender(appender);
+            Logger.getRootLogger().setLevel(Level.INFO);
+            Logger.getLogger("com.fatwire").setLevel(Level.INFO);
+            Logger.getLogger("httpclient.wire.header").setLevel(Level.INFO);
+            // Logger.getLogger(org.apache.commons.httpclient.HttpConnection.class).setLevel(Level.TRACE);
+        }
     }
 
     /**
