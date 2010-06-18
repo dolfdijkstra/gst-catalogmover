@@ -1,10 +1,15 @@
 package com.fatwire.cs.catalogmover.mover;
 
+/**
+ * ProgressMonitor that prints a dot to standard out on each subtask
+ * 
+ * @author Dolf Dijkstra
+ * 
+ */
 public class StdOutProgressMonitor implements IProgressMonitor {
-    private String task;
 
     public void beginTask(final String string, final int i) {
-        task = string;
+
         System.out.println(string);
         if (string == null) {
             new Exception().printStackTrace();
