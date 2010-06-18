@@ -40,7 +40,7 @@ public class DiffTest extends TestCase {
         final List<String> l1 = Arrays.asList("a,b,c".split(","));
         final List<String> l2 = Arrays.asList("a".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("b,c".split(",")), result);
 
     }
@@ -49,7 +49,7 @@ public class DiffTest extends TestCase {
         final List<String> l1 = Arrays.asList("a,b,c".split(","));
         final List<String> l2 = Arrays.asList("a,c".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("b".split(",")), result);
 
     }
@@ -58,7 +58,7 @@ public class DiffTest extends TestCase {
         final List<String> l1 = Arrays.asList("a,b,c".split(","));
         final List<String> l2 = Arrays.asList("b".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("a,c".split(",")), result);
 
     }
@@ -67,7 +67,7 @@ public class DiffTest extends TestCase {
         final List<String> l1 = Arrays.asList("a,b,c,d,e,f,g,h".split(","));
         final List<String> l2 = Arrays.asList("a,b,c,e,f,g,h".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("d".split(",")), result);
 
     }
@@ -76,23 +76,25 @@ public class DiffTest extends TestCase {
         final List<String> l1 = Arrays.asList("a,b,c,d,e,f,g,h".split(","));
         final List<String> l2 = Arrays.asList("a,b,c,e,f,g,h".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("d".split(",")), result);
 
     }
+
     public void testDiff6() {
         final List<String> l1 = Arrays.asList("a,b,c,g,h".split(","));
         final List<String> l2 = Arrays.asList("a,b,c,e,f,h".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("g".split(",")), result);
 
     }
+
     public void testDiff7() {
         final List<String> l1 = Arrays.asList("b,c,g,h".split(","));
         final List<String> l2 = Arrays.asList("a,b,c,e,f,h".split(","));
 
-        List result = result(l1.iterator(), l2.iterator());
+        List<?> result = result(l1.iterator(), l2.iterator());
         assertEquals(Arrays.asList("g".split(",")), result);
 
     }
