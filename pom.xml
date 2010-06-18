@@ -2,25 +2,18 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
     http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.fatwire.cs.support.tools</groupId>
-        <artifactId>tools-parent</artifactId>
-        <version>3</version>
-    </parent>
-    <groupId>com.fatwire.cs</groupId>
-    <artifactId>catalogmover</artifactId>
+    <groupId>com.fatwire.gst</groupId>
+    <artifactId>gst-catalogmover</artifactId>
     <packaging>jar</packaging>
     <version>1.1.0-SNAPSHOT</version>
-    <name>ContentServer CatalogMover</name>
-    <url>http://www.nl.fatwire.com</url>
+    <name>FatWire GST: ContentServer CatalogMover</name>
+    <url>http://www.nl.fatwire.com/dta/gst-catalogmover</url>
+    <inceptionYear>2007</inceptionYear>
     <scm>
-        <connection>scm:svn:http://d670-1.nl.fatwire.com/svn/support/support-tools/trunk/catalogmover/</connection>
-        <developerConnection>
-            scm:svn:http://d670-1.nl.fatwire.com/svn/support/support-tools/trunk/catalogmover/
-        </developerConnection>
-        <url>http://d670-1.nl.fatwire.com/viewvc/support/support-tools/trunk/catalogmover/</url>
+        <connection>scm:svn:http://www.nl.fatwire.com/svn/dta/contrib/gst-catalogmover/trunk</connection>
+        <developerConnection>scm:svn:http://www.fatwire.com/svn/dta/contrib/gst-catalogmover/trunk</developerConnection>
+        <url>http://www.nl.fatwire.com/viewvc/dta/contrib/gst-catalogmover/trunk</url>
     </scm>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -57,16 +50,6 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
-        <!--
-            <dependency> <groupId>com.fatwire.cs.core</groupId> <artifactId>cs-core</artifactId> <version>7.0</version>
-            </dependency>
-        
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -123,7 +106,6 @@
                             <name>it.disable.test</name>
                             <value>true</value>
                         </property>
-
                         <property>
                             <name>it.url</name>
                             <value>http://localhost:8080/cs/CatalogManager</value>
@@ -139,7 +121,6 @@
                     </systemProperties>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -151,7 +132,6 @@
                             <mainClass>com.fatwire.cs.catalogmover.app.Main</mainClass>
                         </manifest>
                     </archive>
-
                 </configuration>
                 <executions>
                     <execution>
@@ -162,7 +142,6 @@
                         </goals>
                     </execution>
                 </executions>
-
             </plugin>
         </plugins>
     </build>
