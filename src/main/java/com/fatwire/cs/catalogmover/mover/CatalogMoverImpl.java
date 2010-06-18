@@ -3,7 +3,7 @@ package com.fatwire.cs.catalogmover.mover;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @author Dolf.Dijkstra
+ * @author Dolf Dijkstra
  * @since 11-mei-2007
  */
 public class CatalogMoverImpl extends BaseCatalogMover {

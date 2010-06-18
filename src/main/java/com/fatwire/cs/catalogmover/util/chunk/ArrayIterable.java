@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 /**
  * Makes an Iterable from an array, so an array can be used in methods that
  * expect an iterable
- * 
- * @author Dolf.Dijkstra
+ *
+ * @author Dolf Dijkstra
  * @since Jun 29, 2007
  * @param <T>
  */

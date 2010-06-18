@@ -1,7 +1,7 @@
 package com.fatwire.cs.catalogmover.util.chunk;
 
 /**
- * @author Dolf.Dijkstra
+ * @author Dolf Dijkstra
  * @since Jul 5, 2007
  * @param <T>
  * @param <E>
@@ -22,7 +22,7 @@ public class SimpleChunkProcessor<T, E extends Exception> implements ChunkProces
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.fatwire.cs.catalogmover.util.chunk.ChunkProcessor#process(com.fatwire
      * .cs.catalogmover.util.chunk.IterableProcessor)

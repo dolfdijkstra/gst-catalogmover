@@ -1,14 +1,14 @@
 /**
- * 
+ *
  */
 package com.fatwire.cs.catalogmover.util.chunk;
 
 /**
  * The base ChunkProcessor to pass a chunk to the caller to be processed.
- * 
- * @author Dolf.Dijkstra
+ *
+ * @author Dolf Dijkstra
  * @since Jun 25, 2007
- * 
+ *
  */
 
 public class BaseIterableProcessor<T, E extends Exception> implements IterableProcessor<T, E> {
@@ -23,12 +23,12 @@ public class BaseIterableProcessor<T, E extends Exception> implements IterablePr
      * This method calls processor.endChunk() in a finally block, so it is
      * guaranteed that endChunk() is called for each previous call to
      * beginChunk();
-     * 
+     *
      * All thrown exceptions are not catched
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.fatwire.cs.catalogmover.util.chunk.IterableProcessor#process(java
      * .lang.Iterable)

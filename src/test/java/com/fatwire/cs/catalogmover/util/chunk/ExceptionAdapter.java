@@ -6,15 +6,15 @@ import java.io.PrintWriter;
 
 /**
  * Code borrowed from Bruce Eckel (http://www.mindview.net/Etc/Discussions/CheckedExceptions)
- * 
+ *
  * It converts any checked exception into a RuntimeException while preserving all the information from the checked exception.
- * 
- * @author Dolf.Dijkstra
+ *
+ * @author Dolf Dijkstra
  * @since Jun 29, 2007
  */
 public class ExceptionAdapter extends RuntimeException {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -6725464553770535043L;
 
@@ -80,7 +80,7 @@ public class ExceptionAdapter extends RuntimeException {
 
 
     /**
-     * 
+     *
      * @see java.lang.Throwable#printStackTrace()
      */
     public void printStackTrace() {

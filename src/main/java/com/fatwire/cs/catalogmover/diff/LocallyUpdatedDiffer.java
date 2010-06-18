@@ -9,8 +9,8 @@ import com.fatwire.cs.catalogmover.mover.LocalCatalog;
 /**
  * an Iterable of rows with url fields that are updated since the a passed in
  * timestamp
- * 
- * @author Dolf.Dijkstra
+ *
+ * @author Dolf Dijkstra
  * @since 18-mei-2007
  */
 public class LocallyUpdatedDiffer implements Iterable<Row> {

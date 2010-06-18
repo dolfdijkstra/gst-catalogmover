@@ -31,8 +31,8 @@ import com.fatwire.cs.catalogmover.util.StringUtils;
 /**
  * Export command for a ContentSever Catalog that uses an include and exclude
  * Filter for selecting the rows to export.
- * 
- * @author Dolf.Dijkstra
+ *
+ * @author Dolf Dijkstra
  * @since Nov 18, 2009
  * @see CatalogMoverCommand
  * @see Filter

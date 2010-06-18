@@ -8,8 +8,8 @@ import com.fatwire.cs.catalogmover.catalogs.Row;
 
 /**
  * created a list of PatternBasedRowFilters.
- * 
- * @author Dolf.Dijkstra
+ *
+ * @author Dolf Dijkstra
  * @since 6-jun-2007
  * @see PatternBasedRowFilter
  */
@@ -18,10 +18,10 @@ public class PatternBasedRowFilterFactory {
     }
 
     /**
-     * 
+     *
      * PatternBasedRowFilterFactory.create(new
      * String[]{"elementname","OpenMarket/.*","elementname","fatwire/.*"});
-     * 
+     *
      * @param pairs
      *            a paired array of Strings. The first elemement of a pair holds
      *            the columnname, the second the pattern to check
