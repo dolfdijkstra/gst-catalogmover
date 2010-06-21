@@ -16,7 +16,7 @@ Usage
   
   * with the settings defined on the command-line:
   
-  <<<java -jar gst-catalogmover-x.x.jar --host=http://localhost:8080/cs/CatalogManager --user=ContentServer --password=password --pattern=Support/.*>>>
+  <<<java -jar gst-catalogmover-x.x-jar-with-dependencies.jar --host=http://localhost:8080/cs/CatalogManager --user=ContentServer --password=password --pattern=Support/.*>>>
   
   * or from a properties file:
   
