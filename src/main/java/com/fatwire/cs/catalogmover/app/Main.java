@@ -1,8 +1,10 @@
 package com.fatwire.cs.catalogmover.app;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -102,6 +104,9 @@ public class Main {
             throw new IllegalArgumentException("The parameter 'host' can not be blank");
         if (StringUtils.isBlank(p.getProperty("user")))
             throw new IllegalArgumentException("The parameter 'user' can not be blank");
+        if (StringUtils.isBlank(p.getProperty("password"))) {
+            p.setProperty("password", readPassword());
+        }
         if (StringUtils.isBlank(p.getProperty("password")))
             throw new IllegalArgumentException("The parameter 'password' can not be blank");
 
@@ -139,8 +144,8 @@ public class Main {
         // catalogs.add("SystemInfo");
 
         try {
-            doMain(uri, username, password, proxyHost, proxyPort, proxyUsername, proxyPassword, populateDirectory,
-                    pattern, catalogs);
+            new Main().export(uri, username, password, proxyHost, proxyPort, proxyUsername, proxyPassword,
+                    populateDirectory, pattern, catalogs);
             System.out.println("done");
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,7 +154,23 @@ public class Main {
 
     }
 
-    public static void doMain(URI uri, String username, String password, String proxyHost, int proxyPort,
+    public static String readPassword() {
+        System.out.print("Enter password: ");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String pw = null;
+
+        try {
+            pw = br.readLine();
+        } catch (IOException ioe) {
+            System.out.println("IO error trying to read your password!");
+            System.exit(1);
+        }
+        return pw;
+    }
+
+    public void export(URI uri, String username, String password, String proxyHost, int proxyPort,
             String proxyUsername, String proxyPassword, File populateDirectory, String pattern, Set<String> catalogs)
             throws CatalogMoverException {
 
