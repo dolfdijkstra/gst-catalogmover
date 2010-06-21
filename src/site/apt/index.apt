@@ -1,11 +1,26 @@
 CatalogMover
 
-  This project was created out of the need to do diffs on elements.
+  This project was created out of the need to do diffs on elements. It is a partial replacement of CatalogMover, with  more potential.
   
-  Traditional CatalogMover does not order the rows in any catalog.html file in a predetermined
+
+  
+  Traditional CatalogMover does not order the rows in any catalog.html file in a pre-determined
   order, making diffs difficult.
-  
+
+  Currrently on the export functionality is exposed via the command-line. There is also import and advanced filtering and selection possible. 
+  Currently primary row regex pattern matching is implemented.  
+    
 Usage
+
+  There are two ways to invoke the tool
+  
+  * with the settings defined on the command-line:
+  
+  <<<java -jar gst-catalogmover-x.x.jar --host=http://localhost:8080/cs/CatalogManager --user=ContentServer --password=password --pattern=Support/.*>>>
+  
+  * or from a properties file:
+  
+  <<<java -jar gst-catalogmover-x.x.jar \<file.properties\> >>>
 
   Sample properties file
 
@@ -16,9 +31,43 @@ password=password
 #target=target/localhost_8080
 pattern=Support/.*
 #proxy_host=myproxyhost
-#proxy_port=8080"
+#proxy_port=8080
 #proxy_user=authproxy
 #proxy_password=letmein
-#catalogs=ElementCatalog,SiteCatalog,SystemSQL (Setting SystemInfo will download all catalogs)
+#catalogs=ElementCatalog,SiteCatalog,SystemSQL
+--------
 
---------  
+Options
+ 
+  The property file or the command like accepts various options. The command-line version takes the same options as the properties file. 
+  The options on the command like must be pre-pended with <<<-->>> and the key needs to be followed by a equals (=) sign and the value.   
+    
+    * host: [REQUIRED] Host,port and path to the CatalogManager servlet
+
+    * user: [REQUIRED] Username of the ContentServer user
+
+    * password: [OPTIONAL] Password of the ContentServer user. If not provided, you will be asked to enter it.
+
+    * pattern: [OPTIONAL] Regular expression (java syntax) for the primary key selector. 
+
+    * target: [OPTIONAL] the location where the catalogs will be saved.\    
+      Defaults to  target/\<host\>_\<port\>
+   
+    * proxy_host: [OPTIONAL] 
+    
+    * proxy_port: [OPTIONAL] 
+    
+    * proxy_user: [OPTIONAL]
+     
+    * proxy_password: [OPTIONAL]
+     
+    * catalogs: [OPTIONAL]  the catalogs to download, comma seperated.\     
+      Default values are <<<ElementCatalog,SiteCatalog,SystemSQL>>>.\       
+      Setting this to SystemInfo will download all catalogs!
+    
+    
+  Further use
+    There is a powerfull architecture implemented, that allows for very advanced selection of tables and rows, based on an event model. 
+    The export of one row, can lead to download of other rows. Check out the source code and read the code and javadocs for further inspriration.
+    
+        
