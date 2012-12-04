@@ -199,14 +199,16 @@ public class Main {
 
             state.setProxyCredentials(AuthScope.ANY, credentials);
         }
-        ProxyHost proxyHost1 = StringUtils.isNotBlank(proxyHost) ? new ProxyHost(proxyHost, proxyPort) : null;
-        HttpClientTransporter transporter = new HttpClientTransporter(conManager, state, proxyHost1);
+        ProxyHost proxy = StringUtils.isNotBlank(proxyHost) ? new ProxyHost(proxyHost, proxyPort) : null;
+        HttpClientTransporter transporter = new HttpClientTransporter(conManager, state, proxy);
 
         transporter.setCsPath(uri);
         transporter.setUsername(username);
         transporter.setPassword(password);
+        transporter.login();
         ExecutorService executor = Executors.newFixedThreadPool(size);
         final CatalogExporter cm = new CatalogExporter(transporter, executor);
+        
         try {
             final IProgressMonitor monitor = new StdOutProgressMonitor();
             if ((catalogs.size() == 1) && catalogs.contains("SystemInfo")) {

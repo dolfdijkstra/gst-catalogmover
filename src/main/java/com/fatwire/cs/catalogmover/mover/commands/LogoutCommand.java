@@ -25,32 +25,33 @@ import com.fatwire.cs.catalogmover.mover.CatalogMoverException;
 import com.fatwire.cs.catalogmover.mover.NoStatusInResponseException;
 import com.fatwire.cs.catalogmover.util.ResponseStatusCode;
 
-public class LogoutCommand extends AbstractCatalogMoverCommand implements CatalogMoverCommand {
-    protected final static Log log = LogFactory.getLog(LogoutCommand.class);
+public class LogoutCommand extends AbstractCatalogMoverCommand {
+	protected final static Log log = LogFactory.getLog(LogoutCommand.class);
 
-    public LogoutCommand(final BaseCatalogMover cm) {
-        super(cm);
-    }
+	public LogoutCommand(final BaseCatalogMover cm) {
+		super(cm);
+	}
 
-    public void execute() throws CatalogMoverException {
-        logout();
-    }
+	public void execute() throws CatalogMoverException {
+		logout();
+	}
 
-    /**
-     * @throws CatalogMoverException
-     */
-    protected void logout() throws CatalogMoverException {
-        final Post post = prepareNewPost();
-        post.addMultipartData("ftcmd", "logout");
-        post.addMultipartData("killsession", "true");
+	/**
+	 * @throws CatalogMoverException
+	 */
+	protected void logout() throws CatalogMoverException {
+		final Post post = prepareNewPost();
+		post.addMultipartData("ftcmd", "logout");
+		post.addMultipartData("killsession", "true");
 
-        final ResponseStatusCode status = catalogMover.executeForResponseStatusCode(post);
-        if (status.getResult()) {
-            log.info(status.toString());
-        } else {
-            throw new NoStatusInResponseException();
-        }
+		final ResponseStatusCode status = catalogMover
+				.executeForResponseStatusCode(post);
+		if (status.getResult()) {
+			log.info(status.toString());
+		} else {
+			throw new NoStatusInResponseException();
+		}
 
-    }
+	}
 
 }

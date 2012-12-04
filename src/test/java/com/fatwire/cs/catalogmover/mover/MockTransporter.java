@@ -44,4 +44,10 @@ public class MockTransporter implements Transporter {
         return "mocku";
     }
 
+	@Override
+	public void decorate(Post post) {
+
+		
+	}
+
 }

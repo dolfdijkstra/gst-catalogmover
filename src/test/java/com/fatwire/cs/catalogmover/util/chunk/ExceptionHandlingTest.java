@@ -49,7 +49,8 @@ public class ExceptionHandlingTest extends TestCase {
     public void testHandling() {
 
         Worker<IOException> worker = new Worker<IOException>(handler);
-        List<ICommand> list = new ArrayList<ICommand>();
+        @SuppressWarnings("rawtypes")
+		List<ICommand> list = new ArrayList<ICommand>();
         list.add(new Command());
         worker.doWork(list);
     }
@@ -57,7 +58,8 @@ public class ExceptionHandlingTest extends TestCase {
     public void testRTEHandling() {
 
         Worker<IOException> worker = new Worker<IOException>(handler);
-        List<ICommand> list = new ArrayList<ICommand>();
+        @SuppressWarnings("rawtypes")
+		List<ICommand> list = new ArrayList<ICommand>();
         list.add(new RuntimeThrowingCommand());
         try {
             worker.doWork(list);
@@ -98,7 +100,7 @@ public class ExceptionHandlingTest extends TestCase {
             this.handler = handler;
         }
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         void doWork(Iterable<ICommand> iterable) {
             for (ICommand i : iterable) {
 

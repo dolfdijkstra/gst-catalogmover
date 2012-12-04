@@ -46,10 +46,10 @@ public class ChunkedIterableTest extends TestCase {
         int y = 0;
         for (final Iterable<Entry<Integer, String>> i : new ChunkedIterable<Entry<Integer, String>>(
                 l.entrySet(), 10)) {
-            for (final Entry<Integer, String> u : i) {
+            for (@SuppressWarnings("unused") final Entry<Integer, String> u : i) {
                 y++;
             }
-            for (final Entry<Integer, String> u : i) {
+            for (@SuppressWarnings("unused") final Entry<Integer, String> u : i) {
                 y++;
             }
 
@@ -71,7 +71,7 @@ public class ChunkedIterableTest extends TestCase {
         int y = 0;
         for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l,
                 chunckSize)) {
-            for (final Integer u : i) {
+            for (@SuppressWarnings("unused") final Integer u : i) {
                 y++;
             }
             j++;
@@ -88,7 +88,7 @@ public class ChunkedIterableTest extends TestCase {
         }
 
         try {
-            for (final Iterable<Integer> i : new ChunkedIterable<Integer>(l,
+            for (@SuppressWarnings("unused") final Iterable<Integer> i : new ChunkedIterable<Integer>(l,
                     chunckSize)) {
 
             }

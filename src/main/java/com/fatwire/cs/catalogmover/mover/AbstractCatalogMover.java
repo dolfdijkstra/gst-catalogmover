@@ -56,9 +56,7 @@ public abstract class AbstractCatalogMover {
 
     protected Post prepareNewPost() {
         final Post post = new Post();
-        post.setUrl(transporter.getCsPath());
-        post.addMultipartData("authusername", transporter.getUsername());
-        post.addMultipartData("authpassword", transporter.getPassword());
+        transporter.decorate(post);
         return post;
     }
 
