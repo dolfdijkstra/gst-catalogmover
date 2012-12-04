@@ -23,7 +23,7 @@ CatalogMover
   Traditional CatalogMover does not order the rows in any catalog.html file in a pre-determined
   order, making diffs difficult.
 
-  Currrently on the export functionality is exposed via the command-line. There is also import and advanced filtering and selection possible. 
+  Currently on the export functionality is exposed via the command-line. There is also import and advanced filtering and selection possible. 
   Currently primary row regex pattern matching is implemented.  
     
 Usage
@@ -77,13 +77,13 @@ Options
      
     * proxy_password: [OPTIONAL]
      
-    * catalogs: [OPTIONAL]  the catalogs to download, comma seperated.\     
+    * catalogs: [OPTIONAL]  the catalogs to download, comma separated.\     
       Default values are <<<ElementCatalog,SiteCatalog,SystemSQL>>>.\       
       Setting this to SystemInfo will download all catalogs!
     
     
   Further use
-    There is a powerfull architecture implemented, that allows for very advanced selection of tables and rows, based on an event model. 
+    There is a powerful architecture implemented, that allows for very advanced selection of tables and rows, based on an event model. 
     The export of one row, can lead to download of other rows. Check out the source code and read the code and javadocs for further inspriration.
     
         
